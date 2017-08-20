@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ctre.CANTalon.TrajectoryPoint;
 import com.eagleforce.robot.model.MotionProfileConfiguration;
-import com.eagleforce.robot.model.MotionProfilePoint;
+//import com.eagleforce.robot.model.MotionProfilePoint;
 import com.eagleforce.robot.service.MotionProfileService;
 
 public class ApplicationRunner {

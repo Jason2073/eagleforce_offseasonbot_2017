@@ -1,6 +1,6 @@
 package com.eagleforce.robot.service;
 
-import java.math.BigDecimal;
+//import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -8,7 +8,7 @@ import java.util.Properties;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
 import com.eagleforce.robot.model.MotionProfileConfiguration;
-import com.eagleforce.robot.model.MotionProfilePoint;
+//import com.eagleforce.robot.model.MotionProfilePoint;
 
 public class MotionProfileService {
 
@@ -150,13 +150,13 @@ public class MotionProfileService {
 //		return truncateDecimal(pos, 3).equals(truncateDecimal(endDistance, 3));
 //	}
 	
-	private BigDecimal truncateDecimal(double x, int numberofDecimals) {
+/*	private BigDecimal truncateDecimal(double x, int numberofDecimals) {
 		if (x > 0) {
 			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_FLOOR);
 		} else {
 			return new BigDecimal(String.valueOf(x)).setScale(numberofDecimals, BigDecimal.ROUND_CEILING);
 		}
-	}
+	}*/
 	
 	
 }

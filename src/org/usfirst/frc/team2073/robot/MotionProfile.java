@@ -39,10 +39,12 @@ public class MotionProfile {
 		bStart = false;
 	}
 	public void startFilling(){
-		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.numPoints);
+//		startFilling(GeneratedMotionProfile.Points, GeneratedMotionProfile.numPoints);
+		startFilling();
 	}
-	public void startFilling(List<TrajectoryPoint> tpList, int totalCnt){
-		CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
+	public void startFilling(List<TrajectoryPoint> tpList){
+		talon.changeControlMode(TalonControlMode.MotionProfile);
+//		CANTalon.TrajectoryPoint point = new CANTalon.TrajectoryPoint();
 		if (status.hasUnderrun){
 			System.out.println("Has underrun");
 			talon.clearMotionProfileHasUnderrun();
