@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2073.robot;
 
-import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.SampleRobot;
 /*
  * **Keybinds and Port info
  *
@@ -26,12 +26,12 @@ import edu.wpi.first.wpilibj.CameraServer;
  * 3: ball intake
  * 
  * Controller Buttons(2)
- * 1:point turn
  * 2: pull gear in
  * 3: Ball intake motors
- * 4: push gear out
+ * 4: climb
  * 5: Reverse Ball intake
  * 6: Gearintake down
+ * 7:push gear out
  * 
  * Joystick Buttons(0)
  * 1:

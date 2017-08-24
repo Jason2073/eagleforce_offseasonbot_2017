@@ -10,7 +10,7 @@ import com.ctre.CANTalon.TrajectoryPoint;
 import com.eagleforce.robot.model.MotionProfileConfiguration;
 //import com.eagleforce.robot.model.MotionProfilePoint;
 
-public class MotionProfileService {
+public class MotionProfileGenerationService {
 
 	private static final String ROBOT_MAX_VELOCITY_KEY = "robot.specs.max-vel";
 	private static final String ROBOT_MAX_ACCELERATION_KEY = "robot.specs.max-acc";

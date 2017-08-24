@@ -8,14 +8,14 @@ import edu.wpi.first.wpilibj.Victor;
 
 public class Climber {
 	
-	Victor ClimbMotor = new Victor(4);
+	Victor climbMotor = new Victor(4);
 	Joystick Stick = new Joystick(2);
 	
 	public void StartClimb(){
-		ClimbMotor.set(-1);
+		climbMotor.set(-1);
 	}
 	public void StopClimb(){
-		ClimbMotor.set(0);
+		climbMotor.set(0);
 	}
 	Thread Climb = new Thread(){
 		public void run(){

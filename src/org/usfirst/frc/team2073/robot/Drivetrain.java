@@ -71,6 +71,7 @@ public class Drivetrain{
 						steerwheel(pwr_joystick.getY(), wheel.getX());
 					}
 					if(pwr_joystick.getRawButton(4)){
+//						change to shiftHighGear
 						Sol1.set(true);
 						Sol2.set(false);
 					}else{

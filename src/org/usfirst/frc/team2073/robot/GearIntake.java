@@ -9,11 +9,11 @@ import com.ctre.CANTalon;
 //import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 import com.eagleforce.robot.model.MotionProfileConfiguration;
-import com.eagleforce.robot.service.MotionProfileService;
+import com.eagleforce.robot.service.MotionProfileGenerationService;
 
 public class GearIntake {
 	// can i get a uhhhhhhhhhhhhhhhhhhhhh... cadd for this
-	MotionProfileService mps = new MotionProfileService();
+	MotionProfileGenerationService mps = new MotionProfileGenerationService();
 	MotionProfileConfiguration conf1;
 	MotionProfileConfiguration conf2;
 	MotionProfileConfiguration conf3;
@@ -21,12 +21,12 @@ public class GearIntake {
 	MotionProfileConfiguration conf5;
 	MotionProfileConfiguration conf6;
 
-	List<TrajectoryPoint> upToDownTpList;
-	List<TrajectoryPoint> upToPlaceTpList;
-	List<TrajectoryPoint> placeToUpTpList;
-	List<TrajectoryPoint> placeToDownTpList;
-	List<TrajectoryPoint> downToPlaceTpList;
-	List<TrajectoryPoint> downToUpTpList;
+	public List<TrajectoryPoint> upToDownTpList;
+	public List<TrajectoryPoint> upToPlaceTpList;
+	public List<TrajectoryPoint> placeToUpTpList;
+	public List<TrajectoryPoint> placeToDownTpList;
+	public List<TrajectoryPoint> downToPlaceTpList;
+	public List<TrajectoryPoint> downToUpTpList;
 
 	Victor motor = new Victor(9);
 	Joystick controller = new Joystick(2);
