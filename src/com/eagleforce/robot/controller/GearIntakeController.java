@@ -23,11 +23,29 @@ public class GearIntakeController {
 						gearSvc.gearIn();
 					} else if (dvrSvc.gearPlaceButton()) {
 						gearSvc.gearOut();
-					} else {
+					} else if (gearSvc.lightSensor()) {
 						gearSvc.gearHold();
+					} else {
+						gearSvc.gearStop();
 					}
-					if (dvrSvc.controllerJoystickAngle() == 90) {
-						gearSvc.startFilling(gearSvc.getUpToDownTpList());
+
+					if (dvrSvc.controllerJoystickAngle() == 90 && gearSvc.getApproxAngle() == 0) {
+						gearSvc.runDownToUp();
+					}
+					if (dvrSvc.controllerJoystickAngle() == 90 && gearSvc.getApproxAngle() == 45) {
+						// gearSvc.runPlaceToDown;
+					}
+					if (dvrSvc.controllerJoystickAngle() == 45 && gearSvc.getApproxAngle() == 0) {
+						// gearSvc.runUpToPlace;
+					}
+					if (dvrSvc.controllerJoystickAngle() == 45 && gearSvc.getApproxAngle() == 90) {
+						// gearSvc.runDownToPlace;
+					}
+					if (dvrSvc.controllerJoystickAngle() == 0 && gearSvc.getApproxAngle() == 45) {
+						// gearSvc.runPlaceToUp;
+					}
+					if (dvrSvc.controllerJoystickAngle() == 0 && gearSvc.getApproxAngle() == 90) {
+						// gearSvc.runDownToUp;
 					}
 					// TODO: Finalize motion profiles and configure selector here
 

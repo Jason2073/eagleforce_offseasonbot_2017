@@ -4,13 +4,13 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class DriverStationService {
 
-	private Joystick controller = new Joystick(2);
+	private Joystick controller = new Joystick(0);
 	private Joystick joystick = new Joystick(1);
-	private Joystick wheel = new Joystick(0);
+	private Joystick wheel = new Joystick(2);
 
 	// CONTROLLER
 	// ==============================================================================================================================================================================
-	
+
 	// gear intake
 	// ============================================
 	public boolean gearIntakeButton() {
@@ -32,7 +32,6 @@ public class DriverStationService {
 	// Ball Intake
 	// ============================================
 	public boolean ballIntakeButton() {
-		// TODO: add logic here
 		if (controller.getRawButton(3))
 			return true;
 		return false;
@@ -56,12 +55,28 @@ public class DriverStationService {
 	public double controllerJoystickAngle() {
 		return controller.getDirectionDegrees();
 	}
+	private boolean result = false;
+	private boolean previous = true;
+	
+	public boolean toggleDriveMode() {
+		
+		if (previous && climberButton()) {
+			previous = false;
+			if (result)
+			  result = false;
+			else
+				result = true;
+		}else if (!climberButton())
+			previous = true;
+		
+		return result;
+	}
 
 	// STEERING WHEEL
 	// ==============================================================================================================================================================================
 
 	public boolean pointTurnButton() {
-		if (wheel.getRawButton(1))
+		if (wheel.getRawButton(9))
 			return true;
 		return false;
 	}
@@ -87,6 +102,19 @@ public class DriverStationService {
 		if (joystick.getRawButton(4))
 			return true;
 		return false;
+	}
+public boolean toggleDriveDirection() {
+		
+		if (previous && joystick.getRawButton(4)) {
+			previous = false;
+			if (result)
+			  result = false;
+			else
+				result = true;
+		}else if (!joystick.getRawButton(4))
+			previous = true;
+		
+		return result;
 	}
 
 }

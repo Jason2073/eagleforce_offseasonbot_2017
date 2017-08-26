@@ -2,11 +2,26 @@ package com.eagleforce.robot.model;
 
 public class MotionProfileConfiguration {
 
-	private double maxVel = 3;
-	private double endDistance = 1.;
-	private int interval = 10;
-	private double maxAcc = 15;
+	private double maxVel;
+	private double endDistance;
+	private int interval;
+	private double maxAcc;
+	private boolean isVelocityOnly;
+	private boolean isForwards;
 	
+	
+	public boolean isForwards() {
+		return isForwards;
+	}
+	public void setForwards(boolean isForwards) {
+		this.isForwards = isForwards;
+	}
+	public boolean isVelocityOnly() {
+		return isVelocityOnly;
+	}
+	public void setVelocityOnly(boolean isVelocityOnly) {
+		this.isVelocityOnly = isVelocityOnly;
+	}
 	public double getMaxVel() {
 		return maxVel;
 	}

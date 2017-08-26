@@ -10,6 +10,7 @@ public class ShooterService {
 	// private IntermediateService ammo = new IntermediateService();
 	private Victor turret = new Victor(1);
 	private Encoder enc = new Encoder(5, 6);
+//	conf.setVelocityOnly(true)
 
 	public void moveTurret(double rotate) {
 		enc.setDistancePerPulse(45 / 128);

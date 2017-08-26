@@ -1,31 +1,34 @@
 package com.eagleforce.robot.service;
 
-import edu.wpi.first.wpilibj.Encoder;
+import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainService {
-	
 
-	private Victor lMotor = new Victor(0);
-	private Victor lMotor2 = new Victor(1);
-	private Victor rMotor = new Victor(2);
-	private Victor rMotor2 = new Victor(3);
-	private Encoder lEnc = new Encoder(3, 4);
-	private Encoder rEnc = new Encoder(1, 2);
+	private CANTalon lMotor = new CANTalon(3);
+	private CANTalon lMotor2 = new CANTalon(1);
+	private CANTalon rMotor = new CANTalon(7);
+	private CANTalon rMotor2 = new CANTalon(8);
 	private Solenoid sol1 = new Solenoid(0);
 	private Solenoid sol2 = new Solenoid(1);
+
+	private MotionProfileDriveTrainService mpdtSvc = new MotionProfileDriveTrainService(lMotor, lMotor2, rMotor,
+			rMotor2);
 
 	double preTurn;
 
 	public DrivetrainService() {
-		lEnc.setDistancePerPulse(.01227);
-		rEnc.setDistancePerPulse(.01227);
-		
-//		MotionProfileGenerationService mps = new MotionProfileGenerationService();
-//		MotionProfileConfiguration conf1;
 
+	}
+
+	public void setSlave() {
+		lMotor2.changeControlMode(TalonControlMode.Follower);
+		rMotor2.changeControlMode(TalonControlMode.Follower);
+		rMotor2.set(rMotor.getDeviceID());
+		lMotor2.set(lMotor.getDeviceID());
 	}
 
 	public double turnSense(double Ptart) {
@@ -42,15 +45,16 @@ public class DrivetrainService {
 	public void pTurn(double turn) {
 		rMotor.set(-turn);
 		lMotor.set(-turn);
-		rMotor2.set(-turn);
-		lMotor2.set(-turn);
 	}
 
 	public void move(double speed, double turn) {
-		rMotor.set(-(inverse(speed) - (inverse(speed) * turnSense(turn))));
+		rMotor.set(-inverse(speed) - (inverse(speed) * turnSense(turn)));
 		lMotor.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
-		rMotor2.set(-(inverse(speed) - (inverse(speed) * turnSense(turn))));
-		lMotor2.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
+	}
+
+	public void moveBackwards(double speed, double turn) {
+		rMotor.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
+		lMotor.set(-inverse(speed) - (inverse(speed) * turnSense(turn)));
 	}
 
 	public void shiftHighGear() {
@@ -63,4 +67,39 @@ public class DrivetrainService {
 		sol2.set(true);
 	}
 
+	// MotionProfileDrivetrainService delegation methods
+	// ====================================================================================================
+	public void startMotionProfile() {
+		mpdtSvc.startMotionProfile();
+
+	}
+
+	public void generateTrajPointList() {
+		mpdtSvc.generateTrajPointList();
+	}
+
+	public void stopMotionProfile() {
+		mpdtSvc.stopMotionProfile();
+	}
+
+	public void changeControlMode(TalonControlMode mode) {
+		mpdtSvc.changeControlMode(mode);
+	}
+
+	public void processPeriodic() {
+		mpdtSvc.processPeriodic();
+	}
+
+	public void startFilling() {
+		mpdtSvc.startFilling();
+
+	}
+
+	public void moveMotionProfile() {
+		mpdtSvc.moveMotionProfile();
+	}
+
+	public void resetEncoders() {
+		mpdtSvc.resetEnc();
+	}
 }

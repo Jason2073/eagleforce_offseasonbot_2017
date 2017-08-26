@@ -28,5 +28,4 @@
   <import file="${wpilib.ant.dir}/build.xml"/>
 	  <import file="${wpilib}/ant/build.xml"/>
 	  <import file="${user.home}/wpilib/java/${version}/ant/build.xml"/>
-	<import file="C:\Users\Jason/wpilib/java/current/ant/build.xml"/>
 </project>
