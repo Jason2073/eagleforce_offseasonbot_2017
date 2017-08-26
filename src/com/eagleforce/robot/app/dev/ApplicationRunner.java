@@ -1,15 +1,15 @@
-package com.eagleforce.robot.app;
+package com.eagleforce.robot.app.dev;
 
 import java.util.List;
 
 import com.ctre.CANTalon.TrajectoryPoint;
 import com.eagleforce.robot.model.MotionProfileConfiguration;
-import com.eagleforce.robot.model.MotionProfilePoint;
-import com.eagleforce.robot.service.MotionProfileService;
+//import com.eagleforce.robot.model.MotionProfilePoint;
+import com.eagleforce.robot.service.MotionProfileGenerationService;
 
 public class ApplicationRunner {
 
-	MotionProfileService mpService = new MotionProfileService();
+	MotionProfileGenerationService mpService = new MotionProfileGenerationService();
 
 	public void run() {
 		// TODO: Extract to properties or something

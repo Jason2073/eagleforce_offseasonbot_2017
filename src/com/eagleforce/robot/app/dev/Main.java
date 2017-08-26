@@ -1,4 +1,4 @@
-package com.eagleforce.robot.app;
+package com.eagleforce.robot.app.dev;
 
 public class Main {
 
