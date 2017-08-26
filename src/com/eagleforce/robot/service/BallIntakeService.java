@@ -7,7 +7,6 @@ public class BallIntakeService {
 	// TODO: extract channel to configuration
 	private Victor intake = new Victor(5);
 	private Victor intake2 = new Victor(6);
-	// private Victor belly_roller = new Victor(7);
 	private Solenoid intakeSol = new Solenoid(2);
 	private Solenoid intakeSol2 = new Solenoid(3);
 

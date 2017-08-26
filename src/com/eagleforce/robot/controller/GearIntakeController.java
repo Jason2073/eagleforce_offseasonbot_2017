@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class GearIntakeController {
 
-	DriverStationService dvrSvc = new DriverStationService();
-	GearIntakeService gearSvc = new GearIntakeService();
+	private DriverStationService dvrSvc = new DriverStationService();
+	private GearIntakeService gearSvc = new GearIntakeService();
 
 	private Thread gearIntakeControl = new Thread() {
 		@Override
@@ -26,9 +26,10 @@ public class GearIntakeController {
 					} else {
 						gearSvc.gearHold();
 					}
-					if(dvrSvc.controllerJoystickAngle()==90){
-						gearSvc.startFilling(gearSvc.upToDownTpList);
+					if (dvrSvc.controllerJoystickAngle() == 90) {
+						gearSvc.startFilling(gearSvc.getUpToDownTpList());
 					}
+					// TODO: Finalize motion profiles and configure selector here
 
 				}
 				Timer.delay(.005);

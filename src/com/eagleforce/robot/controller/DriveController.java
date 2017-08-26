@@ -21,7 +21,7 @@ public class DriveController {
 					if (dvrSvc.pointTurnButton()) {
 						dTrainSvc.pTurn(dvrSvc.wheelX());
 					} else {
-						dTrainSvc.steerwheel(dvrSvc.joystickY(), dvrSvc.wheelX());
+						dTrainSvc.move(dvrSvc.joystickY(), dvrSvc.wheelX());
 					}
 					if (dvrSvc.shiftButton()) {
 						dTrainSvc.shiftHighGear();

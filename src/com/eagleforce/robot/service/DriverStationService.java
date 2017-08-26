@@ -10,7 +10,9 @@ public class DriverStationService {
 
 	// CONTROLLER
 	// ==============================================================================================================================================================================
+	
 	// gear intake
+	// ============================================
 	public boolean gearIntakeButton() {
 		if (controller.getRawButton(2))
 			return true;
@@ -28,6 +30,7 @@ public class DriverStationService {
 	}
 
 	// Ball Intake
+	// ============================================
 	public boolean ballIntakeButton() {
 		// TODO: add logic here
 		if (controller.getRawButton(3))
@@ -42,6 +45,7 @@ public class DriverStationService {
 	}
 
 	// climber
+	// ============================================
 	public boolean climberButton() {
 		if (controller.getRawButton(4))
 			return true;

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainService {
+	
 
 	private Victor lMotor = new Victor(0);
 	private Victor lMotor2 = new Victor(1);
@@ -21,18 +22,20 @@ public class DrivetrainService {
 	public DrivetrainService() {
 		lEnc.setDistancePerPulse(.01227);
 		rEnc.setDistancePerPulse(.01227);
+		
+//		MotionProfileGenerationService mps = new MotionProfileGenerationService();
+//		MotionProfileConfiguration conf1;
+
 	}
 
-	public double TurnSense(double Ptart) {
-		double sTurn;
-		sTurn = SmartDashboard.getNumber("Sense", .7) * Ptart * Ptart * Ptart
+	public double turnSense(double Ptart) {
+		double sTurn = SmartDashboard.getNumber("Sense", .7) * Ptart * Ptart * Ptart
 				+ Ptart * (1 - SmartDashboard.getNumber("Sense", .7));
 		return sTurn;
 	}
 
-	public double Inverse(double Start) {
-		double inv;
-		inv = (Start - preTurn) * SmartDashboard.getNumber("Inverse", .2) + Start;
+	public double inverse(double Start) {
+		double inv = (Start - preTurn) * SmartDashboard.getNumber("Inverse", .2) + Start;
 		return inv;
 	}
 
@@ -43,11 +46,11 @@ public class DrivetrainService {
 		lMotor2.set(-turn);
 	}
 
-	public void steerwheel(double speed, double turn) {
-		rMotor.set(-(Inverse(speed) - (Inverse(speed) * TurnSense(turn))));
-		lMotor.set(Inverse(speed) + (Inverse(speed) * TurnSense(turn)));
-		rMotor2.set(-(Inverse(speed) - (Inverse(speed) * TurnSense(turn))));
-		lMotor2.set(Inverse(speed) + (Inverse(speed) * TurnSense(turn)));
+	public void move(double speed, double turn) {
+		rMotor.set(-(inverse(speed) - (inverse(speed) * turnSense(turn))));
+		lMotor.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
+		rMotor2.set(-(inverse(speed) - (inverse(speed) * turnSense(turn))));
+		lMotor2.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
 	}
 
 	public void shiftHighGear() {
