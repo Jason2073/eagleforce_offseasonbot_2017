@@ -7,6 +7,8 @@ public class DriverStationService {
 	private Joystick controller = new Joystick(0);
 	private Joystick joystick = new Joystick(1);
 	private Joystick wheel = new Joystick(2);
+	private boolean result = false;
+	private boolean previous = true;
 
 	// CONTROLLER
 	// ==============================================================================================================================================================================
@@ -55,11 +57,10 @@ public class DriverStationService {
 	public double controllerJoystickAngle() {
 		return controller.getDirectionDegrees();
 	}
-	private boolean result = false;
-	private boolean previous = true;
+	
 	
 	public boolean toggleDriveMode() {
-		
+//		toggles between manual and motion profiled drive
 		if (previous && climberButton()) {
 			previous = false;
 			if (result)
