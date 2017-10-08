@@ -112,12 +112,12 @@ public class MotionProfileDriveTrainService {
 		ctList.add(this.lMotor);
 		// ctList.add(this.lMotorSlave); // Comment once setup with master/slave
 		// properly
-		ctList.add(this.rMotor);
+//		ctList.add(this.rMotor);
 		// ctList.add(this.rMotorSlave); // Comment once setup with master/slave
 		// properly
 
 		mpsList.add(lMotorStatus);
-		mpsList.add(rMotorStatus);
+//		mpsList.add(rMotorStatus);
 		SmartDashboard.putNumber("Fgain", 60);
 		lMotor.setF(SmartDashboard.getNumber("Fgain", 1));
 		rMotor.setF(SmartDashboard.getNumber("Fgain", 1));
@@ -133,8 +133,8 @@ public class MotionProfileDriveTrainService {
 		rMotorSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		lMotorSlave.set(lMotor.getDeviceID());
 		rMotorSlave.set(rMotor.getDeviceID());
-		SmartDashboard.putNumber("Max Velocity", 100);
-		SmartDashboard.putNumber("Max Acceleration", 2000);
+		SmartDashboard.putNumber("Max Velocity", 3);
+		SmartDashboard.putNumber("Max Acceleration", 100);
 		SmartDashboard.putNumber("Distance", 10);
 		SmartDashboard.putNumber("Interval", 1);
 		SmartDashboard.putBoolean("Log MotionProfile Stats", true);

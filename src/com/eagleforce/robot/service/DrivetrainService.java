@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainService {
 
-	private CANTalon lMotor = new CANTalon(3);
+	private CANTalon lMotor = new CANTalon(4);
 	private CANTalon lMotor2 = new CANTalon(1);
 	private CANTalon rMotor = new CANTalon(7);
 	private CANTalon rMotor2 = new CANTalon(8);
