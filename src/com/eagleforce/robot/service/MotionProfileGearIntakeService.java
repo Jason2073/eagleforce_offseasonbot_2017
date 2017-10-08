@@ -132,17 +132,8 @@ public class MotionProfileGearIntakeService extends GearIntakeService {
 	}
 	
 	public void processPoints() {
-		
-//		if(talonStatus.btmBufferCnt > 5) {
-//			bufferFilled = true;
-//		}
-		
 		talon.processMotionProfileBuffer();
-		
-		if(true /*bufferFilled*/) {
-			System.out.println("talon.set running");
-			talon.set(CANTalon.SetValueMotionProfile.Enable.value);
-		}
+		talon.set(CANTalon.SetValueMotionProfile.Enable.value);
 	}
 
 	public void resetEnc() {
@@ -156,8 +147,11 @@ public class MotionProfileGearIntakeService extends GearIntakeService {
 	}
 	
 	public void printTalonInfo() {
-		System.out.println(talon.getPosition());
-		System.out.println("");
+		System.out.println("Pos: " + talon.getPosition() + "topBuffer: " + talonStatus.topBufferCnt);
+	}
+	
+	public void checkDirection(boolean forwards){
+		talon.reverseOutput(forwards);
 	}
 
 

@@ -45,25 +45,23 @@ public class GearIntakeController {
 					// Acts same as an if/else (first method to return true wins)
 //					gearSvc.printTalonInfo();
 					System.out.println(dvrSvc.gearPositionDPad());
-					if (tryMotionProfiling(90, 0, gearSvc.upToDownTpList)
-							|| tryMotionProfiling(90, 45, gearSvc.placeToDownTpList)
-							|| tryMotionProfiling(45, 0, gearSvc.upToPlaceTpList)
-							|| tryMotionProfiling(45, 90, gearSvc.downToPlaceTpList)
-							|| tryMotionProfiling(0, 45, gearSvc.placeToUpTpList)
-							|| tryMotionProfiling(0, 90, gearSvc.downToUpTpList)) {
+					if (tryMotionProfiling(90, 0, gearSvc.upToDownTpList, true)
+							|| tryMotionProfiling(90, 45, gearSvc.placeToDownTpList, true)
+							|| tryMotionProfiling(45, 0, gearSvc.upToPlaceTpList, true)
+							|| tryMotionProfiling(45, 90, gearSvc.downToPlaceTpList, false)
+							|| tryMotionProfiling(0, 45, gearSvc.placeToUpTpList, false)
+							|| tryMotionProfiling(0, 90, gearSvc.downToUpTpList, false)) {
 						// Motion profiling works
-						
+
 					}
 					else if (gearSvc.getApproxAngle() != 0 && gearSvc.getApproxAngle() != 45
 							&& gearSvc.getApproxAngle() != 90) {
-						System.out.println("ruh roh shaggy, we've been hit");
+						System.out.println("ruh roh Shaggy, we've been hit!");
 						gearSvc.resetGearIntake();
 					} else {
-//						System.out.println("GearIntake is broke af dude");
+						System.out.println("Doing Nothing");
 					}
-					// TODO: Finalize motion profiles and configure selector
-					// here
-					
+					// TODO: Finalize motion profiles 
 				}
 				Timer.delay(.005);
 			}
@@ -73,12 +71,13 @@ public class GearIntakeController {
 		
 	};
 
-	private boolean tryMotionProfiling(int dvrAngle, int gearAngle, List<TrajectoryPoint> list) {
+	private boolean tryMotionProfiling(int dvrAngle, int gearAngle, List<TrajectoryPoint> list, boolean forwards) {
 //		System.out.println("trying");
 		if (dvrSvc.gearPositionDPad() == dvrAngle && gearSvc.getApproxAngle() == gearAngle) {
 			if (!filledPoints) {
 				System.out.println("filling");
 				gearSvc.pushPoints(list);
+				gearSvc.checkDirection(forwards);
 				filledPoints = true;
 			} else{
 				System.out.println("proccessing");
