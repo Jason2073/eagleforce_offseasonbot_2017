@@ -36,18 +36,8 @@ public class MotionProfileGearIntakeService extends GearIntakeService {
 	enum MotionProfileState {
 		INACTIVE, FILLING_BUFFER, RUNNING_PROFILE
 	}
-//	private final SuppressibleLogger log = new SuppressibleLogger(this.getClass());
 	private List<CANTalon> ctList = new ArrayList<>();
-//	private List<MotionProfileStatus> mpsList = new ArrayList<>();
-//	private List<TrajectoryPoint> tpList = new ArrayList<>();
 	private CANTalon.MotionProfileStatus talonStatus = new CANTalon.MotionProfileStatus();
-//	private MotionProfileState _state = MotionProfileState.INACTIVE;
-//	private int _loopTimeout = -1;
-//	private boolean _bStart = false;
-//	private CANTalon.SetValueMotionProfile _setValue = CANTalon.SetValueMotionProfile.Disable;
-//	private static final int kMinPointsInTalon = 0;
-//	private static final int kNumLoopsTimeout = 10;
-//	private Notifier _notifer = new Notifier(new CANTalonBufferProcessor(ctList));
 	private boolean bufferFilled = false;
 
 
@@ -124,8 +114,6 @@ public class MotionProfileGearIntakeService extends GearIntakeService {
 	
 	public void pushPoints(List<TrajectoryPoint> tpList) {
 		Queue<TrajectoryPoint> tpQueue = new LinkedList<>(tpList);
-//		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
-//		talon.clearMotionProfileTrajectories();
 		for (TrajectoryPoint tp : tpQueue) {
 			talon.pushMotionProfileTrajectory(tp);
 		}
