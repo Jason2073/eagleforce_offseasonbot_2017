@@ -1,6 +1,6 @@
 package com.eagleforce.robot.service;
 
-//import java.math.BigDecimal;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -72,24 +72,24 @@ public class MotionProfileGenerationService {
 			TrajectoryPoint tPoint = new TrajectoryPoint();
 			// TODO: Decide which version below is better/more readable
 			// MotionProfilePoint prevMpp = mppList.listIterator().previous();
-			TrajectoryPoint prevMpp = tpList.get(i - 1);
+			TrajectoryPoint prevTp = tpList.get(i - 1);
 
 			posOrNeg = increasingOrDecreasing(i, endDistance, maxVel, interval, t1);
 			double sumF1Count = Math.max(0, Math.min(1, (f1List.get(i - 1) + posOrNeg)));
 			f1List.add(sumF1Count);
 			f2 = calculateF2(t2, i, interval, f1List, f2);
 
-			tPoint.velocityOnly = false;
+			tPoint.velocityOnly = mpc.isVelocityOnly();
 			tPoint.profileSlotSelect = 0;
 			tPoint.timeDurMs = interval;
 			tPoint.velocity = calculateVelocity(maxVel, f1List, f2, i, t2, interval);
-			tPoint.position = prevMpp.position + calculatePosition(tPoint, prevMpp, interval);
+			tPoint.position = (prevTp.position + calculatePosition(tPoint, prevTp, interval));
 			// TODO: Decide whether we should keep or remove acceleration
 
 			tpList.add(tPoint);
-			// System.out.println(i + "\t" + mpp.getVel() + "\t" + mpp.getPos()
-			// + "\t" + mpp.getAcc() + "\t" + mpp.getInterval() + "\t" +
-			// posOrNeg + "\t" +f1List.get(i) + "\t" +f2);
+			 System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position +"\t" + tPoint.timeDurMs);
+//			 + "\t" + mpp.getAcc() + "\t" + mpp.getInterval() + "\t" +
+//			 posOrNeg + "\t" +f1List.get(i) + "\t" +f2);
 			if (tPoint.velocity == 0 /*
 										 * endDistanceReached(mpp.getPos(),
 										 * endDistance)
@@ -112,6 +112,12 @@ public class MotionProfileGenerationService {
 		tp.zeroPos = true;
 
 		return tp;
+	}
+	
+	public static double round(double d, int decimalPlace) {
+	    BigDecimal bd = new BigDecimal(d);
+	    bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+	    return bd.doubleValue();
 	}
 
 	// TODO: Break these variables out into a model object to be passed around
