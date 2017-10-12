@@ -58,6 +58,10 @@ public class DriverStationService {
 		return controller.getDirectionDegrees();
 	}
 	
+	public boolean alignTurret(){
+		return joystick.getRawButton(4);
+	}
+	
 	
 	public boolean toggleDriveMode() {
 //		toggles between manual and motion profiled drive
