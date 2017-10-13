@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotionProfileShooterService {
 	
-	private CANTalon talon = new CANTalon(5);
+	private static final double MIN_PROFILE_DISTANCE = 10;
+
+	private CANTalon talon = new CANTalon(4);
 
 	private MotionProfileGenerationService mpgSvc = new MotionProfileGenerationService();
 	private CameraService cam = CameraService.getInstance();
@@ -32,10 +34,10 @@ public class MotionProfileShooterService {
 	private List<CANTalon> ctList = new ArrayList<>();
 	private CANTalon.MotionProfileStatus talonStatus = new CANTalon.MotionProfileStatus();
 	private boolean bufferFilled = false;
-	private double MAX_VELOCITY = 300;
-	private int INTERVAL = 5;
-	private double MAX_ACCELERATION = 10;
-	private double GEAR_RATIO = 10; /* this to one */
+	private static final double MAX_VELOCITY = 300;
+	private static final int INTERVAL = 10;
+	private static final double MAX_ACCELERATION = 30;
+	private static final double GEAR_RATIO = 10.*(7./3.); /* this to one */
 
 	public MotionProfileShooterService() {
 		SmartDashboard.putNumber("Fgain", .7871);
@@ -43,6 +45,23 @@ public class MotionProfileShooterService {
 			ct.changeMotionControlFramePeriod(INTERVAL / 2);
 		}
 
+	}
+	
+	public boolean targetOffScreen() {
+		boolean offScreen = !cam.lastCameraMessage().isTracking();
+		if(offScreen)
+			System.out.println("Off screen");
+		return offScreen;
+	}
+	
+	public boolean targetLocked() {
+		if(targetOffScreen())
+			return false;
+		
+		boolean locked = Math.abs(cam.lastCameraMessage().getAngleToTarget()) < 1;
+		if(locked)
+			System.out.println("Target locked!");
+		return locked;
 	}
 
 	public void generateProfile() {
@@ -52,11 +71,16 @@ public class MotionProfileShooterService {
 		conf1.setEndDistance(profileDistanceToTarget());
 		conf1.setMaxAcc(MAX_ACCELERATION);
 		turretProfile = mpgSvc.generatePoints(conf1);
+		System.out.println("generated");
 	}
 
 	public double profileDistanceToTarget() {
 		double dist = 0;
-		dist = GEAR_RATIO * (cam.lastCameraMessage().getAngleToTarget() / 360);
+		double camDist = Math.abs(cam.lastCameraMessage().getAngleToTarget()/360);
+		camDist *= GEAR_RATIO;
+		camDist = Math.max(camDist, MIN_PROFILE_DISTANCE);
+//		dist *= GEAR_RATIO;
+		dist = camDist;
 		return dist;
 	}
 
@@ -78,6 +102,7 @@ public class MotionProfileShooterService {
 	public void processPoints() {
 		talon.processMotionProfileBuffer();
 		talon.set(CANTalon.SetValueMotionProfile.Enable.value);
+//		System.out.println("Processing");
 	}
 
 	public void resetEnc() {
@@ -92,13 +117,14 @@ public class MotionProfileShooterService {
 
 	public void printTalonInfo() {
 		System.out.println("Pos: " + talon.getPosition() + "topBuffer: " + talonStatus.topBufferCnt);
+		talon.changeControlMode(TalonControlMode.PercentVbus);
 	}
 
-	public void checkDirection(boolean forwards) {
+	public void setDirection(boolean forwards) {
 		talon.reverseOutput(forwards);
 	}
 
-	private boolean isToTheRight() {
+	public boolean isToTheRight() {
 		boolean direction = false;
 		if (cam.lastCameraMessage().getAngleToTarget() > 0)
 			direction = true;
@@ -110,6 +136,17 @@ public class MotionProfileShooterService {
 	public double bufferedPoints(){
 		double points = talonStatus.topBufferCnt;
 		return points;
+	}
+	
+	public void printCameraInfo() {
+		SmartDashboard.putNumber("CamDistance", cam.lastCameraMessage().getDistanceToTarget());
+		SmartDashboard.putNumber("CamAngle", cam.lastCameraMessage().getAngleToTarget());
+		SmartDashboard.putNumber("CamTime", cam.lastCameraMessage().getTimeOfImage());
+		SmartDashboard.putBoolean("CamTracking", cam.lastCameraMessage().isTracking());
+	}
+	
+	public double angle() {
+		return cam.lastCameraMessage().getAngleToTarget();
 	}
 
 }

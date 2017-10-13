@@ -1,5 +1,6 @@
 package com.eagleforce.robot.controller;
 
+import com.eagleforce.robot.model.CameraMessage;
 import com.eagleforce.robot.service.DriverStationService;
 import com.eagleforce.robot.service.GyroService;
 import com.eagleforce.robot.service.MotionProfileShooterService;
@@ -24,24 +25,33 @@ public class ShooterController {
 				if (RobotState.isAutonomous()) {
 					// put auto here
 				} else if (RobotState.isOperatorControl()) {
-					if (drvSvc.controllerJoystickAngle() != 0) {
-						double rotate = drvSvc.controllerJoystickAngle();
-						if (rotate < 0)
-							rotate += 360;
-						rotate += gyroSvc.gyroAngle();
-						shootSvc.moveTurret(rotate);
-					}
-					if (drvSvc.alignTurret()){
+//					if (drvSvc.controllerJoystickAngle() != 0) {
+//						double rotate = drvSvc.controllerJoystickAngle();
+//						if (rotate < 0)
+//							rotate += 360;
+//						rotate += gyroSvc.gyroAngle();
+//						shootSvc.moveTurret(rotate);
+//					}
+//					shootSvc.moveTurret(mpShooter.angle());
+					if (drvSvc.alignTurret() && !mpShooter.targetLocked()){
 						if (!pushedPoints){
+							System.out.println("pressed button");
 							mpShooter.generateProfile();
 							mpShooter.pushPoints(mpShooter.turretProfile);
 							pushedPoints = true;
-						}else{
+						}else if(!mpShooter.isToTheRight()){
+							mpShooter.setDirection(false);
+						}else {
 							mpShooter.processPoints();
 						}
 					}else{
 						mpShooter.stopMotionProfile();
+						pushedPoints = false;
+//						System.out.println("stopped");
 					}
+					
+					mpShooter.printCameraInfo();
+					
 					
 
 					// TODO: add camera tracking and shooter wheel control
@@ -57,6 +67,7 @@ public class ShooterController {
 		shooterControl.start();
 		mpShooter.motionProfileInit();
 		mpShooter.resetEnc();
+//		mpShooter.printTalonInfo();
 	}
 
 }

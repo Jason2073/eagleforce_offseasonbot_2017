@@ -33,20 +33,24 @@ public class CameraService {
 		@Override
 		public void run() {
 			while(!Thread.interrupted()){ 
+				DatagramSocket socket = null;
 				try{
 					String message = "";
-					DatagramSocket socket = new DatagramSocket(2073);
-					byte[] receiveData = new byte[24];
+					socket = new DatagramSocket(2073);
+					byte[] receiveData = new byte[300];
 					DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 					socket.receive(receivePacket);
 					message = new String(receivePacket.getData());
 					// get message from packet
 					CameraMessage msg = parser.parseJson(message);
-					socket.close();
 					
 					lastMessage = msg;
 				}catch(Exception ex){
 					ex.printStackTrace();
+				}finally {
+					if(socket != null)
+						socket.close();
+					
 				}
 			}
 		

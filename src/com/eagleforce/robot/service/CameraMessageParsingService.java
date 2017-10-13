@@ -1,32 +1,37 @@
 package com.eagleforce.robot.service;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import com.eagleforce.robot.model.CameraMessage;
-import org.json.simple.parser.*;
 
 public class CameraMessageParsingService {
 	
+	private static final String TRACKING_JSON_KEY = "Trk";
+	private static final String TIME_JSON_KEY = "Tm";
+	private static final String DEGREES_JSON_KEY = "Deg";
+	private static final String DISTANCE_JSON_KEY = "Dist";
+
 	public CameraMessage parseJson(String json) {
 //		this is where we put json parsing (http://www.java2s.com/Code/Jar/j/Downloadjsonsimple11jar.htm)
+//		and http://www.java2s.com/Code/Jar/o/Downloadorgjsonjar.htm
 		try {
 			CameraMessage camMsg = new CameraMessage();
 			Object obj;
-			obj = new JSONParser().parse(new FileReader(""));
+			obj = new JSONParser().parse(json.trim());
 			JSONObject jo = (JSONObject) obj;
 
-			camMsg.setDistanceToTarget(Double.parseDouble(((String) jo.get("distance"))));
-			camMsg.setAngleToTarget(Double.parseDouble(((String) jo.get("angle"))));
-			camMsg.setTimeOfImage(Double.parseDouble(((String) jo.get("distance"))));
-			camMsg.setTracking(Boolean.parseBoolean(((String) jo.get("distance"))));
+			camMsg.setDistanceToTarget((Double) jo.get(DISTANCE_JSON_KEY));
+			camMsg.setAngleToTarget((Double) jo.get(DEGREES_JSON_KEY));
+			camMsg.setTimeOfImage((Double)  jo.get(TIME_JSON_KEY));
+//			ask bill if this returns a boolean value, and if not see if we can change it
+			camMsg.setTracking((Boolean) jo.get(TRACKING_JSON_KEY));
 			
 			return camMsg;
 
-		} catch (IOException | ParseException | NumberFormatException | JSONException e) {
+		} catch (ParseException | NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			

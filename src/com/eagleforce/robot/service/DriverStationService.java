@@ -59,7 +59,7 @@ public class DriverStationService {
 	}
 	
 	public boolean alignTurret(){
-		return joystick.getRawButton(4);
+		return controller.getRawButton(1);
 	}
 	
 	

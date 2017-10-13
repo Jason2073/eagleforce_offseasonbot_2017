@@ -1,5 +1,7 @@
 package com.eagleforce.robot.service;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
 
@@ -10,17 +12,20 @@ public class ShooterService {
 	// private IntermediateService ammo = new IntermediateService();
 	private Victor turret = new Victor(1);
 	private Encoder enc = new Encoder(5, 6);
+	private CANTalon talon = new CANTalon(4);
 //	conf.setVelocityOnly(true)
 
 	public void moveTurret(double rotate) {
-		enc.setDistancePerPulse(45 / 128);
-		if (Math.round(rotate) > Math.round(enc.getDistance())) {
-			turret.set(.25);
-		} else if (Math.round(rotate) < Math.round(enc.getDistance())) {
-			turret.set(-.25);
+//		enc.setDistancePerPulse(45 / 128);
+		if (Math.round(rotate) > Math.round(talon.getPosition()) ) {
+			talon.set(.1);
+		} else if (rotate < talon.getPosition() ) {
+			talon.set(-.1);
 		} else {
 			turret.set(0);
 		}
+		
+	
 		
 		
 		
