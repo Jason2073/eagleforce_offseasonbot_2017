@@ -1,4 +1,4 @@
-package com.eagleforce.robot.service;
+package old.com.eagleforce.robot.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.Properties;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
-import com.eagleforce.robot.model.MotionProfileConfiguration;
-//import com.eagleforce.robot.model.MotionProfilePoint;
+
+import old.com.eagleforce.robot.model.MotionProfileConfiguration;
 
 public class MotionProfileGenerationService {
 

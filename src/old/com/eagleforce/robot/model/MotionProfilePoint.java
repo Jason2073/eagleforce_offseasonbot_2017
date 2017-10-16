@@ -1,4 +1,4 @@
-package com.eagleforce.robot.model;
+package old.com.eagleforce.robot.model;
 
 public class MotionProfilePoint {
 	

@@ -1,4 +1,4 @@
-package com.eagleforce.robot.service;
+package old.com.eagleforce.robot.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
-import com.eagleforce.robot.model.MotionProfileConfiguration;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import old.com.eagleforce.robot.model.MotionProfileConfiguration;
 
 public class MotionProfileDrivetrainServiceOld {
 

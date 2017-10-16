@@ -1,11 +1,11 @@
-package com.eagleforce.robot.service;
+package old.com.eagleforce.robot.service;
 
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.eagleforce.robot.model.CameraMessage;
+import old.com.eagleforce.robot.model.CameraMessage;
 
 public class CameraMessageParsingService {
 	

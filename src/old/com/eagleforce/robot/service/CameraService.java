@@ -1,9 +1,9 @@
-package com.eagleforce.robot.service;
+package old.com.eagleforce.robot.service;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import com.eagleforce.robot.model.CameraMessage;
+import old.com.eagleforce.robot.model.CameraMessage;
 
 public class CameraService {
 	private CameraMessage lastMessage = new CameraMessage();

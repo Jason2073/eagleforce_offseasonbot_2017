@@ -1,4 +1,4 @@
-package com.eagleforce.robot.service;
+package old.com.eagleforce.robot.service;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,11 +9,11 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.MotionProfileStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
-import com.eagleforce.robot.model.MotionProfileConfiguration;
-import com.eagleforce.robot.util.SuppressibleLogger;
 
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import old.com.eagleforce.robot.model.MotionProfileConfiguration;
+import old.com.eagleforce.robot.util.SuppressibleLogger;
 
 public class MotionProfileGearIntakeService extends GearIntakeService {
 	private CANTalon talon = new CANTalon(4);

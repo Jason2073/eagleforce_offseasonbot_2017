@@ -1,7 +1,7 @@
-package com.eagleforce.robot.model;
+package old.com.eagleforce.robot.model;
 
-import com.eagleforce.robot.service.CameraMessageParsingService;
-import com.eagleforce.robot.service.CameraService;
+import old.com.eagleforce.robot.service.CameraMessageParsingService;
+import old.com.eagleforce.robot.service.CameraService;
 
 public class CameraMessage {
 

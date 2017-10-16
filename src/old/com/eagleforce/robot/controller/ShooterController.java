@@ -1,13 +1,12 @@
-package com.eagleforce.robot.controller;
-
-import com.eagleforce.robot.model.CameraMessage;
-import com.eagleforce.robot.service.DriverStationService;
-import com.eagleforce.robot.service.GyroService;
-import com.eagleforce.robot.service.MotionProfileShooterService;
-import com.eagleforce.robot.service.ShooterService;
+package old.com.eagleforce.robot.controller;
 
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.Timer;
+import old.com.eagleforce.robot.model.CameraMessage;
+import old.com.eagleforce.robot.service.DriverStationService;
+import old.com.eagleforce.robot.service.GyroService;
+import old.com.eagleforce.robot.service.MotionProfileShooterService;
+import old.com.eagleforce.robot.service.ShooterService;
 
 public class ShooterController {
 
