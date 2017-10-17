@@ -1,9 +1,7 @@
 package old.com.eagleforce.robot.service;
 
 import org.json.JSONException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
 
 import old.com.eagleforce.robot.model.CameraMessage;
 
@@ -19,19 +17,17 @@ public class CameraMessageParsingService {
 //		and http://www.java2s.com/Code/Jar/o/Downloadorgjsonjar.htm
 		try {
 			CameraMessage camMsg = new CameraMessage();
-			Object obj;
-			obj = new JSONParser().parse(json.trim());
-			JSONObject jo = (JSONObject) obj;
+			JSONObject jo = new JSONObject(json);
 
-			camMsg.setDistanceToTarget((Double) jo.get(DISTANCE_JSON_KEY));
-			camMsg.setAngleToTarget((Double) jo.get(DEGREES_JSON_KEY));
-			camMsg.setTimeOfImage((Double)  jo.get(TIME_JSON_KEY));
+			camMsg.setDistanceToTarget(jo.getDouble(DISTANCE_JSON_KEY));
+			camMsg.setAngleToTarget(jo.getDouble(DEGREES_JSON_KEY));
+			camMsg.setTimeOfImage(jo.getDouble(TIME_JSON_KEY));
 //			ask bill if this returns a boolean value, and if not see if we can change it
-			camMsg.setTracking((Boolean) jo.get(TRACKING_JSON_KEY));
+			camMsg.setTracking(jo.getBoolean(TRACKING_JSON_KEY));
 			
 			return camMsg;
 
-		} catch (ParseException | NumberFormatException e) {
+		} catch (JSONException | NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
