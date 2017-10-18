@@ -1,22 +1,18 @@
 package org.usfirst.frc.team2073.robot.svc;
 
-import java.util.List;
-
 import com.ctre.CANTalon;
 
 public class MotionProfileBufferProcesser implements java.lang.Runnable {
 	
 //		private Notifier _notifer = new Notifier(new CANTalonBufferProcessor(ctList));
-	
-		private List<CANTalon> ctList;
-		public MotionProfileBufferProcesser (List<CANTalon> ctList) {
-			this.ctList = ctList;
+		private CANTalon talon;
+		
+		public MotionProfileBufferProcesser (CANTalon talon) {
+			this.talon = talon;
 		}
 		
 	    public void run() {
-	    	for(CANTalon ct : ctList) {
-	    		ct.processMotionProfileBuffer();
-	    	}
+	    		talon.processMotionProfileBuffer();
 	    }
 	
 
