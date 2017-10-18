@@ -1,28 +1,39 @@
 package org.usfirst.frc.team2073.robot;
 
-import com.eagleforce.robot.controller.DriveController;
-import com.eagleforce.robot.controller.GearIntakeController;
+import org.usfirst.frc.team2073.robot.ctx.AppContext;
+import org.usfirst.frc.team2073.robot.ctx.OI;
+import org.usfirst.frc.team2073.robot.ctx.RobotMap;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
 
-import edu.wpi.first.wpilibj.SampleRobot;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
-public class Robot extends SampleRobot {
-//	private BallIntakeController ballCtr = new BallIntakeController();
-//	private ClimberController climbCtr = new ClimberController();
-	private DriveController driveCtr = new DriveController();
-	private GearIntakeController gearCtr = new GearIntakeController();
-//	private ShooterController shootCtr = new ShooterController();
-	
+public class Robot extends IterativeRobot {
+	private static AppContext ctx;
+	private OI oi;
+	private RobotMap rm;
+	private DriveTrain dt;
 
 	@Override
-	protected void robotInit() {
-		
-//		ballCtr.init();
-//		climbCtr.init();
-//		driveCtr.init();
-		gearCtr.init();
-//		shootCtr.init();
-		
-//		call other controller.init here
+	public void robotInit() {
+//    	System.out.println("-> robotInit()");
+		ctx = AppContext.getInstance();
+		ctx.init();
+		oi = ctx.getOi();
+		rm = ctx.getRobotMap();
+		dt = rm.getDriveTrain();
+//    	System.out.println("<- robotInit()");
 	}
 
+	@Override
+	public void robotPeriodic() {
+		Scheduler.getInstance().run();
+		dt.periodic();
+	}
+	
+	public static AppContext getCtx() {
+//    	System.out.println("-> getCtx()");
+//    	System.out.println("<- getCtx()");
+		return ctx;
+	}
 }
