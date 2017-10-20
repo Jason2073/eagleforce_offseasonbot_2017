@@ -1,41 +1,33 @@
 package org.usfirst.frc.team2073.robot.ctx;
 
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.RobotPorts;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
-import org.usfirst.frc.team2073.robot.svc.CameraService;
 
 import com.ctre.CANTalon;
 
 public class RobotMap {
-	private DriveTrain driveTrain;
-	private TurretSubsystem turret;
-	
-	// TODO: Extract talons, etc. here as PRIVATE variables and then
-	// pass them into any classes that need them.
-	private CANTalon talon = new CANTalon(4); // TODO: Extract talon port to constants
+	private static CANTalon driveTrainTalon;
 
-	protected RobotMap() {
-//    	System.out.println("-> RobotMap constructor");
-//    	System.out.println("<- RobotMap constructor");
-		// Only allow instantiation from the AppContext
-	}
+	private static DriveTrainSubsystem driveTrain;
+	private static TurretSubsystem turret;
 	
-	protected void init(CameraService camSvc) {
-//    	System.out.println("-> RobotMap init()");
-		driveTrain = new DriveTrain();
+	public static void init() {
+		driveTrainTalon = new CANTalon(RobotPorts.DRIVE_TRAIN_TALON);
+		
+		driveTrain = new DriveTrainSubsystem();
 		turret = new TurretSubsystem();
-		driveTrain.init(talon);
-		turret.init(camSvc);
-//    	System.out.println("<- RobotMap init()");
+	}
+
+	public static CANTalon getDriveTrainTalon() {
+		return driveTrainTalon;
 	}
 	
-	public DriveTrain getDriveTrain() {
-//    	System.out.println("-> RobotMap getDriveTrain()");
-//    	System.out.println("<- RobotMap getDriveTrain()");
+	public static DriveTrainSubsystem getDriveTrain() {
 		return driveTrain;
 	}
 
-	public TurretSubsystem getTurret() {
+	public static TurretSubsystem getTurret() {
 		return turret;
 	}
 }
