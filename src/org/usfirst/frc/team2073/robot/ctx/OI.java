@@ -11,17 +11,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class OI {
+	private static Joystick controller;
 
-	private Joystick controller;
-	
-	protected OI() {
-    	System.out.println("OI constructor");
-		// Only allow instantiation from the AppContext
-	}
-	
-	protected void init() {
-    	System.out.println("OI init");
+	public static void init() {
 		controller = new Joystick(Xbox.PORT);
+		
 		Command move = new MoveCommand();
 		Command genMP = new GenerateMotionProfileCommand();
 		Command runMP = new RunMotionProfileCommand();

@@ -13,7 +13,10 @@ public abstract class AppConstants {
 				public static final int R1 = 6;
 				public static final int L2 = 7;
 				public static final int R2 = 8;
-			}	
-		}	
+			}
+		}
+	}
+	public abstract class RobotPorts {
+		public static final int DRIVE_TRAIN_TALON = 4;
 	}
 }

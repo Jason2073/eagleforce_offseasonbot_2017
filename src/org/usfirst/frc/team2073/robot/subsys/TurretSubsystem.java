@@ -1,14 +1,13 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
+import org.usfirst.frc.team2073.robot.Robot;
 import org.usfirst.frc.team2073.robot.domain.CameraMessage;
+import org.usfirst.frc.team2073.robot.domain.CameraMessageReceiver;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
-import org.usfirst.frc.team2073.robot.svc.CameraService;
-import org.usfirst.frc.team2073.robot.svc.MotionProfileGenerationService;
+import org.usfirst.frc.team2073.robot.domain.MotionProfileGenerator;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -43,7 +42,6 @@ public class TurretSubsystem extends Subsystem {
 		private static final String CAMERA_ANGLE 		= "VisionStat: Angle";
 		private static final String CAMERA_TIME 		= "VisionStat: Time";
 //		private static final String CAMERA_TARGET_ON_SCREEN = "Vision: Target on Sc";
-		
 	}
 	
 	private enum SubsystemState {
@@ -60,13 +58,9 @@ public class TurretSubsystem extends Subsystem {
 		PROFILE_STOPPED
 	}
 	
-	// Service/functional objects
-	private MotionProfileGenerationService mpgSvc;
-	private CameraService cam;
-	
 	// Internal helper classes
-	private Helper helper = new Helper();
-	private Info info = new Info();
+	private final Helper helper = new Helper();
+	private final Info info = new Info();
 
 	// Model objects
 	private MotionProfileConfiguration conf1 = new MotionProfileConfiguration();
@@ -89,15 +83,7 @@ public class TurretSubsystem extends Subsystem {
 	private double fGain = 		Defaults.F_GAIN;
 	private double gearRatio = 	Defaults.DEFAULT_GEAR_RATIO;
 	
-	
-	
 	public TurretSubsystem() {
-	}
-	
-	public void init(CameraService cam) {
-		mpgSvc = new MotionProfileGenerationService(); // Not extracting to use DI because we are changing this to a util class
-		this.cam = cam;
-		
 		initTalonList();
 		helper.refreshData();
 		helper.updateDashboard();
@@ -132,7 +118,6 @@ public class TurretSubsystem extends Subsystem {
 	private void processPeriodic() {
 		helper.processTalonPeriodic();
 		helper.updateMotionProfileStatus();
-		
 	}
 
 	/**
@@ -143,36 +128,39 @@ public class TurretSubsystem extends Subsystem {
 		processPeriodic();
 		
 		switch (mpState) {
-		case INACTIVE:
-			mpState = MotionProfileState.GENERATING_PROFILE;
-			break;
-
-		case GENERATING_PROFILE:
-			helper.generateVisionTrackingProfile();
-			helper.pushPoints(currentProfile);
-			mpState = MotionProfileState.FILLING_BUFFER;
-
-		case FILLING_BUFFER:
-			helper.processBufferPeriodic();
-			if (info.bufferFilled())
-				mpState = MotionProfileState.RUNNING_PROFILE;
-			break;
-
-		case RUNNING_PROFILE:
-			helper.processBufferPeriodic();
-			helper.processProfilePeriodic();
-			if (info.bufferEmpty()) {
-				mpState = MotionProfileState.PROFILE_COMPLETE;
+			case INACTIVE: {
+				mpState = MotionProfileState.GENERATING_PROFILE;
+				break;
 			}
-			break;
-
-		case PROFILE_COMPLETE:
-			stopMotionProfileMode();
-			mpState = MotionProfileState.INACTIVE;
-			break;
-			
-		default:
-			break;
+			case GENERATING_PROFILE: {
+				helper.generateVisionTrackingProfile();
+				helper.pushPoints(currentProfile);
+				mpState = MotionProfileState.FILLING_BUFFER;
+				break;
+			}
+			case FILLING_BUFFER: {
+				helper.processBufferPeriodic();
+				if (info.bufferFilled()) {
+					mpState = MotionProfileState.RUNNING_PROFILE;
+				}
+				break;
+			}
+			case RUNNING_PROFILE: {
+				helper.processBufferPeriodic();
+				helper.processProfilePeriodic();
+				if (info.bufferEmpty()) {
+					mpState = MotionProfileState.PROFILE_COMPLETE;
+				}
+				break;
+			}
+			case PROFILE_COMPLETE: {
+				stopMotionProfileMode();
+				mpState = MotionProfileState.INACTIVE;
+				break;
+			}
+			default: {
+				break;
+			}
 		}
 	}
 	
@@ -183,24 +171,26 @@ public class TurretSubsystem extends Subsystem {
 
 	public void stopMotionProfileMode() {
 		mpState = MotionProfileState.PROFILE_STOPPED;
-		ctList.forEach(talon -> talon.changeControlMode(TalonControlMode.PercentVbus));
-		ctList.forEach(talon -> talon.set(CANTalon.SetValueMotionProfile.Disable.value));
-		ctList.forEach(talon -> talon.clearMotionProfileTrajectories());
+		ctList.forEach(talon -> {
+			talon.changeControlMode(TalonControlMode.PercentVbus);
+			talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+			talon.clearMotionProfileTrajectories();
+		});
 	}
 
 	// Informational methods (these return the mpState of this subsystem)
 	// ====================================================================================================
 	
 	public boolean targetOffScreen() {
-		return !cam.lastCameraMessage().isTracking();
+		return !CameraMessageReceiver.getLastMessage().isTracking();
 	}
 	
 	public boolean targetLocked() {
-		if(targetOffScreen())
+		if (targetOffScreen())
 			return false;
 		
-		boolean locked = Math.abs(cam.lastCameraMessage().getAngleToTarget()) < lockZone;
-		if(locked)
+		boolean locked = Math.abs(CameraMessageReceiver.getLastMessage().getAngleToTarget()) < lockZone;
+		if (locked)
 			System.out.println("Target locked!");
 		return locked;
 	}
@@ -209,8 +199,6 @@ public class TurretSubsystem extends Subsystem {
 //		talon.setPosition(0);
 //		talon.setEncPosition(0);
 //	}
-	
-	
 
 //	private void printTalonInfo() {
 //		System.out.println("Pos: " + talon.getPosition() + "topBuffer: " + talonStatus.topBufferCnt);
@@ -236,7 +224,6 @@ public class TurretSubsystem extends Subsystem {
 //		return cam.lastCameraMessage().getAngleToTarget();
 //	}
 
-
 	private class Info {
 
 		/**
@@ -245,12 +232,8 @@ public class TurretSubsystem extends Subsystem {
 		 * threshold.
 		 */
 		public boolean bufferFilled() {
-			if(talonStatus.btmBufferCnt > Defaults.MIN_BUFFER_THRESHOLD)
-				return true;
-			if(talonStatus.btmBufferCnt == currentProfile.size())
-				return true;
-			
-			return false;
+			int buffer = talonStatus.btmBufferCnt;
+			return buffer > Defaults.MIN_BUFFER_THRESHOLD || buffer == currentProfile.size();
 		}
 		
 		public boolean bufferEmpty() {
@@ -261,7 +244,7 @@ public class TurretSubsystem extends Subsystem {
 		// a profile. In the future we need to use this to create real profiles.
 		private double profileDistanceToTarget() {
 			double dist = 0;
-			double camDist = Math.abs(cam.lastCameraMessage().getAngleToTarget()/360);
+			double camDist = Math.abs(CameraMessageReceiver.getLastMessage().getAngleToTarget()/360);
 			camDist *= gearRatio;
 			camDist = Math.max(camDist, Defaults.PROFILE_DISTANCE);
 //			dist *= GEAR_RATIO;
@@ -271,7 +254,7 @@ public class TurretSubsystem extends Subsystem {
 	}
 	
 	private class Helper {
-		
+
 		private void initTalons() {
 			for (CANTalon tal : ctList) {
 				tal.setF(fGain);
@@ -290,9 +273,8 @@ public class TurretSubsystem extends Subsystem {
 			conf1.setInterval(Defaults.INTERVAL);
 			conf1.setEndDistance(Defaults.PROFILE_DISTANCE);
 			conf1.setMaxAcc(Defaults.MAX_ACCELERATION);
-//			currentProfile = mpgSvc.generatePoints(conf1);
+//			currentProfile = MotionProfileGenerator.generatePoints(conf1);
 //			System.out.println("generated");
-			
 		}
 
 		private void generateVisionTrackingProfile() {
@@ -306,7 +288,7 @@ public class TurretSubsystem extends Subsystem {
 			// Method 2: Get distance from camera
 //			conf1.setEndDistance(profileDistanceToTarget());
 			
-			currentProfile = mpgSvc.generatePoints(conf1);
+			currentProfile = MotionProfileGenerator.generatePoints(conf1);
 		}
 
 		private void pushPoints(List<TrajectoryPoint> tpList) {
@@ -356,13 +338,12 @@ public class TurretSubsystem extends Subsystem {
 			SmartDashboard.putNumber(DashboardKeys.F_GAIN, 				fGain);
 			SmartDashboard.putNumber(DashboardKeys.GEAR_RATIO,			gearRatio);
 			
-			CameraMessage cm = cam.lastCameraMessage();
-			SmartDashboard.putNumber(DashboardKeys.PROFILE_DISTANCE, cm.getDistanceToTarget());
-			SmartDashboard.putNumber(DashboardKeys.CAMERA_ANGLE, cm.getAngleToTarget());
-			SmartDashboard.putNumber(DashboardKeys.CAMERA_TIME, cm.getTimeOfImage());
-//			SmartDashboard.putBoolean("CamTracking", cm.isTracking());
+			CameraMessage cameraMessage = CameraMessageReceiver.getLastMessage();
+			SmartDashboard.putNumber(DashboardKeys.PROFILE_DISTANCE, cameraMessage.getDistanceToTarget());
+			SmartDashboard.putNumber(DashboardKeys.CAMERA_ANGLE, cameraMessage.getAngleToTarget());
+			SmartDashboard.putNumber(DashboardKeys.CAMERA_TIME, cameraMessage.getTimeOfImage());
+//			SmartDashboard.putBoolean("CamTracking", cameraMessage.isTracking());
 		}
-		
 	}
 }
 
