@@ -82,6 +82,11 @@ public class FollowTurretTargetCommand extends Command {
 		turret.stopMotionProfileMode();
 		state = CommandState.OFF;
 	}
+
+    @Override
+    protected void interrupted() {
+    	end();
+    }
 	
 	private void processPeriodic() {
 		// TODO: Print to smartdashboard
