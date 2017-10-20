@@ -9,8 +9,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
-		OI.init();
 		RobotMap.init();
+		OI.init();
 	}
 
 	@Override
