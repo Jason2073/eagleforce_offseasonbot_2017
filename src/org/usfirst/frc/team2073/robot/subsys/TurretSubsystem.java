@@ -58,6 +58,13 @@ public class TurretSubsystem extends Subsystem {
 		PROFILE_STOPPED
 	}
 	
+	public enum DirectionToTarget {
+		LEFT,
+		CENTER,
+		RIGHT,
+		UNKNOWN
+	}
+	
 	// Internal helper classes
 	private final Helper helper = new Helper();
 	private final Info info = new Info();
@@ -193,6 +200,38 @@ public class TurretSubsystem extends Subsystem {
 		if (locked)
 			System.out.println("Target locked!");
 		return locked;
+	}
+	
+	public DirectionToTarget directionToTarget() {
+		CameraMessage camMsg = CameraMessageReceiver.getLastMessage();
+		
+		if(targetOffScreen())
+			return DirectionToTarget.UNKNOWN;
+		
+		if(targetLocked())
+			return DirectionToTarget.CENTER;
+		
+		if(camMsg.getAngleToTarget() > 0)
+			return DirectionToTarget.RIGHT;
+		else
+			return DirectionToTarget.LEFT;
+	}
+
+	public void rotate(double d) {
+		ctList.forEach(talon -> {
+			talon.changeControlMode(TalonControlMode.PercentVbus);
+			talon.set(d);
+		});
+	}
+	
+	public void stopMoving() {
+		ctList.forEach(talon -> talon.set(0));
+		
+	}
+	
+	public void periodic() {
+		helper.refreshData();
+		helper.updateDashboard();
 	}
 
 //	private void resetEnc() {
