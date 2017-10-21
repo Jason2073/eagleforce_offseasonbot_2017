@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Queue;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
@@ -23,8 +24,14 @@ public class MotionProfileService {
 		public void motionProfileInit() {
 			talon.setF(SmartDashboard.getNumber("Fgain", .7871));
 			talon.changeControlMode(TalonControlMode.MotionProfile);
+			talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 			talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 			talon.clearMotionProfileTrajectories();	
+		}
+		public void motionProfileReset(){
+			talon.changeControlMode(TalonControlMode.MotionProfile);
+			talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+			talon.clearMotionProfileTrajectories();
 		}
 		
 		public void pushPoints(List<TrajectoryPoint> tpList) {
@@ -54,8 +61,8 @@ public class MotionProfileService {
 			talon.reverseOutput(forwards);
 		}
 		
-		public void generalRun(boolean button, ArrayList<TrajectoryPoint> tpList, boolean isForwards){
-			motionProfileInit();
+		public void generalRun(List<TrajectoryPoint> tpList, boolean isForwards){
+			motionProfileReset();
 			pushPoints(tpList);
 			checkDirection(isForwards);
 			Notifier notifer = new Notifier(new MotionProfileBufferProcesser(talon));
@@ -63,7 +70,7 @@ public class MotionProfileService {
 			for (TrajectoryPoint tPoint : tpList) {
 				if (tPoint.isLastPoint)
 					System.out.println("DONE Running Profile");
-				talon.set(1);
+				talon.set(CANTalon.SetValueMotionProfile.Enable.value);
 			}
 			notifer.stop();
 			stopMotionProfile();

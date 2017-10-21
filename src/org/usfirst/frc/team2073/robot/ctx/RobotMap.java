@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.ctx;
 
 import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 import org.usfirst.frc.team2073.robot.svc.CameraService;
 
@@ -9,6 +10,7 @@ import com.ctre.CANTalon;
 public class RobotMap {
 	private DriveTrain driveTrain;
 	private TurretSubsystem turret;
+	private GearIntakeSubsystem gearIntake;
 	
 	// TODO: Extract talons, etc. here as PRIVATE variables and then
 	// pass them into any classes that need them.
@@ -34,8 +36,13 @@ public class RobotMap {
 //    	System.out.println("<- RobotMap getDriveTrain()");
 		return driveTrain;
 	}
+	
 
 	public TurretSubsystem getTurret() {
 		return turret;
+	}
+
+	public GearIntakeSubsystem getGearIntake() {
+		return gearIntake;
 	}
 }
