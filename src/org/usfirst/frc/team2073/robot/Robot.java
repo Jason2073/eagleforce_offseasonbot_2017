@@ -3,7 +3,7 @@ package org.usfirst.frc.team2073.robot;
 import org.usfirst.frc.team2073.robot.ctx.AppContext;
 import org.usfirst.frc.team2073.robot.ctx.OI;
 import org.usfirst.frc.team2073.robot.ctx.RobotMap;
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.Drivetrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -12,7 +12,7 @@ public class Robot extends IterativeRobot {
 	private static AppContext ctx;
 	private OI oi;
 	private RobotMap rm;
-	private DriveTrain dt;
+	private Drivetrain dt;
 
 	@Override
 	public void robotInit() {
@@ -28,7 +28,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
-		dt.periodic();
+		dt.move(oi.joystick.getY(), oi.wheel.getX());
+		
 	}
 	
 	public static AppContext getCtx() {

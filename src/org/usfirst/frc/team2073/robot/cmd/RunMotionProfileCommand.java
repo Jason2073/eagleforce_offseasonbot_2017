@@ -2,7 +2,7 @@ package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.Robot;
 import org.usfirst.frc.team2073.robot.ctx.RobotMap;
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrainOLD;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunMotionProfileCommand extends Command {
 
-	private DriveTrain dt = Robot.getCtx().getRobotMap().getDriveTrain();
+	private DriveTrainOLD dt = Robot.getCtx().getRobotMap().getDriveTrain();
 
     public RunMotionProfileCommand() {
         // Use requires() here to declare subsystem dependencies

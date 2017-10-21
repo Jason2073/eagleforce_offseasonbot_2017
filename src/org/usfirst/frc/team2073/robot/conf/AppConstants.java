@@ -4,9 +4,17 @@ public abstract class AppConstants {
 	public abstract class Controllers {
 		public abstract class PowerStick{
 			public static final int PORT = 1;
+			public abstract class ButtonPorts {
+				public static final int CENTER = 4;
+				
+			}	
 		}
 		public abstract class DriveWheel{
 			public static final int PORT = 2;
+			public abstract class ButtonPorts {
+				public static final int LPADDLE = 1;
+				
+			}	
 		}
 		
 		public abstract class Xbox {

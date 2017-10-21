@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.Robot;
+import org.usfirst.frc.team2073.robot.ctx.OI;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,7 +27,7 @@ public class GearIntakeToPlace extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearIntake.toPlace(0);
+    	gearIntake.toPlace(OI.controller.getPOV());
     }
 
     // Make this return true when this Command no longer needs to run execute()

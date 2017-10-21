@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.Robot;
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrainOLD;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GenerateMotionProfileCommand extends Command {
 
-	private DriveTrain dt = Robot.getCtx().getRobotMap().getDriveTrain();
+	private DriveTrainOLD dt = Robot.getCtx().getRobotMap().getDriveTrain();
 	boolean finished = false;
 	
     public GenerateMotionProfileCommand() {

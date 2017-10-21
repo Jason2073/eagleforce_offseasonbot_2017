@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrainOLD extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -69,7 +69,7 @@ public class DriveTrain extends Subsystem {
 
 	boolean printed = false;
 	
-	public DriveTrain() {
+	public DriveTrainOLD() {
 //		System.out.println("-> DriveTrain constructor");
 //		System.out.println("<- DriveTrain constructor");
 	}

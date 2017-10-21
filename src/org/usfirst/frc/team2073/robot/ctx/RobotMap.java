@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.ctx;
 
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrainOLD;
+import org.usfirst.frc.team2073.robot.subsys.Drivetrain;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 import org.usfirst.frc.team2073.robot.svc.CameraService;
@@ -8,7 +9,7 @@ import org.usfirst.frc.team2073.robot.svc.CameraService;
 import com.ctre.CANTalon;
 
 public class RobotMap {
-	private DriveTrain driveTrain;
+	private Drivetrain driveTrain;
 	private TurretSubsystem turret;
 	private GearIntakeSubsystem gearIntake;
 	
@@ -24,14 +25,13 @@ public class RobotMap {
 	
 	protected void init(CameraService camSvc) {
 //    	System.out.println("-> RobotMap init()");
-		driveTrain = new DriveTrain();
+		driveTrain = new Drivetrain();
 		turret = new TurretSubsystem();
-		driveTrain.init(talon);
 		turret.init(camSvc);
 //    	System.out.println("<- RobotMap init()");
 	}
 	
-	public DriveTrain getDriveTrain() {
+	public Drivetrain getDriveTrain() {
 //    	System.out.println("-> RobotMap getDriveTrain()");
 //    	System.out.println("<- RobotMap getDriveTrain()");
 		return driveTrain;

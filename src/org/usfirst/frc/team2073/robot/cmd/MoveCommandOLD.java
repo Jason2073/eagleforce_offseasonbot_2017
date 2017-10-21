@@ -2,18 +2,19 @@ package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.Robot;
 import org.usfirst.frc.team2073.robot.ctx.RobotMap;
-import org.usfirst.frc.team2073.robot.subsys.DriveTrain;
+import org.usfirst.frc.team2073.robot.subsys.DriveTrainOLD;
+import org.usfirst.frc.team2073.robot.subsys.Drivetrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class MoveCommand extends Command {
+public class MoveCommandOLD extends Command {
 
-	private DriveTrain dt;
+	private Drivetrain dt;
 	
-    public MoveCommand() {
+    public MoveCommandOLD() {
     	System.out.println("-> MoveCommand Constructor");
         // Use requires() here to declare subsystem dependencies
     	dt = Robot.getCtx().getRobotMap().getDriveTrain();
@@ -30,7 +31,7 @@ public class MoveCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	dt.move();
+//    	dt.move();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,14 +43,14 @@ public class MoveCommand extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
-    	dt.stop();
+//    	dt.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
 	protected void interrupted() {
-    	dt.stop();
+//    	dt.stop();
     }
     
     
