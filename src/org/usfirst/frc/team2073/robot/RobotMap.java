@@ -5,6 +5,7 @@ import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 
 import com.ctre.CANTalon;
@@ -30,6 +31,8 @@ public class RobotMap {
 	private static Victor ballIntakeMotor1 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_1);
 	private static Victor ballIntakeMotor2 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_2);
 	private static Victor climberMotor = new Victor(RobotPorts.CLIMBER_MOTOR);
+	private static Victor bellyRoller = new Victor(RobotPorts.BELLY_ROLLERS);
+	private static Victor intermediateBelts = new Victor(RobotPorts.INTERMEDIATE);
 	
 	private static DigitalInput lightSensor = new DigitalInput(RobotPorts.LIGHT_SENSOR);
 	private static DigitalInput magnetZeroer = new DigitalInput(RobotPorts.MAGNET_ZEROER);
@@ -39,6 +42,7 @@ public class RobotMap {
 	private static GearIntakeSubsystem gearIntake;
 	private static BallIntakeSubsystem ballIntake;
 	private static ClimberSubsystem climber;
+	private static IntermediateSubsystem intermediate;
 
 	static void init() {
 		drivetrain = new DrivetrainSubsystem();
@@ -130,5 +134,17 @@ public class RobotMap {
 
 	public static ClimberSubsystem getClimber() {
 		return climber;
+	}
+
+	public static Victor getBellyRoller() {
+		return bellyRoller;
+	}
+
+	public static IntermediateSubsystem getIntermediate() {
+		return intermediate;
+	}
+
+	public static Victor getIntermediateBelts() {
+		return intermediateBelts;
 	}
 }

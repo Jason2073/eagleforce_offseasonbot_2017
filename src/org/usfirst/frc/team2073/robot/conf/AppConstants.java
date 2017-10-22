@@ -37,7 +37,9 @@ public abstract class AppConstants {
 		public static final int DRIVE_SOLENOID_2 = 1;		
 		public static final int BALL_INTAKE_SOLENOID_1 = 2;
 		public static final int BALL_INTAKE_SOLENOID_2 = 3;
-		public static final int CLIMBER_MOTOR = 5;
+		public static final int CLIMBER_MOTOR = 6;
+		public static final int BELLY_ROLLERS = 1;
+		public static final int INTERMEDIATE = 2;
 		
 		
 		public static final int GEAR_INTAKE_MOTOR = 9;
