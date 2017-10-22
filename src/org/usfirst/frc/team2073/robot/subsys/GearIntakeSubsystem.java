@@ -2,8 +2,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
-import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
-import org.usfirst.frc.team2073.robot.ctx.RobotMap;
+import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;

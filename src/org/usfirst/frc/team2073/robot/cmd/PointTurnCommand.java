@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
-import org.usfirst.frc.team2073.robot.ctx.OI;
-import org.usfirst.frc.team2073.robot.ctx.RobotMap;
+import org.usfirst.frc.team2073.robot.OI;
+import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
