@@ -10,6 +10,7 @@ import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
@@ -32,6 +33,10 @@ public class RobotMap {
 		drivetrain = new DrivetrainSubsystem();
 		turret = new TurretSubsystem();
 		gearIntake = new GearIntakeSubsystem();
+
+		SmartDashboard.putData("Drivetrain", drivetrain);
+		SmartDashboard.putData("Turret", turret);
+		SmartDashboard.putData("Gear Intake", gearIntake);
 	}
 
 	public static CANTalon getLeftMotor() {
