@@ -15,6 +15,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurretSubsystem extends Subsystem {
@@ -104,8 +105,14 @@ public class TurretSubsystem extends Subsystem {
 	 * CanTalons can be changed at runtime without changing code at all.
 	 */
 	private void initTalonList() {
-		ctList.add(new CANTalon(4));
+		initTalon("Talon 1", 4);
 		// Add other talons here
+	}
+	
+	private void initTalon(String name, int deviceNumber) {
+		CANTalon talon = new CANTalon(deviceNumber);
+		ctList.add(talon);
+		LiveWindow.addActuator("Turret", name, talon);
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainSubsystem extends Subsystem {
@@ -38,6 +39,13 @@ public class DrivetrainSubsystem extends Subsystem {
 		setSlaves();
 		shiftLowGear();
 		generatePoints();
+		
+		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
+		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
+		LiveWindow.addActuator("Drivetrain", "Left Motor", rightMotor);
+		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", rightMotorSlave);
+		LiveWindow.addActuator("Drivetrain", "Solenoid 1", solenoid1);
+		LiveWindow.addActuator("Drivetrain", "Solenoid 2", solenoid2);
 	}
 
 	@Override
