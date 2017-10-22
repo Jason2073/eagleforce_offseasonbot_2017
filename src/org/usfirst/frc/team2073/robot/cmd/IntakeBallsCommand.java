@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DeployBallIntake extends Command {
+public class IntakeBallsCommand extends Command {
 	private BallIntakeSubsystem ballIntake;
 		
-    public DeployBallIntake() {
+    public IntakeBallsCommand() {
     	ballIntake = RobotMap.getBallIntake();
 		requires(ballIntake);
     }
@@ -20,7 +20,7 @@ public class DeployBallIntake extends Command {
     }
 
     protected void execute() {
-    	ballIntake.deployIntake();
+    	ballIntake.intakeBalls();
     }
 
     protected boolean isFinished() {
@@ -28,6 +28,7 @@ public class DeployBallIntake extends Command {
     }
 
     protected void end() {
+    	ballIntake.stopIntake();
     }
 
     protected void interrupted() {

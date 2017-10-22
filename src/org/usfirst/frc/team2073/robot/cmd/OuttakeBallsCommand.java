@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class OuttakeBalls extends Command {
+public class OuttakeBallsCommand extends Command {
 	private BallIntakeSubsystem ballIntake;
 		
-    public OuttakeBalls() {
+    public OuttakeBallsCommand() {
     	ballIntake = RobotMap.getBallIntake();
 		requires(ballIntake);
     }

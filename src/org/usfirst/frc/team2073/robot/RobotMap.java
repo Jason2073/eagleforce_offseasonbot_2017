@@ -2,6 +2,7 @@ package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.conf.AppConstants.RobotPorts;
 import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
@@ -18,16 +19,18 @@ public class RobotMap {
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
 	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
+	private static CANTalon gearIntakeTalon = new CANTalon(RobotPorts.GEAR_INTAKE_TALON);
+	
 	private static Solenoid solenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
 	private static Solenoid solenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
 	private static Solenoid solenoid3 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_1);
 	private static Solenoid solenoid4 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_2);
 	
-	
 	private static Victor gearIntakeMotor = new Victor(RobotPorts.GEAR_INTAKE_MOTOR);
 	private static Victor ballIntakeMotor1 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_1);
 	private static Victor ballIntakeMotor2 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_2);
-	private static CANTalon gearIntakeTalon = new CANTalon(RobotPorts.GEAR_INTAKE_TALON);
+	private static Victor climberMotor = new Victor(RobotPorts.CLIMBER_MOTOR);
+	
 	private static DigitalInput lightSensor = new DigitalInput(RobotPorts.LIGHT_SENSOR);
 	private static DigitalInput magnetZeroer = new DigitalInput(RobotPorts.MAGNET_ZEROER);
 
@@ -35,6 +38,7 @@ public class RobotMap {
 	private static TurretSubsystem turret;
 	private static GearIntakeSubsystem gearIntake;
 	private static BallIntakeSubsystem ballIntake;
+	private static ClimberSubsystem climber;
 
 	static void init() {
 		drivetrain = new DrivetrainSubsystem();
@@ -118,5 +122,13 @@ public class RobotMap {
 
 	public static BallIntakeSubsystem getBallIntake() {
 		return ballIntake;
+	}
+
+	public static Victor getClimberMotor() {
+		return climberMotor;
+	}
+
+	public static ClimberSubsystem getClimber() {
+		return climber;
 	}
 }

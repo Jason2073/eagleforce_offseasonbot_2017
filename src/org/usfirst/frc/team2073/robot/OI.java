@@ -1,11 +1,12 @@
 package org.usfirst.frc.team2073.robot;
 
+import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
-import org.usfirst.frc.team2073.robot.cmd.IntakeBalls;
+import org.usfirst.frc.team2073.robot.cmd.IntakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.MotionProfileDriveCommand;
-import org.usfirst.frc.team2073.robot.cmd.OuttakeBalls;
+import org.usfirst.frc.team2073.robot.cmd.OuttakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.PointTurnCommand;
 import org.usfirst.frc.team2073.robot.cmd.ShiftCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.DriveWheel;
@@ -32,8 +33,9 @@ public class OI {
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
 		Command mpDrive = new MotionProfileDriveCommand();
-		Command intakeBalls = new IntakeBalls();
-		Command outtakeBalls = new OuttakeBalls();
+		Command intakeBalls = new IntakeBallsCommand();
+		Command outtakeBalls = new OuttakeBallsCommand();
+		Command climb = new ClimbCommand();
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
@@ -47,6 +49,7 @@ public class OI {
 		a.whileHeld(gearDown);
 		b.whileHeld(gearPlace);
 		x.whileHeld(intakeBalls);
+		y.whileHeld(climb);
 		leftBumper.whileHeld(outtakeBalls);
 		leftJoy.toggleWhenPressed(shift);
 		lPaddle.whileHeld(pointTurn);
