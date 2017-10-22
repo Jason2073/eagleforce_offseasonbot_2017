@@ -3,7 +3,9 @@ package org.usfirst.frc.team2073.robot;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
+import org.usfirst.frc.team2073.robot.cmd.IntakeBalls;
 import org.usfirst.frc.team2073.robot.cmd.MotionProfileDriveCommand;
+import org.usfirst.frc.team2073.robot.cmd.OuttakeBalls;
 import org.usfirst.frc.team2073.robot.cmd.PointTurnCommand;
 import org.usfirst.frc.team2073.robot.cmd.ShiftCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.DriveWheel;
@@ -26,25 +28,30 @@ public class OI {
 		
 		Command gearDown = new GearIntakeToDownCommand();
 		Command gearPlace = new GearIntakeToPlaceCommand();
-		Command gearReset = new GearIntakeResetCommand();
+//		Command gearReset = new GearIntakeResetCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
 		Command mpDrive = new MotionProfileDriveCommand();
+		Command intakeBalls = new IntakeBalls();
+		Command outtakeBalls = new OuttakeBalls();
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
 		JoystickButton b = new JoystickButton(controller, Xbox.ButtonPorts.B);
 		JoystickButton y = new JoystickButton(controller, Xbox.ButtonPorts.Y);
+		JoystickButton leftBumper = new JoystickButton(controller, Xbox.ButtonPorts.L1);
 		JoystickButton leftJoy = new JoystickButton(joystick, PowerStick.ButtonPorts.LEFT);
 		JoystickButton lPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LPADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
 		
 		a.whileHeld(gearDown);
 		b.whileHeld(gearPlace);
-		x.whileHeld(gearReset);
+		x.whileHeld(intakeBalls);
+		leftBumper.whileHeld(outtakeBalls);
 		leftJoy.toggleWhenPressed(shift);
 		lPaddle.whileHeld(pointTurn);
 		rightBumper.whileHeld(mpDrive);
+		
 	}
 
 	public static Joystick getController() {

@@ -33,10 +33,15 @@ public abstract class AppConstants {
 		public static final int LEFT_MOTOR_SLAVE = 8;
 		public static final int RIGHT_MOTOR = 3;
 		public static final int RIGHT_MOTOR_SLAVE = 1;
-		public static final int SOLENOID_1 = 0;
-		public static final int SOLENOID_2 = 1;
+		public static final int DRIVE_SOLENOID_1 = 0;
+		public static final int DRIVE_SOLENOID_2 = 1;		
+		public static final int BALL_INTAKE_SOLENOID_1 = 2;
+		public static final int BALL_INTAKE_SOLENOID_2 = 3;
+		
 		
 		public static final int GEAR_INTAKE_MOTOR = 9;
+		public static final int BALL_INTAKE_MOTOR_1 = 4;		
+		public static final int BALL_INTAKE_MOTOR_2 = 5;		
 		public static final int GEAR_INTAKE_TALON = 0;
 		public static final int LIGHT_SENSOR = 2;
 		public static final int MAGNET_ZEROER = 0;
