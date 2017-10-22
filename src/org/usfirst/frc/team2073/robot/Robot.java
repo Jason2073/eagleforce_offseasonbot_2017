@@ -16,6 +16,5 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotPeriodic() {
 		Scheduler.getInstance().run();
-		RobotMap.getDriveTrain().periodic();
 	}
 }

@@ -1,8 +1,10 @@
-package org.usfirst.frc.team2073.robot.domain;
+package org.usfirst.frc.team2073.robot.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
@@ -121,6 +123,4 @@ public class MotionProfileGenerator {
 		final double avgVel = (currTp.velocity + prevTp.velocity) / 2;
 		return ((avgVel * interval) / 1000);
 	}
-
-
 }
