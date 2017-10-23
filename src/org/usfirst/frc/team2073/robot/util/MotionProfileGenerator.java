@@ -20,6 +20,7 @@ public class MotionProfileGenerator {
 		final double endDistance = mpc.getEndDistance();
 		final int interval = mpc.getInterval();
 		final double maxAcc = mpc.getMaxAcc();
+		final boolean isVelocityOnly = mpc.isVelocityOnly();
 
 		// Resolve non-config, static variables
 		// final double t1 = (1. / (maxAcc / RENAME_THIS));
@@ -49,7 +50,7 @@ public class MotionProfileGenerator {
 			f1List.add(sumF1Count);
 			f2 = calculateF2(t2, i, interval, f1List, f2);
 
-			tPoint.velocityOnly = mpc.isVelocityOnly();
+			tPoint.velocityOnly = isVelocityOnly;
 			tPoint.profileSlotSelect = 0;
 			tPoint.timeDurMs = interval;
 			tPoint.velocity = calculateVelocity(maxVel, f1List, f2, i, t2, interval);
@@ -60,10 +61,7 @@ public class MotionProfileGenerator {
 			 System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position +"\t" + tPoint.timeDurMs);
 //			 + "\t" + mpp.getAcc() + "\t" + mpp.getInterval() + "\t" +
 //			 posOrNeg + "\t" +f1List.get(i) + "\t" +f2);
-			if (tPoint.velocity == 0 /*
-										 * endDistanceReached(mpp.getPos(),
-										 * endDistance)
-										 */) {
+			if (tPoint.velocity == 0 || (isVelocityOnly && tPoint.velocity == maxVel)) {
 				tPoint.isLastPoint = true;
 				break;
 			}

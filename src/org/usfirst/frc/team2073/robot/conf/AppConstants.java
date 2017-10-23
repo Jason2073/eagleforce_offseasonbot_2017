@@ -40,6 +40,10 @@ public abstract class AppConstants {
 		public static final int CLIMBER_MOTOR = 6;
 		public static final int BELLY_ROLLERS = 1;
 		public static final int INTERMEDIATE = 2;
+		public static final int TURRET_POSITION = 3;
+		public static final int TURRET_SHOOTER_1 = 4;
+		public static final int TURRET_SHOOTER_2 = 5;
+		
 		
 		
 		public static final int GEAR_INTAKE_MOTOR = 9;

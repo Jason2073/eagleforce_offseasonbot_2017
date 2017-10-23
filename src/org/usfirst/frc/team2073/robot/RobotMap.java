@@ -6,6 +6,7 @@ import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.MPTurretSubsystemOLD;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 
 import com.ctre.CANTalon;
@@ -18,9 +19,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotMap {
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
+	public static TurretSubsystem getTurret() {
+		return turret;
+	}
+
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
 	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
 	private static CANTalon gearIntakeTalon = new CANTalon(RobotPorts.GEAR_INTAKE_TALON);
+	private static CANTalon turretPosition = new CANTalon(RobotPorts.TURRET_POSITION);	
+	private static CANTalon shooter1 = new CANTalon(RobotPorts.TURRET_SHOOTER_1);
+	private static CANTalon shooter2 = new CANTalon(RobotPorts.TURRET_SHOOTER_2);
 	
 	private static Solenoid solenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
 	private static Solenoid solenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
@@ -38,19 +46,22 @@ public class RobotMap {
 	private static DigitalInput magnetZeroer = new DigitalInput(RobotPorts.MAGNET_ZEROER);
 
 	private static DrivetrainSubsystem drivetrain;
-	private static TurretSubsystem turret;
+	private static MPTurretSubsystemOLD turretOLD;
 	private static GearIntakeSubsystem gearIntake;
 	private static BallIntakeSubsystem ballIntake;
 	private static ClimberSubsystem climber;
 	private static IntermediateSubsystem intermediate;
+	private static TurretSubsystem turret;
+	
+	private static int turretPositionCodesPerRev = 10;
 
 	static void init() {
 		drivetrain = new DrivetrainSubsystem();
-		turret = new TurretSubsystem();
+		turretOLD = new MPTurretSubsystemOLD();
 		gearIntake = new GearIntakeSubsystem();
 		ballIntake = new BallIntakeSubsystem();
 		SmartDashboard.putData("Drivetrain", drivetrain);
-		SmartDashboard.putData("Turret", turret);
+		SmartDashboard.putData("Turret", turretOLD);
 		SmartDashboard.putData("Gear Intake", gearIntake);
 		SmartDashboard.putData("Ball Intake", ballIntake);
 		
@@ -84,8 +95,8 @@ public class RobotMap {
 		return drivetrain;
 	}
 
-	public static TurretSubsystem getTurret() {
-		return turret;
+	public static MPTurretSubsystemOLD getTurretOLD() {
+		return turretOLD;
 	}
 
 	public static GearIntakeSubsystem getGearIntake() {
@@ -146,5 +157,21 @@ public class RobotMap {
 
 	public static Victor getIntermediateBelts() {
 		return intermediateBelts;
+	}
+
+	public static CANTalon getTurretPosition() {
+		return turretPosition;
+	}
+
+	public static CANTalon getShooter1() {
+		return shooter1;
+	}
+
+	public static CANTalon getShooter2() {
+		return shooter2;
+	}
+
+	public static int getTurretPositionCodesPerRev() {
+		return turretPositionCodesPerRev;
 	}
 }

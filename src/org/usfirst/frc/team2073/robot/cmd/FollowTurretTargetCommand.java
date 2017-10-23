@@ -1,12 +1,12 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
-import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.MPTurretSubsystemOLD;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FollowTurretTargetCommand extends Command {
-	private final TurretSubsystem turret;
+	private final MPTurretSubsystemOLD turret;
 	private CommandState state = CommandState.OFF;
 	
 	private enum CommandState {
@@ -19,7 +19,7 @@ public class FollowTurretTargetCommand extends Command {
 	}
 	
 	public FollowTurretTargetCommand() {
-		turret = RobotMap.getTurret();
+		turret = RobotMap.getTurretOLD();
 		requires(turret);
 	}
 
