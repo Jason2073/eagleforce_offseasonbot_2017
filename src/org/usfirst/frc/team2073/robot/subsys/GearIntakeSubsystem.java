@@ -2,8 +2,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
-import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
-import org.usfirst.frc.team2073.robot.ctx.RobotMap;
+import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -15,6 +14,7 @@ import com.ctre.CANTalon.TrajectoryPoint;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearIntakeSubsystem extends Subsystem {
@@ -51,6 +51,12 @@ public class GearIntakeSubsystem extends Subsystem {
 //		talon.changeMotionControlFramePeriod(5);
 
 		MotionProfileHelper.init(talon);
+
+		// TODO: Extract to constants
+		LiveWindow.addActuator("Gear Intake", "Intake Motor", intakeMotor);
+		LiveWindow.addActuator("Gear Intake", "Talon", talon);
+		LiveWindow.addSensor("Gear Intake", "Light Sensor", lightSensor);
+		LiveWindow.addSensor("Gear Intake", "Magnet Zeroer", magnetZeroer);
 	}
 
 	@Override

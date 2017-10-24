@@ -3,7 +3,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.usfirst.frc.team2073.robot.ctx.RobotMap;
+import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.domain.CameraMessage;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.CameraMessageReceiver;
@@ -15,6 +15,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurretSubsystem extends Subsystem {
@@ -104,8 +105,16 @@ public class TurretSubsystem extends Subsystem {
 	 * CanTalons can be changed at runtime without changing code at all.
 	 */
 	private void initTalonList() {
-		ctList.add(new CANTalon(4));
+		// TODO: Extract to constants
+		initTalon("Talon 1", 4);
 		// Add other talons here
+	}
+	
+	private void initTalon(String name, int deviceNumber) {
+		CANTalon talon = new CANTalon(deviceNumber);
+		ctList.add(talon);
+		// TODO: Extract to constants
+		LiveWindow.addActuator("Turret", name, talon);
 	}
 	
 	@Override
