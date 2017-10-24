@@ -39,7 +39,8 @@ public class DrivetrainSubsystem extends Subsystem {
 		setSlaves();
 		shiftLowGear();
 		generatePoints();
-		
+
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
 		LiveWindow.addActuator("Drivetrain", "Left Motor", rightMotor);

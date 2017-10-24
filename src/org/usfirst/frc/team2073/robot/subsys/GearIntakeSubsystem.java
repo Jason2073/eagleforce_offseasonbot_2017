@@ -52,6 +52,7 @@ public class GearIntakeSubsystem extends Subsystem {
 
 		MotionProfileHelper.init(talon);
 
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Gear Intake", "Intake Motor", intakeMotor);
 		LiveWindow.addActuator("Gear Intake", "Talon", talon);
 		LiveWindow.addSensor("Gear Intake", "Light Sensor", lightSensor);

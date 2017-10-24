@@ -105,6 +105,7 @@ public class TurretSubsystem extends Subsystem {
 	 * CanTalons can be changed at runtime without changing code at all.
 	 */
 	private void initTalonList() {
+		// TODO: Extract to constants
 		initTalon("Talon 1", 4);
 		// Add other talons here
 	}
@@ -112,6 +113,7 @@ public class TurretSubsystem extends Subsystem {
 	private void initTalon(String name, int deviceNumber) {
 		CANTalon talon = new CANTalon(deviceNumber);
 		ctList.add(talon);
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Turret", name, talon);
 	}
 	
