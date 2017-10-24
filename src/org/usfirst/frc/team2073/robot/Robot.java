@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
 //		gear.readPos();
 //		gear.isZero();
 		Joystick joy = OI.getController();
-		System.out.println(joy.getY());
+//		System.out.println(joy.getY());
 		
 	}
 

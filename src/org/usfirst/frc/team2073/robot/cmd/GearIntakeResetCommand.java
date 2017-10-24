@@ -15,7 +15,6 @@ public class GearIntakeResetCommand extends Command {
 
 	@Override
 	protected void execute() {
-		System.out.println("executing");
 		if (!gearIntake.isZero()) {
 			gearIntake.resetGearIntake();
 		} else {
@@ -31,7 +30,6 @@ public class GearIntakeResetCommand extends Command {
 	
 	@Override
 	protected void end() {
-		System.out.println("ended");
 		gearIntake.zeroIntake();
 	}
 }

@@ -16,7 +16,7 @@ public class GearIntakeToDownCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		gearIntake.toDown(OI.getController().getPOV());
+		gearIntake.upToDown();
 	}
 
 	@Override
@@ -26,11 +26,11 @@ public class GearIntakeToDownCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return gearIntake.isMotionProfilingFinished();
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		gearIntake.stopMotionProfiling();
+//		gearIntake.stopMotionProfiling();
 	}
 }

@@ -16,7 +16,7 @@ public class GearIntakeToPlaceCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		gearIntake.toPlace(OI.getController().getPOV());
+		gearIntake.upToPlace();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class GearIntakeToPlaceCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return gearIntake.isMotionProfilingFinished();
+		return false;
 	}
 
 	@Override

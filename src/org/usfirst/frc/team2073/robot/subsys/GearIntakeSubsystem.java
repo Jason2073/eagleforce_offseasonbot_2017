@@ -44,8 +44,9 @@ public class GearIntakeSubsystem extends Subsystem {
 		SmartDashboard.putNumber("Fgain", .7871);
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
-		upToDownTpList = generatePoints(false, 300, 10, 250, 60);
-		upToPlaceTpList = generatePoints(false, 3, 5, .125, 60);
+		upToDownTpList = generatePoints(false, 300, 10, 25, 60);
+		upToPlaceTpList = generatePoints(false, 300, 10, 25, 60);
+//		shouldnt be called
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
 		downToPlaceTpList = generatePoints(false, 3, 10, .125, 60);
@@ -93,7 +94,6 @@ public class GearIntakeSubsystem extends Subsystem {
 	}
 	
 	public void stop() {
-		System.out.println("stopping");
 		talon.changeControlMode(TalonControlMode.PercentVbus);
 		talon.set(0);
 	}
@@ -122,7 +122,6 @@ public class GearIntakeSubsystem extends Subsystem {
 	public void zeroIntake() {
 		talon.setPosition(0);
 		talon.setEncPosition(0);
-		System.out.println("set to 0");
 	}
 
 	public boolean isZero() {
@@ -151,15 +150,6 @@ public class GearIntakeSubsystem extends Subsystem {
 
 	public void downToPlace() {
 		MotionProfileHelper.resetAndPushPoints(talon, downToPlaceTpList, false);
-	}
-	
-	public void moveGearIntake() {
-		if(controller.getPOV() == 180 && isZero()) {
-			
-    	}else if(controller.getPOV() == 90 && isZero()) {
-    		
-    	}else {
-    	}
 	}
 
 	public void toDown(int input) {
