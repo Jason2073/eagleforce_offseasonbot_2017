@@ -1,8 +1,10 @@
-package org.usfirst.frc.team2073.robot.domain;
+package org.usfirst.frc.team2073.robot.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
@@ -81,13 +83,24 @@ public class MotionProfileGenerator {
 
 		return tp;
 	}
-	
-	public static double round(double d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(d);
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.doubleValue();
-	}
 
+	// TODO: Remove?
+//	private static double round(double d, int decimalPlace) {
+//		BigDecimal bd = new BigDecimal(d);
+//		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+//		return bd.doubleValue();
+//	}
+
+	/**
+	 * TODO: Jason, add JavaDocs about what this is doing mathematically.
+	 * 
+	 * @param i
+	 * @param endDistance
+	 * @param maxVel
+	 * @param interval
+	 * @param t1
+	 * @return
+	 */
 	// TODO: Break these variables out into a model object to be passed around
 	private static double increasingOrDecreasing(int i, double endDistance, double maxVel, int interval, double t1) {
 		if (i - 1 < (((endDistance / maxVel) * 1000) / interval)) {
@@ -121,6 +134,4 @@ public class MotionProfileGenerator {
 		final double avgVel = (currTp.velocity + prevTp.velocity) / 2;
 		return ((avgVel * interval) / 1000);
 	}
-
-
 }

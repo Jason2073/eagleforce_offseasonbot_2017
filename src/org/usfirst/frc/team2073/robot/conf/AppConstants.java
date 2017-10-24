@@ -2,6 +2,18 @@ package org.usfirst.frc.team2073.robot.conf;
 
 public abstract class AppConstants {
 	public abstract class Controllers {
+		public abstract class PowerStick {
+			public static final int PORT = 1;
+			public abstract class ButtonPorts {
+				public static final int LEFT = 4;
+			}	
+		}
+		public abstract class DriveWheel {
+			public static final int PORT = 2;
+			public abstract class ButtonPorts {
+				public static final int LPADDLE = 1;
+			}	
+		}
 		public abstract class Xbox {
 			public static final int PORT = 0;
 			public abstract class ButtonPorts {
@@ -17,6 +29,16 @@ public abstract class AppConstants {
 		}
 	}
 	public abstract class RobotPorts {
-		public static final int DRIVE_TRAIN_TALON = 4;
+		public static final int LEFT_MOTOR = 7;
+		public static final int LEFT_MOTOR_SLAVE = 8;
+		public static final int RIGHT_MOTOR = 3;
+		public static final int RIGHT_MOTOR_SLAVE = 1;
+		public static final int SOLENOID_1 = 0;
+		public static final int SOLENOID_2 = 1;
+		
+		public static final int GEAR_INTAKE_MOTOR = 9;
+		public static final int GEAR_INTAKE_TALON = 0;
+		public static final int LIGHT_SENSOR = 2;
+		public static final int MAGNET_ZEROER = 0;
 	}
 }
