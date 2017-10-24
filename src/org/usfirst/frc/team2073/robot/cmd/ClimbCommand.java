@@ -5,31 +5,26 @@ import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-
 public class ClimbCommand extends Command {
-	private ClimberSubsystem climb;
+	private final ClimberSubsystem climber;
 
 	public ClimbCommand() {
-		climb = RobotMap.getClimber();
-		requires(climb);
+		climber = RobotMap.getClimber();
+		requires(climber);
 	}
 
-	protected void initialize() {
-
-	}
-
+	@Override
 	protected void execute() {
-		climb.startClimb();
+		climber.startClimb();
 	}
 
+	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
+	@Override
 	protected void end() {
-		climb.stopClimb();
-	}
-
-	protected void interrupted() {
+		climber.stopClimb();
 	}
 }

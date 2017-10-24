@@ -5,31 +5,21 @@ import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class DeployBallIntakeCommand extends Command {
-	private BallIntakeSubsystem ballIntake;
+	private final BallIntakeSubsystem ballIntake;
 		
-    public DeployBallIntakeCommand() {
-    	ballIntake = RobotMap.getBallIntake();
+	public DeployBallIntakeCommand() {
+		ballIntake = RobotMap.getBallIntake();
 		requires(ballIntake);
-    }
+	}
 
-    protected void initialize() {
-    }
+	@Override
+	protected void execute() {
+		ballIntake.deployIntake();
+	}
 
-    protected void execute() {
-    	ballIntake.deployIntake();
-    }
-
-    protected boolean isFinished() {
-        return false;
-    }
-
-    protected void end() {
-    }
-
-    protected void interrupted() {
-    }
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 }

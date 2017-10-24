@@ -19,15 +19,11 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class OI {
-	private static Joystick controller;
-	private static Joystick wheel;
-	private static Joystick joystick;
+	private static Joystick controller = new Joystick(Xbox.PORT);
+	private static Joystick joystick = new Joystick(PowerStick.PORT);
+	private static Joystick wheel = new Joystick(DriveWheel.PORT);
 
 	static void init() {
-		controller = new Joystick(Xbox.PORT);
-		joystick = new Joystick(PowerStick.PORT);
-		wheel = new Joystick(DriveWheel.PORT);
-		
 		Command gearCommand = new GearIntakeCommandGroup();
 		Command gearPlace = new GearIntakeToPlaceCommand();
 		Command gearReset = new GearIntakeResetCommand();
@@ -54,8 +50,6 @@ public class OI {
 		leftJoy.toggleWhenPressed(shift);
 		lPaddle.whileHeld(pointTurn);
 		rightBumper.whileHeld(mpDrive);
-		
-		
 	}
 
 	public static Joystick getController() {

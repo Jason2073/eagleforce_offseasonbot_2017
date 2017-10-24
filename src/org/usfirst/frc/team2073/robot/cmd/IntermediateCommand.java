@@ -5,32 +5,26 @@ import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
 public class IntermediateCommand extends Command {
-	private IntermediateSubsystem intermediate;
-    public IntermediateCommand() {
-    	intermediate = RobotMap.getIntermediate();
-    	requires(intermediate);
-    }
+	private final IntermediateSubsystem intermediate;
 
-    protected void initialize() {
-    	
-    }
+	public IntermediateCommand() {
+		intermediate = RobotMap.getIntermediate();
+		requires(intermediate);
+	}
 
-    protected void execute() {
-    	intermediate.intermediateOn();
-    }
+	@Override
+	protected void execute() {
+		intermediate.intermediateOn();
+	}
 
-    protected boolean isFinished() {
-        return false;
-    }
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 
-    protected void end() {
-    	intermediate.intermediateOff();
-    }
-
-    protected void interrupted() {
-    }
+	@Override
+	protected void end() {
+		intermediate.intermediateOff();
+	}
 }

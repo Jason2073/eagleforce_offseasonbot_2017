@@ -1,24 +1,26 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
-import org.usfirst.frc.team2073.robot.Robot;
 import org.usfirst.frc.team2073.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-/**
- *
- */
 public class IntermediateSubsystem extends Subsystem {
-	private Victor main = RobotMap.getIntermediateBelts();
-	private Victor bellyRoller = RobotMap.getBellyRoller();
-	
+	private final Victor main;
+	private final Victor bellyRoller;
+
 	public IntermediateSubsystem(){
-		LiveWindow.addActuator("Intermediate", "UpToTurret", main);
-		LiveWindow.addActuator("Intermediate", "BellyRollers ", bellyRoller);
+		main = RobotMap.getIntermediateBelts();
+		bellyRoller = RobotMap.getBellyRoller();
+
+		LiveWindow.addActuator("Intermediate", "Up To Turret", main);
+		LiveWindow.addActuator("Intermediate", "Belly Rollers ", bellyRoller);
 	}
 
+	@Override
+	public void initDefaultCommand() {
+	}
 
 	public void intermediateOn() {
 		main.set(1);
@@ -34,8 +36,5 @@ public class IntermediateSubsystem extends Subsystem {
 
 	public void bellyPanOff() {
 		bellyRoller.set(0);
-	}
-
-	public void initDefaultCommand() {
 	}
 }

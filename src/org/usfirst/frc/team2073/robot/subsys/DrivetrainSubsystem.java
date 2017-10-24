@@ -7,6 +7,7 @@ import org.usfirst.frc.team2073.robot.cmd.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
+import org.usfirst.frc.team2073.robot.util.TalonHelper;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -33,12 +34,12 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftMotorSlave = RobotMap.getLeftMotorSlave();
 		rightMotor = RobotMap.getRightMotor();
 		rightMotorSlave = RobotMap.getRightMotorSlave();
-		solenoid1 = RobotMap.getSolenoid1();
-		solenoid2 = RobotMap.getSolenoid2();
+		solenoid1 = RobotMap.getDriveSolenoid1();
+		solenoid2 = RobotMap.getDriveSolenoid2();
 		
 		setSlaves();
 		shiftLowGear();
-		generatePoints();
+		generateTrajPoints();
 		
 		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
@@ -54,13 +55,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	private void setSlaves() {
-		leftMotorSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
-		rightMotorSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
-		rightMotorSlave.set(rightMotor.getDeviceID());
-		leftMotorSlave.set(leftMotor.getDeviceID());
+		TalonHelper.setFollowerOf(leftMotorSlave, leftMotor);
+		TalonHelper.setFollowerOf(rightMotorSlave, rightMotor);
 	}
 	
-	private void generatePoints() {
+	private void generateTrajPoints() {
 		MotionProfileConfiguration config = new MotionProfileConfiguration();
 		config.setEndDistance(1000);
 		config.setForwards(true);
