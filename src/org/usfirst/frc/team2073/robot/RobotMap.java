@@ -60,10 +60,16 @@ public class RobotMap {
 		turretOLD = new MPTurretSubsystemOLD();
 		gearIntake = new GearIntakeSubsystem();
 		ballIntake = new BallIntakeSubsystem();
+		climber = new ClimberSubsystem();
+		turret = new TurretSubsystem();
+		intermediate = new IntermediateSubsystem();
+		
 		SmartDashboard.putData("Drivetrain", drivetrain);
-		SmartDashboard.putData("Turret", turretOLD);
+		SmartDashboard.putData("Turret", turret);
 		SmartDashboard.putData("Gear Intake", gearIntake);
 		SmartDashboard.putData("Ball Intake", ballIntake);
+		SmartDashboard.putData("Intermediate", intermediate);
+		SmartDashboard.putData("climber", climber);
 		
 	}
 

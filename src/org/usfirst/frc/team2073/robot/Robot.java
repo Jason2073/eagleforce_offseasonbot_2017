@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2073.robot;
 
+import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,6 +35,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		GearIntakeSubsystem gear = RobotMap.getGearIntake();
+//		gear.readPos();
+//		gear.isZero();
 	}
 
 	@Override

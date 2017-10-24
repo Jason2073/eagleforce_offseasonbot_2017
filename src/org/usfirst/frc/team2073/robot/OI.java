@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
+import org.usfirst.frc.team2073.robot.cmd.GearIntakeCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
@@ -27,9 +28,9 @@ public class OI {
 		joystick = new Joystick(PowerStick.PORT);
 		wheel = new Joystick(DriveWheel.PORT);
 		
-		Command gearDown = new GearIntakeToDownCommand();
-		Command gearPlace = new GearIntakeToPlaceCommand();
-//		Command gearReset = new GearIntakeResetCommand();
+		Command gearCommand = new GearIntakeCommandGroup();
+//		Command gearPlace = new GearIntakeToPlaceCommand();
+		Command gearReset = new GearIntakeResetCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
 		Command mpDrive = new MotionProfileDriveCommand();
@@ -46,14 +47,14 @@ public class OI {
 		JoystickButton lPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LPADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
 		
-		a.whileHeld(gearDown);
-		b.whileHeld(gearPlace);
+		a.toggleWhenPressed(gearReset);
 		x.whileHeld(intakeBalls);
 		y.whileHeld(climb);
 		leftBumper.whileHeld(outtakeBalls);
 		leftJoy.toggleWhenPressed(shift);
 		lPaddle.whileHeld(pointTurn);
 		rightBumper.whileHeld(mpDrive);
+		
 		
 	}
 

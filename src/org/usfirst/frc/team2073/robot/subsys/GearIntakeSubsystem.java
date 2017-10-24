@@ -8,6 +8,7 @@ import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
@@ -58,7 +59,8 @@ public class GearIntakeSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-//		TODO setDefaultCommand(new GearIntakeResetCommand());
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//		talon.configEncoderCodesPerRev(10);
 	}
 
 	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance, double maxAcc) {
@@ -78,9 +80,18 @@ public class GearIntakeSubsystem extends Subsystem {
 	public void gearIn() {
 		intakeMotor.set(-1);
 	}
+	public void readPos() {
+		System.out.println(talon.getPosition());
+	}
 
 	public void gearOut() {
 		intakeMotor.set(1);
+	}
+	
+	public void stop() {
+		System.out.println("stopping");
+		talon.changeControlMode(TalonControlMode.PercentVbus);
+		talon.set(0);
 	}
 
 	public void gearHold() {
@@ -106,11 +117,12 @@ public class GearIntakeSubsystem extends Subsystem {
 
 	public void zeroIntake() {
 		talon.setPosition(0);
+		talon.setEncPosition(0);
+		System.out.println("set to 0");
 	}
 
 	public boolean isZero() {
-		System.out.println(magnetZeroer.get());
-		return magnetZeroer.get();
+		return !magnetZeroer.get();
 	}
 
 	public void upToDown() {
