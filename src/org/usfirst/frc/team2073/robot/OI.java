@@ -29,7 +29,7 @@ public class OI {
 		wheel = new Joystick(DriveWheel.PORT);
 		
 		Command gearCommand = new GearIntakeCommandGroup();
-//		Command gearPlace = new GearIntakeToPlaceCommand();
+		Command gearPlace = new GearIntakeToPlaceCommand();
 		Command gearReset = new GearIntakeResetCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();

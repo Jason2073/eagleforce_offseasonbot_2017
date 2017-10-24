@@ -16,10 +16,12 @@ public class GearIntakeResetCommand extends Command {
 	@Override
 	protected void execute() {
 		System.out.println("executing");
-		if(gearIntake.getAngle() != 0.0)
+		if(!gearIntake.isZero())
 			gearIntake.resetGearIntake();
-		else
+		else {
+			gearIntake.zeroIntake();
 			gearIntake.stop();
+		}
 	}
 
 	@Override

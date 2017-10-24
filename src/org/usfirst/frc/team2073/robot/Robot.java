@@ -3,6 +3,7 @@ package org.usfirst.frc.team2073.robot;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -38,6 +39,9 @@ public class Robot extends IterativeRobot {
 		GearIntakeSubsystem gear = RobotMap.getGearIntake();
 //		gear.readPos();
 //		gear.isZero();
+		Joystick joy = OI.getController();
+		System.out.println(joy.getY());
+		
 	}
 
 	@Override

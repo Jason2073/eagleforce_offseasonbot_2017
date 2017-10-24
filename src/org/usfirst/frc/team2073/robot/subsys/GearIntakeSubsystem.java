@@ -2,6 +2,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
+import org.usfirst.frc.team2073.robot.OI;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
@@ -13,6 +14,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -30,6 +32,8 @@ public class GearIntakeSubsystem extends Subsystem {
 	private List<TrajectoryPoint> placeToDownTpList;
 	private List<TrajectoryPoint> downToPlaceTpList;
 	private List<TrajectoryPoint> downToUpTpList;
+	
+	private Joystick controller = OI.getController();
 
 	public GearIntakeSubsystem() {
 		intakeMotor = RobotMap.getGearIntakeMotor();
@@ -60,7 +64,7 @@ public class GearIntakeSubsystem extends Subsystem {
 	@Override
 	public void initDefaultCommand() {
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		talon.configEncoderCodesPerRev(10);
+		talon.configEncoderCodesPerRev(1024);
 	}
 
 	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance, double maxAcc) {
@@ -147,6 +151,15 @@ public class GearIntakeSubsystem extends Subsystem {
 
 	public void downToPlace() {
 		MotionProfileHelper.resetAndPushPoints(talon, downToPlaceTpList, false);
+	}
+	
+	public void moveGearIntake() {
+		if(controller.getPOV() == 180 && isZero()) {
+			
+    	}else if(controller.getPOV() == 90 && isZero()) {
+    		
+    	}else {
+    	}
 	}
 
 	public void toDown(int input) {

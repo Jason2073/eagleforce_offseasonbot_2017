@@ -15,7 +15,7 @@ public class GearIntakeCommandGroup extends CommandGroup {
 	private Joystick controller = OI.getController();
 
     public GearIntakeCommandGroup() {
-    	if(gearSub.getApproxAngle() < 1 && gearSub.getApproxAngle() > -1 && controller.getPOV() == 90) {
+    /*	if(gearSub.getApproxAngle() < 1 && gearSub.getApproxAngle() > -1 && controller.getPOV() == 90) {
     		addSequential(new GearIntakeToDownCommand());
     	}
     	if(gearSub.getApproxAngle() < 50 && gearSub.getApproxAngle() > 40 && controller.getPOV() == 90) {
@@ -26,8 +26,14 @@ public class GearIntakeCommandGroup extends CommandGroup {
     		addSequential(new GearIntakeToPlaceCommand());
     	}else {
     		addSequential(new GearIntakeResetCommand());
+    	}*/
+    	addSequential(new GearIntakeToDownCommand());
+    	addSequential(new GearIntakeToPlaceCommand());
+    	addSequential(new GearIntakeResetCommand());
+    	if(controller.getPOV() == 180 && gearSub.isZero()) {
+    	}else if(controller.getPOV() == 90 && gearSub.isZero()) {
+    	}else {
     	}
-    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
