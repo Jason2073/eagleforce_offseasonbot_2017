@@ -36,9 +36,11 @@ public class GearIntakeSubsystem extends Subsystem {
 		lightSensor = RobotMap.getLightSensor();
 		magnetZeroer = RobotMap.getMagnetZeroer();
 
+		// TODO: Extract to constant
 		SmartDashboard.putNumber("Fgain", .7871);
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
+		// TODO: Extract method args to constants? Would this help or hurt?
 		upToDownTpList = generatePoints(false, 300, 10, 250, 60);
 		upToPlaceTpList = generatePoints(false, 3, 5, .125, 60);
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);

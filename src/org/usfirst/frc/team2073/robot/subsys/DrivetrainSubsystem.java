@@ -63,11 +63,13 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public double turnSense(double ptart) {
+		// TODO: Extract to constant
 		double sense = SmartDashboard.getNumber("Sense", .7);
 		return sense * ptart * ptart * ptart + ptart * (1 - sense);
 	}
 
 	public double inverse(double start) {
+		// TODO: Extract to constant
 		double inverse = SmartDashboard.getNumber("Inverse", .2);
 		return (start - preTurn) * inverse + start;
 	}
@@ -115,7 +117,6 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public boolean isMotionProfilingFinished() {
-		// TODO: decide whether to check if both are finished or if at least one is finished
 		return MotionProfileHelper.isFinished(leftMotor) && MotionProfileHelper.isFinished(rightMotor);
 	}
 }

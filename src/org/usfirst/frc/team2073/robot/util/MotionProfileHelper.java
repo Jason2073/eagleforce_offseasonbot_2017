@@ -11,7 +11,10 @@ import com.ctre.CANTalon.TrajectoryPoint;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotionProfileHelper {
+	// TODO: Rename to initTalon() 
+	// init() usually refers to initializing the current class
 	public static void init(CANTalon talon) {
+		// TODO: Extract to constant
 		talon.setF(SmartDashboard.getNumber("Fgain", .7871));
 		talon.changeControlMode(TalonControlMode.MotionProfile);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);

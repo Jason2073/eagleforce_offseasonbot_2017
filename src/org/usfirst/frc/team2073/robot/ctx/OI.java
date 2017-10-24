@@ -15,13 +15,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class OI {
+	private static final Object LOCK = new Object(); 
 	private static Boolean initialized = false;
 	private static Joystick controller;
 	private static Joystick wheel;
 	private static Joystick joystick;
 
 	public static void init() {
-		synchronized (initialized) {
+		synchronized (LOCK) {
 			if (!initialized) {
 				initialized = true;
 				
