@@ -5,6 +5,7 @@ import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 
@@ -17,32 +18,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	private static DrivetrainSubsystem drivetrain;
+	public static boolean ballIntakeForwards = true;
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
 	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
 	private static Solenoid driveSolenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
 	private static Solenoid driveSolenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
-	
+
 	private static TurretSubsystem turret;
 	private static int turretPositionCodesPerRev = 10;
-	private static CANTalon turretPosition = new CANTalon(RobotPorts.TURRET_POSITION);	
+	private static CANTalon turretPosition = new CANTalon(RobotPorts.TURRET_POSITION);
 	private static CANTalon shooter1 = new CANTalon(RobotPorts.TURRET_SHOOTER_1);
 	private static CANTalon shooter2 = new CANTalon(RobotPorts.TURRET_SHOOTER_2);
-	
+
 	private static BallIntakeSubsystem ballIntake;
 	private static Solenoid ballIntakeSolenoid1 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_1);
 	private static Solenoid ballIntakeSolenoid2 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_2);
 	private static Victor ballIntakeMotor1 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_1);
 	private static Victor ballIntakeMotor2 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_2);
-	
+
 	private static ClimberSubsystem climber;
 	private static Victor climberMotor = new Victor(RobotPorts.CLIMBER_MOTOR);
-	
+
 	private static IntermediateSubsystem intermediate;
 	private static Victor bellyRoller = new Victor(RobotPorts.BELLY_ROLLERS);
 	private static Victor intermediateBelts = new Victor(RobotPorts.INTERMEDIATE);
-	
+
+	private static GearPositionSubsystem gearPosition;
 	private static GearIntakeSubsystem gearIntake;
 	private static Victor gearIntakeMotor = new Victor(RobotPorts.GEAR_INTAKE_MOTOR);
 	private static CANTalon gearIntakeTalon = new CANTalon(RobotPorts.GEAR_INTAKE_TALON);
@@ -51,15 +54,16 @@ public class RobotMap {
 
 	static void init() {
 		drivetrain = new DrivetrainSubsystem();
-		gearIntake = new GearIntakeSubsystem();
+		gearPosition = new GearPositionSubsystem();
 		ballIntake = new BallIntakeSubsystem();
 		climber = new ClimberSubsystem();
 		turret = new TurretSubsystem();
 		intermediate = new IntermediateSubsystem();
-		
+		gearIntake = new GearIntakeSubsystem();
+
 		SmartDashboard.putData("Drivetrain", drivetrain);
 		SmartDashboard.putData("Turret", turret);
-		SmartDashboard.putData("Gear Intake", gearIntake);
+		SmartDashboard.putData("Gear Intake", gearPosition);
 		SmartDashboard.putData("Ball Intake", ballIntake);
 		SmartDashboard.putData("Intermediate", intermediate);
 		SmartDashboard.putData("Climber", climber);
@@ -81,6 +85,14 @@ public class RobotMap {
 
 	public static CANTalon getRightMotor() {
 		return rightMotor;
+	}
+
+	public static boolean isBallIntakeForwards() {
+		return ballIntakeForwards;
+	}
+
+	public static GearPositionSubsystem getGearPosition() {
+		return gearPosition;
 	}
 
 	public static CANTalon getRightMotorSlave() {

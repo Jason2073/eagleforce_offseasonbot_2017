@@ -1,15 +1,15 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
-import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearIntakeResetCommand extends Command {
-	private final GearIntakeSubsystem gearIntake;
+	private final GearPositionSubsystem gearIntake;
 
 	public GearIntakeResetCommand() {
-		gearIntake = RobotMap.getGearIntake();
+		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
 	}
 

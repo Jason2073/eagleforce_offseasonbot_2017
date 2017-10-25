@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2073.robot;
 
-import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -36,10 +36,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		GearIntakeSubsystem gear = RobotMap.getGearIntake();
+		GearPositionSubsystem gear = RobotMap.getGearIntake();
 //		gear.readPos();
 //		gear.isZero();
-		Joystick joy = OI.getController();
+		Joystick joy = OI.getWheel();
+		System.out.println(joy.getX());
 //		System.out.println(joy.getY());
 		
 	}

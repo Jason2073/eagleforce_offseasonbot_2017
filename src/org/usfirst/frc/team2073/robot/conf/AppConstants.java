@@ -17,9 +17,9 @@ public abstract class AppConstants {
 		public abstract class Xbox {
 			public static final int PORT = 0;
 			public abstract class ButtonPorts {
-				public static final int X = 3;
 				public static final int A = 1;
 				public static final int B = 2;
+				public static final int X = 3;
 				public static final int Y = 4;
 				public static final int L1 = 5;
 				public static final int R1 = 6;

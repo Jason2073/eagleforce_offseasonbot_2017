@@ -10,6 +10,7 @@ import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
 import org.usfirst.frc.team2073.robot.util.TalonHelper;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
@@ -40,6 +41,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		setSlaves();
 		shiftLowGear();
 		generateTrajPoints();
+		configEncoders();
 		
 		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
@@ -47,6 +49,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", rightMotorSlave);
 		LiveWindow.addActuator("Drivetrain", "Solenoid 1", solenoid1);
 		LiveWindow.addActuator("Drivetrain", "Solenoid 2", solenoid2);
+		
 	}
 
 	@Override
@@ -59,9 +62,14 @@ public class DrivetrainSubsystem extends Subsystem {
 		TalonHelper.setFollowerOf(rightMotorSlave, rightMotor);
 	}
 	
+	private void configEncoders(){
+		leftMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+	}
+	
 	private void generateTrajPoints() {
 		MotionProfileConfiguration config = new MotionProfileConfiguration();
-		config.setEndDistance(1000);
+		config.setEndDistance(100);
 		config.setForwards(true);
 		config.setInterval(10);
 		config.setMaxAcc(50);
@@ -87,12 +95,14 @@ public class DrivetrainSubsystem extends Subsystem {
 	public void move(double speed, double turn) {
 		rightMotor.changeControlMode(TalonControlMode.PercentVbus);
 		leftMotor.changeControlMode(TalonControlMode.PercentVbus);
-		if (speed > 0) {
-			leftMotor.set(-inverse(speed) - (inverse(speed) * turnSense(turn)));
-			rightMotor.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
+		double rightSide = -(inverse(speed) - (inverse(speed) * turnSense(turn)));
+		double leftSide = inverse(speed) + (inverse(speed) * turnSense(turn));
+		if (RobotMap.ballIntakeForwards) {
+			rightMotor.set(rightSide);
+			leftMotor.set(leftSide);
 		} else {
-			leftMotor.set(inverse(speed) + (inverse(speed) * turnSense(turn)));
-			rightMotor.set(-inverse(speed) - (inverse(speed) * turnSense(turn)));
+			leftMotor.set(rightSide);
+			rightMotor.set(leftSide);
 		}
 	}
 
@@ -107,7 +117,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void resetMotionProfiling() {
-		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, true);
+		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, false);
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, true);
 	}
 	

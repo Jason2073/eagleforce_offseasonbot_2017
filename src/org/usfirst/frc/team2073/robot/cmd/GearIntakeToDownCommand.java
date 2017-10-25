@@ -2,15 +2,15 @@ package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.OI;
-import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
+import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class GearIntakeToDownCommand extends Command {
-	private final GearIntakeSubsystem gearIntake;
+	private final GearPositionSubsystem gearIntake;
 
 	public GearIntakeToDownCommand() {
-		gearIntake = RobotMap.getGearIntake();
+		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
 	}
 
@@ -26,11 +26,11 @@ public class GearIntakeToDownCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return gearIntake.isMotionProfilingFinished();
 	}
 
 	@Override
 	protected void end() {
-//		gearIntake.stopMotionProfiling();
+		gearIntake.stopMotionProfiling();
 	}
 }
