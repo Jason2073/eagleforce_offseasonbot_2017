@@ -21,16 +21,15 @@ public class GearIntakeToDownCommand extends Command {
 
 	@Override
 	protected void execute() {
-		gearIntake.processMotionProfiling();
+		if(!gearIntake.isMotionProfilingFinished())
+			gearIntake.processMotionProfiling();
+		else
+			gearIntake.stopMotionProfiling();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return gearIntake.isMotionProfilingFinished();
+		return false;
 	}
 
-	@Override
-	protected void end() {
-		gearIntake.stopMotionProfiling();
-	}
 }

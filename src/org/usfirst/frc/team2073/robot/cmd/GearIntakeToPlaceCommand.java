@@ -20,16 +20,14 @@ public class GearIntakeToPlaceCommand extends Command {
 
 	@Override
 	protected void execute() {
-		gearIntake.processMotionProfiling();
+		if(!gearIntake.isMotionProfilingFinished())
+			gearIntake.processMotionProfiling();
+		else
+			gearIntake.stopMotionProfiling();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return gearIntake.isMotionProfilingFinished();
-	}
-
-	@Override
-	protected void end() {
-		gearIntake.stopMotionProfiling();
+		return false;
 	}
 }
