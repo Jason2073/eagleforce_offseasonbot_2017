@@ -1,8 +1,6 @@
 package org.usfirst.frc.team2073.robot;
 
-import org.usfirst.frc.team2073.robot.buttons.DPadDown;
-import org.usfirst.frc.team2073.robot.buttons.DPadNone;
-import org.usfirst.frc.team2073.robot.buttons.DPadRight;
+import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
@@ -19,7 +17,6 @@ import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.Xbox;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class OI {
@@ -48,9 +45,9 @@ public class OI {
 		JoystickButton lPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LPADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
 		JoystickButton joystickCenter = new JoystickButton(joystick, 3);
-		Trigger dPadDown = new DPadDown();
-		Trigger dPadRight = new DPadRight();
-		Trigger dPadNone = new DPadNone();
+		JoystickPOV dPadDown = new JoystickPOV(controller, 180);
+		JoystickPOV dPadRight = new JoystickPOV(controller, 90);
+		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
 		a.toggleWhenPressed(gearDown);

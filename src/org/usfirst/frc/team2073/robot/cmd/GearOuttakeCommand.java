@@ -19,7 +19,6 @@ public class GearOuttakeCommand extends Command{
 		gearIntake.gearOut();
 	}
 	
-	
 	@Override
 	protected boolean isFinished() {
 		return false;
@@ -28,6 +27,4 @@ public class GearOuttakeCommand extends Command{
 	protected void end() {
 		gearIntake.gearStop();
 	}
-	
-
 }

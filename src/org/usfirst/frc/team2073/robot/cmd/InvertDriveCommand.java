@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class InvertDriveCommand extends Command {
 	@Override
 	protected void execute() {
-		RobotMap.ballIntakeForwards = false;
+		RobotMap.setBallIntakeForwards(false);
 	}
 
 	@Override
@@ -17,6 +17,6 @@ public class InvertDriveCommand extends Command {
 
 	@Override
 	protected void end() {
-		RobotMap.ballIntakeForwards = true;
+		RobotMap.setBallIntakeForwards(true);
 	}
 }

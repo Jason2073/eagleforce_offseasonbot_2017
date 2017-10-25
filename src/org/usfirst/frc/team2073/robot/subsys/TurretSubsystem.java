@@ -3,6 +3,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -18,10 +19,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurretSubsystem extends Subsystem {
-	private static final double F = 4.0;
-	private static final double P = 30;
-	private static final double I = 0;
-	private static final double D = 170;
+	private static final double DEFAULT_F = 4.0;
+	private static final double DEFAULT_P = 30;
+	private static final double DEFAULT_I = 0;
+	private static final double DEFAULT_D = 170;
 	private static final double MAX_ACCELERATION = 800;
 	private static final double MAX_VELOCITY = 4000;
 	
@@ -40,6 +41,7 @@ public class TurretSubsystem extends Subsystem {
 		generateTrajPoints();
 		TalonHelper.setFollowerOf(shooter2, shooter1);
 		
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Turret", "Pos", turretPos);
 		LiveWindow.addActuator("Turret", "Shooter 1", shooter1);
 		LiveWindow.addActuator("Turret", "Shooter 2", shooter2);
@@ -50,11 +52,11 @@ public class TurretSubsystem extends Subsystem {
 	}
 	
 	private void initTurretPos() {
-		SmartDashboard.putNumber("Set F", F);
-		SmartDashboard.putNumber("Set P", P);
-		SmartDashboard.putNumber("Set I", I);
-		SmartDashboard.putNumber("Set D", D);
-		SmartDashboard.putNumber("RPM", MAX_VELOCITY);
+		SmartDashboard.putNumber(DashboardKeys.SET_F, DEFAULT_F);
+		SmartDashboard.putNumber(DashboardKeys.SET_P, DEFAULT_P);
+		SmartDashboard.putNumber(DashboardKeys.SET_I, DEFAULT_I);
+		SmartDashboard.putNumber(DashboardKeys.SET_D, DEFAULT_D);
+		SmartDashboard.putNumber(DashboardKeys.RPM, MAX_VELOCITY);
 		
 		turretPos.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		turretPos.reverseSensor(false);
@@ -62,10 +64,10 @@ public class TurretSubsystem extends Subsystem {
 		turretPos.configNominalOutputVoltage(+0.0f, -0.0f);
 		turretPos.configPeakOutputVoltage(+12.0f, 0.0f);
 		turretPos.setProfile(0);
-		turretPos.setF(SmartDashboard.getNumber("Set F", F));
-		turretPos.setP(SmartDashboard.getNumber("Set P", P));
-		turretPos.setI(SmartDashboard.getNumber("Set I", I));
-		turretPos.setD(SmartDashboard.getNumber("Set D", D));
+		turretPos.setF(SmartDashboard.getNumber(DashboardKeys.SET_F, DEFAULT_F));
+		turretPos.setP(SmartDashboard.getNumber(DashboardKeys.SET_P, DEFAULT_P));
+		turretPos.setI(SmartDashboard.getNumber(DashboardKeys.SET_I, DEFAULT_I));
+		turretPos.setD(SmartDashboard.getNumber(DashboardKeys.SET_D, DEFAULT_D));
 	}
 	
 	private void generateTrajPoints() {
@@ -74,7 +76,7 @@ public class TurretSubsystem extends Subsystem {
 		config.setForwards(true);
 		config.setInterval(10);
 		config.setMaxAcc(MAX_ACCELERATION);
-		config.setMaxVel(SmartDashboard.getNumber("RPM", MAX_VELOCITY) * 60);
+		config.setMaxVel(SmartDashboard.getNumber(DashboardKeys.RPM, MAX_VELOCITY) * 60);
 		trajPoints = MotionProfileGenerator.generatePoints(config);
 	}
 	

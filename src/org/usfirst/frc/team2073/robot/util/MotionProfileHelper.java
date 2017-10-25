@@ -2,6 +2,9 @@ package org.usfirst.frc.team2073.robot.util;
 
 import java.util.List;
 
+import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.MotionProfileStatus;
@@ -11,22 +14,22 @@ import com.ctre.CANTalon.TrajectoryPoint;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotionProfileHelper {
-	public static void init(CANTalon talon) {
-		talon.setF(SmartDashboard.getNumber("Fgain", .7871));
+	public static void initTalon(CANTalon talon) {
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
 		talon.changeControlMode(TalonControlMode.MotionProfile);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
 
-	public static void reset(CANTalon talon) {
+	public static void resetTalon(CANTalon talon) {
 		talon.changeControlMode(TalonControlMode.MotionProfile);
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
 
 	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
-		trajPointList.forEach(trajPoint -> talon.pushMotionProfileTrajectory(trajPoint));
+		trajPointList.forEach(talon::pushMotionProfileTrajectory);
 	}
 
 	public static void processPoints(CANTalon talon) {
@@ -39,7 +42,7 @@ public class MotionProfileHelper {
 		talon.setEncPosition(0);
 	}
 
-	public static void stop(CANTalon talon) {
+	public static void stopTalon(CANTalon talon) {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
@@ -49,7 +52,7 @@ public class MotionProfileHelper {
 	}
 
 	public static void resetAndPushPoints(CANTalon talon, List<TrajectoryPoint> tpList, boolean isForwards) {
-		reset(talon);
+		resetTalon(talon);
 		pushPoints(talon, tpList);
 		checkDirection(talon, isForwards);
 	}

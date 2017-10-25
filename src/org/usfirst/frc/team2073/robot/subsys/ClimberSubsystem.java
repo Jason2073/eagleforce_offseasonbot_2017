@@ -12,6 +12,7 @@ public class ClimberSubsystem extends Subsystem {
 
 	public ClimberSubsystem() {
 		motor = RobotMap.getClimberMotor();
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Climber", "Motor", motor);
 	}
 

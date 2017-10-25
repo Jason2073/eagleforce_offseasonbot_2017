@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	private static DrivetrainSubsystem drivetrain;
-	public static boolean ballIntakeForwards = true;
+	private static boolean ballIntakeForwards = true;
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
@@ -61,6 +61,7 @@ public class RobotMap {
 		intermediate = new IntermediateSubsystem();
 		gearIntake = new GearIntakeSubsystem();
 
+		// TODO: Extract to constants
 		SmartDashboard.putData("Drivetrain", drivetrain);
 		SmartDashboard.putData("Turret", turret);
 		SmartDashboard.putData("Gear Intake", gearPosition);
@@ -87,14 +88,6 @@ public class RobotMap {
 		return rightMotor;
 	}
 
-	public static boolean isBallIntakeForwards() {
-		return ballIntakeForwards;
-	}
-
-	public static GearPositionSubsystem getGearPosition() {
-		return gearPosition;
-	}
-
 	public static CANTalon getRightMotorSlave() {
 		return rightMotorSlave;
 	}
@@ -111,6 +104,10 @@ public class RobotMap {
 	// ====================================================================================================
 	public static GearIntakeSubsystem getGearIntake() {
 		return gearIntake;
+	}
+
+	public static GearPositionSubsystem getGearPosition() {
+		return gearPosition;
 	}
 
 	public static Victor getGearIntakeMotor() {
@@ -133,6 +130,14 @@ public class RobotMap {
 	// ====================================================================================================
 	public static BallIntakeSubsystem getBallIntake() {
 		return ballIntake;
+	}
+
+	public static void setBallIntakeForwards(boolean ballIntakeForwards) {
+		RobotMap.ballIntakeForwards = ballIntakeForwards;
+	}
+
+	public static boolean isBallIntakeForwards() {
+		return ballIntakeForwards;
 	}
 
 	public static Solenoid getBallIntakeSolenoid1() {

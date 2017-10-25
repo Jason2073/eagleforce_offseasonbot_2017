@@ -14,6 +14,7 @@ public class IntermediateSubsystem extends Subsystem {
 		main = RobotMap.getIntermediateBelts();
 		bellyRoller = RobotMap.getBellyRoller();
 
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Intermediate", "Up To Turret", main);
 		LiveWindow.addActuator("Intermediate", "Belly Rollers ", bellyRoller);
 	}

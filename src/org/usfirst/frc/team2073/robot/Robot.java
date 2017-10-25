@@ -36,13 +36,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		GearPositionSubsystem gear = RobotMap.getGearIntake();
+		GearPositionSubsystem gear = RobotMap.getGearPosition();
 //		gear.readPos();
 //		gear.isZero();
 		Joystick joy = OI.getWheel();
 		System.out.println(joy.getX());
 //		System.out.println(joy.getY());
-		
 	}
 
 	@Override

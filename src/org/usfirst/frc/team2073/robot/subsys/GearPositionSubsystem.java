@@ -2,8 +2,9 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
-import org.usfirst.frc.team2073.robot.OI;
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -14,8 +15,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,15 +30,14 @@ public class GearPositionSubsystem extends Subsystem {
 	private List<TrajectoryPoint> downToPlaceTpList;
 	private List<TrajectoryPoint> downToUpTpList;
 	
-	private Joystick controller = OI.getController();
-
 	public GearPositionSubsystem() {
 		talon = RobotMap.getGearIntakeTalon();
 		magnetZeroer = RobotMap.getMagnetZeroer();
 
-		SmartDashboard.putNumber("Fgain", .7871);
+		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN);
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
+		// TODO: Extract method args to constants? Would this help or hurt?
 		upToDownTpList = generatePoints(true, 500, 10, 40, 600);
 		upToPlaceTpList = generatePoints(true, 500, 10, 25, 600);
 //		shouldnt be called
@@ -49,17 +47,18 @@ public class GearPositionSubsystem extends Subsystem {
 		downToUpTpList = generatePoints(false, 3, 10, .25, 60);
 
 //		talon.changeMotionControlFramePeriod(5);
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talon.configEncoderCodesPerRev(1024);
 
-		MotionProfileHelper.init(talon);
+		MotionProfileHelper.initTalon(talon);
 
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Gear Intake", "Talon", talon);
 		LiveWindow.addSensor("Gear Intake", "Magnet Zeroer", magnetZeroer);
 	}
 
 	@Override
 	public void initDefaultCommand() {
-		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev(1024);
 	}
 
 	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance, double maxAcc) {
@@ -85,12 +84,9 @@ public class GearPositionSubsystem extends Subsystem {
 		talon.set(0);
 	}
 
-
-
 	public double getApproxAngle() {
 		return Math.round(talon.getPosition());
 	}
-
 
 	public void resetGearIntake() {
 		talon.changeControlMode(TalonControlMode.PercentVbus);
@@ -160,6 +156,6 @@ public class GearPositionSubsystem extends Subsystem {
 	}
 
 	public void stopMotionProfiling() {
-		MotionProfileHelper.stop(talon);
+		MotionProfileHelper.stopTalon(talon);
 	}
 }

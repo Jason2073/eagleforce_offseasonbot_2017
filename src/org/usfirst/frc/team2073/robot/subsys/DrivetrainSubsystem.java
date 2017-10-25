@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.DriveWithJoystickCommand;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -20,6 +21,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DrivetrainSubsystem extends Subsystem {
+	public static final double DEFAULT_INVERSE = .2;
+	public static final double DEFAULT_SENSE = .7;
+
 	private final CANTalon leftMotor;
 	private final CANTalon leftMotorSlave;
 	private final CANTalon rightMotor;
@@ -43,13 +47,13 @@ public class DrivetrainSubsystem extends Subsystem {
 		generateTrajPoints();
 		configEncoders();
 		
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
 		LiveWindow.addActuator("Drivetrain", "Left Motor", rightMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", rightMotorSlave);
 		LiveWindow.addActuator("Drivetrain", "Solenoid 1", solenoid1);
 		LiveWindow.addActuator("Drivetrain", "Solenoid 2", solenoid2);
-		
 	}
 
 	@Override
@@ -62,7 +66,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		TalonHelper.setFollowerOf(rightMotorSlave, rightMotor);
 	}
 	
-	private void configEncoders(){
+	private void configEncoders() {
 		leftMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 	}
@@ -78,12 +82,12 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public double turnSense(double ptart) {
-		double sense = SmartDashboard.getNumber("Sense", .7);
+		double sense = SmartDashboard.getNumber(DashboardKeys.SENSE, DEFAULT_SENSE);
 		return sense * ptart * ptart * ptart + ptart * (1 - sense);
 	}
 
 	public double inverse(double start) {
-		double inverse = SmartDashboard.getNumber("Inverse", .2);
+		double inverse = SmartDashboard.getNumber(DashboardKeys.INVERSE, DEFAULT_INVERSE);
 		return (start - preTurn) * inverse + start;
 	}
 
@@ -95,9 +99,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	public void move(double speed, double turn) {
 		rightMotor.changeControlMode(TalonControlMode.PercentVbus);
 		leftMotor.changeControlMode(TalonControlMode.PercentVbus);
+
 		double rightSide = -(inverse(speed) - (inverse(speed) * turnSense(turn)));
 		double leftSide = inverse(speed) + (inverse(speed) * turnSense(turn));
-		if (RobotMap.ballIntakeForwards) {
+
+		if (RobotMap.isBallIntakeForwards()) {
 			rightMotor.set(rightSide);
 			leftMotor.set(leftSide);
 		} else {
@@ -127,8 +133,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void stopMotionProfiling() {
-		MotionProfileHelper.stop(leftMotor);
-		MotionProfileHelper.stop(rightMotor);
+		MotionProfileHelper.stopTalon(leftMotor);
+		MotionProfileHelper.stopTalon(rightMotor);
 	}
 	
 	public boolean isMotionProfilingFinished() {

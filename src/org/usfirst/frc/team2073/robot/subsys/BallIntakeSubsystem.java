@@ -19,6 +19,7 @@ public class BallIntakeSubsystem extends Subsystem {
 		solenoid1 = RobotMap.getBallIntakeSolenoid1();
 		solenoid2 = RobotMap.getBallIntakeSolenoid2();
 
+		// TODO: Extract to constants
 		LiveWindow.addActuator("Ball Intake", "Motor 1", motor1);
 		LiveWindow.addActuator("Ball Intake", "Motor 2", motor2);
 		LiveWindow.addActuator("Ball Intake", "Solenoid 1", solenoid1);

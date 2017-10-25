@@ -61,4 +61,17 @@ public abstract class AppConstants {
 		public static final int LIGHT_SENSOR = 2;
 		public static final int MAGNET_ZEROER = 0;
 	}
+	public abstract class DashboardKeys {
+		public static final String INVERSE = "Inverse";
+		public static final String SENSE = "Sense";
+		public static final String RPM = "RPM";
+		public static final String SET_F = "Set F";
+		public static final String SET_P = "Set P";
+		public static final String SET_I = "Set I";
+		public static final String SET_D = "Set D";
+		public static final String FGAIN = "Fgain";
+	}
+	public abstract class Defaults {
+		public static final double FGAIN = .7871;
+	}
 }
