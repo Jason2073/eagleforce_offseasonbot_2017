@@ -17,6 +17,9 @@ public class RedFarSidePegCommandGroup extends CommandGroup{
 		addSequential( new MoveForwardMpCommand());
 		addParallel(new GearIntakeToPlaceCommand());
 		addParallel(new GearOuttakeCommand());
+		drivetrain.setMotionProfileDriveDistance(50);
+		addSequential(new MoveBackwardMpCommand());
+		
 		
 		
 		

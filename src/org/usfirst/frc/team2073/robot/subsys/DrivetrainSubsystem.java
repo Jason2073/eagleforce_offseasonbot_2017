@@ -166,15 +166,11 @@ public class DrivetrainSubsystem extends Subsystem {
 		solenoid2.set(false);
 	}
 
-	public void resetMotionProfiling(List<TrajectoryPoint> trajectoryList) {
+	public void resetMotionProfiling(List<TrajectoryPoint> trajectoryList, boolean leftForwards, boolean rightForwards) {
 		MotionProfileHelper.resetAndPushPoints(leftMotor, trajectoryList, false);
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajectoryList, true);
 	}
 	
-	public void resetMotionProfilingForPointTurn(List<TrajectoryPoint> trajectoryList) {
-		MotionProfileHelper.resetAndPushPoints(leftMotor, trajectoryList, false);
-		MotionProfileHelper.resetAndPushPoints(rightMotor, trajectoryList, false);
-	}
 
 	public void processMotionProfiling() {
 		MotionProfileHelper.processPoints(leftMotor);
@@ -193,10 +189,14 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
-		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)));
+		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)), false, true);
 	}
 	public void autonPointTurn(double angle) {
-		resetMotionProfilingForPointTurn(generatePoints(pointTurnConfig(angle)));
+		resetMotionProfiling(generatePoints(pointTurnConfig(angle)), false, false);
+	}
+	
+	public void autonDriveBackward(double linearDistInInches) {
+		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)), true, false);
 	}
 
 }
