@@ -19,12 +19,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotMap {
 	private static DrivetrainSubsystem drivetrain;
 	private static boolean ballIntakeForwards = true;
+	private static final double WHEEL_DIAMETER = 2*Math.PI;
+	private static final double AUTONOMOUS_MAX_VELOCITY = 700;
+	private static final double AUTONOMOUS_MAX_ACCELERATOIN = 50;
+	private static final double ROBOT_WIDTH = 28;
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
 	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
 	private static Solenoid driveSolenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
 	private static Solenoid driveSolenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
+
+	public static double getRobotWidth() {
+		return ROBOT_WIDTH;
+	}
+
+	public static double getAutonomousMaxAcceleratoin() {
+		return AUTONOMOUS_MAX_ACCELERATOIN;
+	}
+
+	public static double getAutonomousMaxVelocity() {
+		return AUTONOMOUS_MAX_VELOCITY;
+	}
+
+	public static double getWheelDiameter() {
+		return WHEEL_DIAMETER;
+	}
 
 	private static TurretSubsystem turret;
 	private static int turretPositionCodesPerRev = 10;

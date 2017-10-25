@@ -15,7 +15,8 @@ public class MotionProfileDriveCommand extends Command {
 
 	@Override
 	protected void initialize() {
-		drivetrain.resetMotionProfiling();
+		drivetrain.setMotionProfileDriveDistance(100);
+		drivetrain.autonDriveForward(drivetrain.getMotionProfileDriveDistance());
 	}
 
 	@Override

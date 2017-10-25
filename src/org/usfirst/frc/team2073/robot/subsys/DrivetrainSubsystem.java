@@ -30,8 +30,27 @@ public class DrivetrainSubsystem extends Subsystem {
 	private final CANTalon rightMotorSlave;
 	private final Solenoid solenoid1;
 	private final Solenoid solenoid2;
+	private double MotionProfileDriveDistance = 0;
+	private double MotionProfilePointTurnAngle = 0;
 
-	private List<TrajectoryPoint> trajPointList;
+	public double getMotionProfilePointTurnAngle() {
+		return MotionProfilePointTurnAngle;
+	}
+
+	public void setMotionProfilePointTurnAngle(double motionProfilePointTurnAngle) {
+		MotionProfilePointTurnAngle = motionProfilePointTurnAngle;
+	}
+
+	public double getMotionProfileDriveDistance() {
+		return MotionProfileDriveDistance;
+	}
+
+	public void setMotionProfileDriveDistance(double motionProfileDriveDistance) {
+		MotionProfileDriveDistance = motionProfileDriveDistance;
+	}
+
+	List<TrajectoryPoint> trajPointList;
+	MotionProfileConfiguration config = new MotionProfileConfiguration();
 	private double preTurn;
 
 	public DrivetrainSubsystem() {
@@ -41,12 +60,12 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightMotorSlave = RobotMap.getRightMotorSlave();
 		solenoid1 = RobotMap.getDriveSolenoid1();
 		solenoid2 = RobotMap.getDriveSolenoid2();
-		
+
 		setSlaves();
 		shiftLowGear();
 		generateTrajPoints();
 		configEncoders();
-		
+
 		// TODO: Extract to constants
 		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
 		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
@@ -65,20 +84,45 @@ public class DrivetrainSubsystem extends Subsystem {
 		TalonHelper.setFollowerOf(leftMotorSlave, leftMotor);
 		TalonHelper.setFollowerOf(rightMotorSlave, rightMotor);
 	}
-	
+
 	private void configEncoders() {
 		leftMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 	}
-	
+
 	private void generateTrajPoints() {
-		MotionProfileConfiguration config = new MotionProfileConfiguration();
 		config.setEndDistance(100);
 		config.setForwards(true);
 		config.setInterval(10);
 		config.setMaxAcc(50);
 		config.setMaxVel(700);
 		trajPointList = MotionProfileGenerator.generatePoints(config);
+	}
+
+	public List<TrajectoryPoint> generatePoints(MotionProfileConfiguration conf) {
+		return trajPointList = MotionProfileGenerator.generatePoints(conf);
+	}
+
+	public MotionProfileConfiguration driveForwardConfig(double linearDistInInches) {
+		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
+		double rotationDist = linearDistInInches / RobotMap.getWheelDiameter();
+		configuration.setEndDistance(rotationDist);
+		configuration.setInterval(10);
+		configuration.setMaxVel(RobotMap.getAutonomousMaxVelocity());
+		configuration.setMaxAcc(RobotMap.getAutonomousMaxAcceleratoin());
+		configuration.setVelocityOnly(false);
+		return configuration;
+	}
+
+	public MotionProfileConfiguration pointTurnConfig(double angleTurn) {
+		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
+		double rotationDist = (angleTurn / 360) * (RobotMap.getRobotWidth() * Math.PI);
+		configuration.setEndDistance(rotationDist);
+		configuration.setInterval(10);
+		configuration.setMaxVel(RobotMap.getAutonomousMaxVelocity());
+		configuration.setMaxAcc(RobotMap.getAutonomousMaxAcceleratoin());
+		configuration.setVelocityOnly(false);
+		return configuration;
 	}
 
 	public double turnSense(double ptart) {
@@ -121,24 +165,38 @@ public class DrivetrainSubsystem extends Subsystem {
 		solenoid1.set(false);
 		solenoid2.set(false);
 	}
-	
-	public void resetMotionProfiling() {
-		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, false);
-		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, true);
+
+	public void resetMotionProfiling(List<TrajectoryPoint> trajectoryList) {
+		MotionProfileHelper.resetAndPushPoints(leftMotor, trajectoryList, false);
+		MotionProfileHelper.resetAndPushPoints(rightMotor, trajectoryList, true);
 	}
 	
+	public void resetMotionProfilingForPointTurn(List<TrajectoryPoint> trajectoryList) {
+		MotionProfileHelper.resetAndPushPoints(leftMotor, trajectoryList, false);
+		MotionProfileHelper.resetAndPushPoints(rightMotor, trajectoryList, false);
+	}
+
 	public void processMotionProfiling() {
 		MotionProfileHelper.processPoints(leftMotor);
 		MotionProfileHelper.processPoints(rightMotor);
 	}
-	
+
 	public void stopMotionProfiling() {
 		MotionProfileHelper.stopTalon(leftMotor);
 		MotionProfileHelper.stopTalon(rightMotor);
 	}
-	
+
 	public boolean isMotionProfilingFinished() {
-		// TODO: decide whether to check if both are finished or if at least one is finished
+		// TODO: decide whether to check if both are finished or if at least one is
+		// finished
 		return MotionProfileHelper.isFinished(leftMotor) && MotionProfileHelper.isFinished(rightMotor);
 	}
+
+	public void autonDriveForward(double linearDistInInches) {
+		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)));
+	}
+	public void autonPointTurn(double angle) {
+		resetMotionProfilingForPointTurn(generatePoints(pointTurnConfig(angle)));
+	}
+
 }
