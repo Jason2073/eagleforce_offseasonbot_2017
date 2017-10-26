@@ -1,12 +1,11 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
-import org.usfirst.frc.team2073.robot.OI;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.GearIntakeSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearIntakeCommand extends Command{
+public class GearIntakeCommand extends Command {
 	private final GearIntakeSubsystem gearIntake;
 	
 	public GearIntakeCommand() {
@@ -19,7 +18,6 @@ public class GearIntakeCommand extends Command{
 		gearIntake.gearIn();
 	}
 	
-	
 	@Override
 	protected boolean isFinished() {
 		return false;
@@ -28,6 +26,4 @@ public class GearIntakeCommand extends Command{
 	protected void end() {
 		gearIntake.gearStop();
 	}
-	
-
 }

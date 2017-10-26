@@ -6,16 +6,18 @@ import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveForwardMpCommand extends Command {
+	private final double distance;
 	private final DrivetrainSubsystem drivetrain;
 	
-	public MoveForwardMpCommand() {
+	public MoveForwardMpCommand(double distance) {
+		this.distance = distance;
 		drivetrain = RobotMap.getDrivetrain();
 		requires(drivetrain);
 	}
 
 	@Override
 	protected void initialize() {
-		drivetrain.autonDriveForward(drivetrain.getMotionProfileDriveDistance());
+		drivetrain.autonDriveForward(distance);
 	}
 
 	@Override
@@ -27,5 +29,4 @@ public class MoveForwardMpCommand extends Command {
 	protected boolean isFinished() {
 		return drivetrain.isMotionProfilingFinished();
 	}
-
 }

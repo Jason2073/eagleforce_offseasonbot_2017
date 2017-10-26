@@ -5,6 +5,7 @@ import java.util.List;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -30,28 +31,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	private final CANTalon rightMotorSlave;
 	private final Solenoid solenoid1;
 	private final Solenoid solenoid2;
-	private double MotionProfileDriveDistance = 0;
-	private double MotionProfilePointTurnAngle = 0;
 
-	public double getMotionProfilePointTurnAngle() {
-		return MotionProfilePointTurnAngle;
-	}
-
-	public void setMotionProfilePointTurnAngle(double motionProfilePointTurnAngle) {
-		MotionProfilePointTurnAngle = motionProfilePointTurnAngle;
-	}
-
-	public double getMotionProfileDriveDistance() {
-		return MotionProfileDriveDistance;
-	}
-
-	public void setMotionProfileDriveDistance(double motionProfileDriveDistance) {
-		MotionProfileDriveDistance = motionProfileDriveDistance;
-	}
-
-	List<TrajectoryPoint> trajPointList;
-	MotionProfileConfiguration config = new MotionProfileConfiguration();
-	private double preTurn;
+	private double preTurn;//TODO: is this needed?
 
 	public DrivetrainSubsystem() {
 		leftMotor = RobotMap.getLeftMotor();
@@ -63,7 +44,6 @@ public class DrivetrainSubsystem extends Subsystem {
 
 		setSlaves();
 		shiftLowGear();
-		generateTrajPoints();
 		configEncoders();
 
 		// TODO: Extract to constants
@@ -90,37 +70,24 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 	}
 
-	private void generateTrajPoints() {
-		config.setEndDistance(100);
-		config.setForwards(true);
-		config.setInterval(10);
-		config.setMaxAcc(50);
-		config.setMaxVel(700);
-		trajPointList = MotionProfileGenerator.generatePoints(config);
-	}
-
-	public List<TrajectoryPoint> generatePoints(MotionProfileConfiguration conf) {
-		return trajPointList = MotionProfileGenerator.generatePoints(conf);
-	}
-
 	public MotionProfileConfiguration driveForwardConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = linearDistInInches / RobotMap.getWheelDiameter();
+		double rotationDist = linearDistInInches / Subsystems.Drivetrain.WHEEL_DIAMETER;
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
-		configuration.setMaxVel(RobotMap.getAutonomousMaxVelocity());
-		configuration.setMaxAcc(RobotMap.getAutonomousMaxAcceleratoin());
+		configuration.setMaxVel(Subsystems.Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration.setMaxAcc(Subsystems.Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
 		configuration.setVelocityOnly(false);
 		return configuration;
 	}
 
 	public MotionProfileConfiguration pointTurnConfig(double angleTurn) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = (angleTurn / 360) * (RobotMap.getRobotWidth() * Math.PI);
+		double rotationDist = (angleTurn / 360) * (Subsystems.Drivetrain.ROBOT_WIDTH * Math.PI);
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
-		configuration.setMaxVel(RobotMap.getAutonomousMaxVelocity());
-		configuration.setMaxAcc(RobotMap.getAutonomousMaxAcceleratoin());
+		configuration.setMaxVel(Subsystems.Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration.setMaxAcc(Subsystems.Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
 		configuration.setVelocityOnly(false);
 		return configuration;
 	}
@@ -166,11 +133,12 @@ public class DrivetrainSubsystem extends Subsystem {
 		solenoid2.set(false);
 	}
 
-	public void resetMotionProfiling(List<TrajectoryPoint> trajectoryList, boolean leftForwards, boolean rightForwards) {
-		MotionProfileHelper.resetAndPushPoints(leftMotor, trajectoryList, false);
-		MotionProfileHelper.resetAndPushPoints(rightMotor, trajectoryList, true);
+	public void resetMotionProfiling(MotionProfileConfiguration config, boolean leftForwards, boolean rightForwards) {
+		List<TrajectoryPoint> trajPointList = MotionProfileGenerator.generatePoints(config);
+		// TODO: use leftForwards and rightForwards or delete them
+		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, false);
+		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, true);
 	}
-	
 
 	public void processMotionProfiling() {
 		MotionProfileHelper.processPoints(leftMotor);
@@ -189,14 +157,14 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
-		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)), false, true);
+		resetMotionProfiling(driveForwardConfig(linearDistInInches), false, true);
 	}
+	
 	public void autonPointTurn(double angle) {
-		resetMotionProfiling(generatePoints(pointTurnConfig(angle)), false, false);
+		resetMotionProfiling(pointTurnConfig(angle), false, false);
 	}
 	
 	public void autonDriveBackward(double linearDistInInches) {
-		resetMotionProfiling(generatePoints(driveForwardConfig(linearDistInInches)), true, false);
+		resetMotionProfiling(driveForwardConfig(linearDistInInches), true, false);
 	}
-
 }

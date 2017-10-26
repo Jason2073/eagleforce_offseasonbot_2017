@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -60,7 +61,7 @@ public class TurretSubsystem extends Subsystem {
 		
 		turretPos.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		turretPos.reverseSensor(false);
-		turretPos.configEncoderCodesPerRev(RobotMap.getTurretPositionCodesPerRev());
+		turretPos.configEncoderCodesPerRev(Subsystems.Turret.TURRET_POSITION_CODES_PER_REV);
 		turretPos.configNominalOutputVoltage(+0.0f, -0.0f);
 		turretPos.configPeakOutputVoltage(+12.0f, 0.0f);
 		turretPos.setProfile(0);

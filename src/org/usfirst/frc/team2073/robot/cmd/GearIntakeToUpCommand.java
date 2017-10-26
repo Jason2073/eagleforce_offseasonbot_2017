@@ -21,10 +21,7 @@ public class GearIntakeToUpCommand extends Command {
 
 	@Override
 	protected void execute() {
-		if(!gearIntake.isMotionProfilingFinished())
-			gearIntake.processMotionProfiling();
-		else
-			gearIntake.stopMotionProfiling();
+		gearIntake.runMotionProfiling();
 	}
 
 	@Override

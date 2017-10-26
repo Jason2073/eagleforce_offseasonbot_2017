@@ -147,15 +147,11 @@ public class GearPositionSubsystem extends Subsystem {
 			placeToUp();
 	}
 
-	public void processMotionProfiling() {
-		MotionProfileHelper.processPoints(talon);
-	}
-
-	public boolean isMotionProfilingFinished() {
-		return MotionProfileHelper.isFinished(talon);
-	}
-
-	public void stopMotionProfiling() {
-		MotionProfileHelper.stopTalon(talon);
+	public void runMotionProfiling() {
+		if (!MotionProfileHelper.isFinished(talon)) {
+			MotionProfileHelper.processPoints(talon);
+		} else {
+			MotionProfileHelper.stopTalon(talon);
+		}
 	}
 }

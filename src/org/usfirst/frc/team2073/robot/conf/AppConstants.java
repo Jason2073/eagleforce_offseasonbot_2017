@@ -74,4 +74,15 @@ public abstract class AppConstants {
 	public abstract class Defaults {
 		public static final double FGAIN = .7871;
 	}
+	public abstract class Subsystems {
+		public abstract class Drivetrain {
+			public static final double WHEEL_DIAMETER = 2 * Math.PI;
+			public static final double AUTONOMOUS_MAX_VELOCITY = 700;
+			public static final double AUTONOMOUS_MAX_ACCELERATION = 50;
+			public static final double ROBOT_WIDTH = 28;
+		}
+		public abstract class Turret {
+			public static final int TURRET_POSITION_CODES_PER_REV = 10;
+		}
+	}
 }

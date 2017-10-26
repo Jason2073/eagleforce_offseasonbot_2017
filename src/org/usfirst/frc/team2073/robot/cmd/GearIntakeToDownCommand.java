@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
-import org.usfirst.frc.team2073.robot.OI;
 import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,10 +20,7 @@ public class GearIntakeToDownCommand extends Command {
 
 	@Override
 	protected void execute() {
-		if(!gearIntake.isMotionProfilingFinished())
-			gearIntake.processMotionProfiling();
-		else
-			gearIntake.stopMotionProfiling();
+		gearIntake.runMotionProfiling();
 	}
 
 	@Override

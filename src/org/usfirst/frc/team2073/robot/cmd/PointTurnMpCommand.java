@@ -6,16 +6,18 @@ import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PointTurnMpCommand extends Command {
+	private final double angle;
 	private final DrivetrainSubsystem drivetrain;
 	
-	public PointTurnMpCommand() {
+	public PointTurnMpCommand(double angle) {
+		this.angle = angle;
 		drivetrain = RobotMap.getDrivetrain();
 		requires(drivetrain);
 	}
 
 	@Override
 	protected void initialize() {
-		drivetrain.autonPointTurn(drivetrain.getMotionProfilePointTurnAngle());
+		drivetrain.autonPointTurn(angle);
 	}
 
 	@Override
@@ -27,5 +29,4 @@ public class PointTurnMpCommand extends Command {
 	protected boolean isFinished() {
 		return drivetrain.isMotionProfilingFinished();
 	}
-
 }
