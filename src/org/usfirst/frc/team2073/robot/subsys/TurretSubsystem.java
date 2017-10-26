@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
-import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Turret;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -42,10 +42,9 @@ public class TurretSubsystem extends Subsystem {
 		generateTrajPoints();
 		TalonHelper.setFollowerOf(shooter2, shooter1);
 		
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Turret", "Pos", turretPos);
-		LiveWindow.addActuator("Turret", "Shooter 1", shooter1);
-		LiveWindow.addActuator("Turret", "Shooter 2", shooter2);
+		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.POS, turretPos);
+		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.SHOOTER_1, shooter1);
+		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.SHOOTER_2, shooter2);
 	}
 	
 	@Override
@@ -61,7 +60,7 @@ public class TurretSubsystem extends Subsystem {
 		
 		turretPos.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		turretPos.reverseSensor(false);
-		turretPos.configEncoderCodesPerRev(Subsystems.Turret.TURRET_POSITION_CODES_PER_REV);
+		turretPos.configEncoderCodesPerRev(Turret.TURRET_POSITION_CODES_PER_REV);
 		turretPos.configNominalOutputVoltage(+0.0f, -0.0f);
 		turretPos.configPeakOutputVoltage(+12.0f, 0.0f);
 		turretPos.setProfile(0);

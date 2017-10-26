@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Intermediate;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,9 +15,8 @@ public class IntermediateSubsystem extends Subsystem {
 		main = RobotMap.getIntermediateBelts();
 		bellyRoller = RobotMap.getBellyRoller();
 
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Intermediate", "Up To Turret", main);
-		LiveWindow.addActuator("Intermediate", "Belly Rollers ", bellyRoller);
+		LiveWindow.addActuator(Intermediate.NAME, Intermediate.ComponentNames.MAIN, main);
+		LiveWindow.addActuator(Intermediate.NAME, Intermediate.ComponentNames.BELL_ROLLER, bellyRoller);
 	}
 
 	@Override

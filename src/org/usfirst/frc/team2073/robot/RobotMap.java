@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.conf.AppConstants.RobotPorts;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.*;
 import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
@@ -60,13 +61,13 @@ public class RobotMap {
 		intermediate = new IntermediateSubsystem();
 		gearIntake = new GearIntakeSubsystem();
 
-		// TODO: Extract to constants
-		SmartDashboard.putData("Drivetrain", drivetrain);
-		SmartDashboard.putData("Turret", turret);
-		SmartDashboard.putData("Gear Intake", gearPosition);
-		SmartDashboard.putData("Ball Intake", ballIntake);
-		SmartDashboard.putData("Intermediate", intermediate);
-		SmartDashboard.putData("Climber", climber);
+		SmartDashboard.putData(Drivetrain.NAME, drivetrain);
+		SmartDashboard.putData(Turret.NAME, turret);
+		SmartDashboard.putData(GearPosition.NAME, gearPosition);
+		SmartDashboard.putData(GearIntake.NAME, gearIntake);
+		SmartDashboard.putData(BallIntake.NAME, ballIntake);
+		SmartDashboard.putData(Intermediate.NAME, intermediate);
+		SmartDashboard.putData(Climber.NAME, climber);
 	}
 
 	// Drivetrain

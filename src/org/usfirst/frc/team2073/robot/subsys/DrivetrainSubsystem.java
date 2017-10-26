@@ -5,7 +5,7 @@ import java.util.List;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
-import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Drivetrain;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -46,13 +46,12 @@ public class DrivetrainSubsystem extends Subsystem {
 		shiftLowGear();
 		configEncoders();
 
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Drivetrain", "Left Motor", leftMotor);
-		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", leftMotorSlave);
-		LiveWindow.addActuator("Drivetrain", "Left Motor", rightMotor);
-		LiveWindow.addActuator("Drivetrain", "Left Motor Slave", rightMotorSlave);
-		LiveWindow.addActuator("Drivetrain", "Solenoid 1", solenoid1);
-		LiveWindow.addActuator("Drivetrain", "Solenoid 2", solenoid2);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR, leftMotor);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR_SLAVE, leftMotorSlave);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.RIGHT_MOTOR, rightMotor);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.RIGHT_MOTOR_SLAVE, rightMotorSlave);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.SOLENOID_1, solenoid1);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.SOLENOID_2, solenoid2);
 	}
 
 	@Override
@@ -72,22 +71,22 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public MotionProfileConfiguration driveForwardConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = linearDistInInches / Subsystems.Drivetrain.WHEEL_DIAMETER;
+		double rotationDist = linearDistInInches / Drivetrain.WHEEL_DIAMETER;
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
-		configuration.setMaxVel(Subsystems.Drivetrain.AUTONOMOUS_MAX_VELOCITY);
-		configuration.setMaxAcc(Subsystems.Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
 		configuration.setVelocityOnly(false);
 		return configuration;
 	}
 
 	public MotionProfileConfiguration pointTurnConfig(double angleTurn) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = (angleTurn / 360) * (Subsystems.Drivetrain.ROBOT_WIDTH * Math.PI);
+		double rotationDist = (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
-		configuration.setMaxVel(Subsystems.Drivetrain.AUTONOMOUS_MAX_VELOCITY);
-		configuration.setMaxAcc(Subsystems.Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
 		configuration.setVelocityOnly(false);
 		return configuration;
 	}
@@ -135,9 +134,8 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public void resetMotionProfiling(MotionProfileConfiguration config, boolean leftForwards, boolean rightForwards) {
 		List<TrajectoryPoint> trajPointList = MotionProfileGenerator.generatePoints(config);
-		// TODO: use leftForwards and rightForwards or delete them
-		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, false);
-		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, true);
+		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, leftForwards);
+		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, rightForwards);
 	}
 
 	public void processMotionProfiling() {

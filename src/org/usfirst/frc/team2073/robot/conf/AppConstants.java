@@ -76,13 +76,64 @@ public abstract class AppConstants {
 	}
 	public abstract class Subsystems {
 		public abstract class Drivetrain {
+			public static final String NAME = "Drivetrain";
 			public static final double WHEEL_DIAMETER = 2 * Math.PI;
 			public static final double AUTONOMOUS_MAX_VELOCITY = 700;
 			public static final double AUTONOMOUS_MAX_ACCELERATION = 50;
 			public static final double ROBOT_WIDTH = 28;
+			public abstract class ComponentNames {
+				public static final String LEFT_MOTOR = "Left Motor";
+				public static final String LEFT_MOTOR_SLAVE = "Left Motor Slave";
+				public static final String RIGHT_MOTOR = "Right Motor";
+				public static final String RIGHT_MOTOR_SLAVE = "Right Motor Slave";
+				public static final String SOLENOID_1 = "Solenoid 1";
+				public static final String SOLENOID_2 = "Solenoid 2";
+			}
 		}
 		public abstract class Turret {
+			public static final String NAME = "Turret";
 			public static final int TURRET_POSITION_CODES_PER_REV = 10;
+			public abstract class ComponentNames {
+				public static final String POS = "Pos";
+				public static final String SHOOTER_1 = "Shooter 1";
+				public static final String SHOOTER_2 = "Shooter 2";
+			}
+		}
+		public abstract class GearPosition {
+			public static final String NAME = "Gear Position";
+			public abstract class ComponentNames {
+				public static final String TALON = "Talon";
+				public static final String MAGNET_ZEROER = "Magnet Zeroer";
+			}
+		}
+		public abstract class GearIntake {
+			public static final String NAME = "Gear Intake";
+			public abstract class ComponentNames {
+				public static final String INTAKE_MOTOR = "Intake Motor";
+				public static final String LIGHT_SENSOR = "Light Sensor";
+			}
+		}
+		public abstract class BallIntake {
+			public static final String NAME = "Ball Intake";
+			public abstract class ComponentNames {
+				public static final String MOTOR_1 = "Motor 1";
+				public static final String MOTOR_2 = "Motor 2";
+				public static final String SOLENOID_1 = "Solenoid 1";
+				public static final String SOLENOID_2 = "Solenoid 2";
+			}
+		}
+		public abstract class Intermediate {
+			public static final String NAME = "Intermediate";
+			public abstract class ComponentNames {
+				public static final String MAIN = "Up to Turret";
+				public static final String BELL_ROLLER = "Belly Rollers";
+			}
+		}
+		public abstract class Climber {
+			public static final String NAME = "Climber";
+			public abstract class ComponentNames {
+				public static final String MOTOR = "Motor";
+			}
 		}
 	}
 }

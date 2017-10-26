@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Climber;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,8 +13,7 @@ public class ClimberSubsystem extends Subsystem {
 
 	public ClimberSubsystem() {
 		motor = RobotMap.getClimberMotor();
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Climber", "Motor", motor);
+		LiveWindow.addActuator(Climber.NAME, Climber.ComponentNames.MOTOR, motor);
 	}
 
 	@Override

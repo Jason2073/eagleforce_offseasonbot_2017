@@ -5,6 +5,7 @@ import java.util.List;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearPosition;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
 import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
@@ -52,9 +53,8 @@ public class GearPositionSubsystem extends Subsystem {
 
 		MotionProfileHelper.initTalon(talon);
 
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Gear Intake", "Talon", talon);
-		LiveWindow.addSensor("Gear Intake", "Magnet Zeroer", magnetZeroer);
+		LiveWindow.addActuator(GearPosition.NAME, GearPosition.ComponentNames.TALON, talon);
+		LiveWindow.addSensor(GearPosition.NAME, GearPosition.ComponentNames.MAGNET_ZEROER, magnetZeroer);
 	}
 
 	@Override

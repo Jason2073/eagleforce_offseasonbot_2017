@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.BallIntake;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -19,11 +20,10 @@ public class BallIntakeSubsystem extends Subsystem {
 		solenoid1 = RobotMap.getBallIntakeSolenoid1();
 		solenoid2 = RobotMap.getBallIntakeSolenoid2();
 
-		// TODO: Extract to constants
-		LiveWindow.addActuator("Ball Intake", "Motor 1", motor1);
-		LiveWindow.addActuator("Ball Intake", "Motor 2", motor2);
-		LiveWindow.addActuator("Ball Intake", "Solenoid 1", solenoid1);
-		LiveWindow.addActuator("Ball Intake", "Solenoid 2", solenoid2);
+		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.MOTOR_1, motor1);
+		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.MOTOR_2, motor2);
+		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.SOLENOID_1, solenoid1);
+		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.SOLENOID_2, solenoid2);
 	}
 
 	@Override
