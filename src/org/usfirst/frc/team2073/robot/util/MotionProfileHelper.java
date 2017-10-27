@@ -27,9 +27,13 @@ public class MotionProfileHelper {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
-
+	
+//	different version, potentially broken
+//	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
+//		trajPointList.forEach(talon::pushMotionProfileTrajectory);
+//	}
 	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
-		trajPointList.forEach(talon::pushMotionProfileTrajectory);
+		trajPointList.forEach(trajPoint -> talon.pushMotionProfileTrajectory(trajPoint));
 	}
 
 	public static void processPoints(CANTalon talon) {
@@ -62,4 +66,5 @@ public class MotionProfileHelper {
 		talon.getMotionProfileStatus(talonStatus);
 		return talonStatus.topBufferCnt == 0 && talonStatus.btmBufferCnt == 0;
 	}
+
 }

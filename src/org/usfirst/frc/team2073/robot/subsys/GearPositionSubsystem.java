@@ -39,8 +39,8 @@ public class GearPositionSubsystem extends Subsystem {
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 500, 10, 40, 600);
-		upToPlaceTpList = generatePoints(true, 500, 10, 25, 600);
+		upToDownTpList = generatePoints(true, 300, 10, 20, 60);
+		upToPlaceTpList = generatePoints(true, 300, 10, 25, 60);
 //		shouldnt be called
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
@@ -48,8 +48,6 @@ public class GearPositionSubsystem extends Subsystem {
 		downToUpTpList = generatePoints(false, 3, 10, .25, 60);
 
 //		talon.changeMotionControlFramePeriod(5);
-		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev(1024);
 
 		MotionProfileHelper.initTalon(talon);
 
@@ -59,6 +57,8 @@ public class GearPositionSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talon.configEncoderCodesPerRev(1024);
 	}
 
 	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance, double maxAcc) {
@@ -153,5 +153,17 @@ public class GearPositionSubsystem extends Subsystem {
 		} else {
 			MotionProfileHelper.stopTalon(talon);
 		}
+	}
+	
+	public void processMotionProfiling() {
+		MotionProfileHelper.processPoints(talon);
+	}
+
+	public boolean isMotionProfilingFinished() {
+		return MotionProfileHelper.isFinished(talon);
+	}
+
+	public void stopMotionProfiling() {
+		MotionProfileHelper.stopTalon(talon);
 	}
 }

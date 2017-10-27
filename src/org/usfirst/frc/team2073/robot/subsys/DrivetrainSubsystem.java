@@ -124,12 +124,12 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public void shiftHighGear() {
 		solenoid1.set(true);
-		solenoid2.set(true);
+		solenoid2.set(false);
 	}
 
 	public void shiftLowGear() {
 		solenoid1.set(false);
-		solenoid2.set(false);
+		solenoid2.set(true);
 	}
 
 	public void resetMotionProfiling(MotionProfileConfiguration config, boolean leftForwards, boolean rightForwards) {
