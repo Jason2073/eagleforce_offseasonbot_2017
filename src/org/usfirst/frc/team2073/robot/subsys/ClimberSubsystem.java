@@ -21,7 +21,7 @@ public class ClimberSubsystem extends Subsystem {
 	}
 
 	public void startClimb() {
-		motor.set(-1);
+		motor.set(1);
 	}
 
 	public void stopClimb() {

@@ -39,8 +39,8 @@ public class GearPositionSubsystem extends Subsystem {
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 300, 10, 20, 60);
-		upToPlaceTpList = generatePoints(true, 300, 10, 25, 60);
+		upToDownTpList = generatePoints(true, 300, 10, 50, 60);
+		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
 //		shouldnt be called
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);

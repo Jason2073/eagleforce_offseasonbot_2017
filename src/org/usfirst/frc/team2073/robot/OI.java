@@ -2,9 +2,11 @@ package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
+import org.usfirst.frc.team2073.robot.cmd.GearIntakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
+import org.usfirst.frc.team2073.robot.cmd.GearOuttakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.IntakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.InvertDriveCommand;
 import org.usfirst.frc.team2073.robot.cmd.MotionProfileDriveCommand;
@@ -28,6 +30,8 @@ public class OI {
 		Command gearDown = new GearIntakeToDownCommand();		
 		Command gearPlace = new GearIntakeToPlaceCommand();
 		Command gearReset = new GearIntakeResetCommand();
+		Command gearIntake = new GearIntakeCommand();
+		Command gearOuttake = new GearOuttakeCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
 		Command mpDrive = new MotionProfileDriveCommand();
@@ -50,7 +54,8 @@ public class OI {
 		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
-		a.toggleWhenPressed(gearDown);
+		a.whileHeld(gearIntake);
+		b.whileHeld(gearOuttake);
 		dPadDown.whileActive(gearDown);
 		dPadNone.whileActive(gearReset);
 		dPadRight.whileActive(gearPlace);

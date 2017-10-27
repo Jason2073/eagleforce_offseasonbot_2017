@@ -35,7 +35,7 @@ public abstract class AppConstants {
 		public static final int RIGHT_MOTOR = 3;
 		public static final int RIGHT_MOTOR_SLAVE = 1;
 		public static final int DRIVE_SOLENOID_1 = 0;
-		public static final int DRIVE_SOLENOID_2 = 1;
+		public static final int DRIVE_SOLENOID_2 = 7;
 		
 		// Ball Intake
 		public static final int BALL_INTAKE_SOLENOID_1 = 2;
@@ -44,10 +44,10 @@ public abstract class AppConstants {
 		public static final int BALL_INTAKE_MOTOR_2 = 5;
 		
 		// Climber
-		public static final int CLIMBER_MOTOR = 6;
+		public static final int CLIMBER_MOTOR = 1;
 		
 		// Intermediate
-		public static final int BELLY_ROLLERS = 1;
+		public static final int BELLY_ROLLERS = 11;
 		public static final int INTERMEDIATE = 2;
 		
 		// Turret Shooter
@@ -56,7 +56,7 @@ public abstract class AppConstants {
 		public static final int TURRET_SHOOTER_2 = 5;
 		
 		// Gear Intake
-		public static final int GEAR_INTAKE_MOTOR = 9;
+		public static final int GEAR_INTAKE_MOTOR = 0;
 		public static final int GEAR_INTAKE_TALON = 0;
 		public static final int LIGHT_SENSOR = 2;
 		public static final int MAGNET_ZEROER = 0;
