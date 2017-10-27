@@ -10,7 +10,7 @@ public class ShiftCommand extends Command {
 	
 	public ShiftCommand() {
 		drivetrain = RobotMap.getDrivetrain();
-		requires(drivetrain);
+//		requires(drivetrain);
 	}
 
 	@Override
