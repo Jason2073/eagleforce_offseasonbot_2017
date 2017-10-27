@@ -9,8 +9,7 @@ import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearOuttakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.IntakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.InvertDriveCommand;
-import org.usfirst.frc.team2073.robot.cmd.MotionProfileDriveCommand;
-import org.usfirst.frc.team2073.robot.cmd.MoveForwardMpCommand;
+import org.usfirst.frc.team2073.robot.cmd.MoveBackwardMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.OuttakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.PointTurnCommand;
 import org.usfirst.frc.team2073.robot.cmd.PointTurnMpCommand;
@@ -36,7 +35,7 @@ public class OI {
 		Command gearOuttake = new GearOuttakeCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
-		Command mpDrive = new MoveForwardMpCommand(100);
+		Command mpDrive = new MoveBackwardMpCommand(100);
 		Command intakeBalls = new IntakeBallsCommand();
 		Command outtakeBalls = new OuttakeBallsCommand();
 		Command climb = new ClimbCommand();

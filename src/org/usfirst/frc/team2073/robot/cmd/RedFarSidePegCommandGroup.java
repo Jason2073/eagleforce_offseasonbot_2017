@@ -8,7 +8,7 @@ public class RedFarSidePegCommandGroup extends CommandGroup {
 		addSequential(new PointTurnMpCommand(65.13));
 		addSequential(new MoveForwardMpCommand(22));
 //		addParallel(new GearIntakeToPlaceCommand());
-		addParallel(new GearOuttakeCommand());
+		addParallel(new GearOuttakeCommand(), 5);
 		addSequential(new MoveBackwardMpCommand(22));
 	}
 }

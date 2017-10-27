@@ -45,6 +45,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		setSlaves();
 		shiftLowGear();
 		configEncoders();
+		initTalons();
 
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR, leftMotor);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR_SLAVE, leftMotorSlave);
@@ -68,10 +69,15 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 	}
+	
+	private void initTalons() {
+		MotionProfileHelper.initTalon(leftMotor);
+		MotionProfileHelper.initTalon(rightMotor);
+	}
 
-	public MotionProfileConfiguration driveForwardConfig(double linearDistInInches) {
+	public MotionProfileConfiguration driveStraigtConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = linearDistInInches / Drivetrain.WHEEL_DIAMETER;
+		double rotationDist = Drivetrain.LOW_GEAR_RATIO * linearDistInInches / Drivetrain.WHEEL_DIAMETER;//TODO: check if high gear is enabled
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -82,7 +88,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public MotionProfileConfiguration pointTurnConfig(double angleTurn) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
+		double rotationDist = Drivetrain.LOW_GEAR_RATIO * (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -123,13 +129,13 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void shiftHighGear() {
-		solenoid1.set(true);
-		solenoid2.set(false);
+		solenoid1.set(false);//TODO: rename misleading shiftHighGear/shiftLowGear names
+		solenoid2.set(true);
 	}
 
 	public void shiftLowGear() {
-		solenoid1.set(false);
-		solenoid2.set(true);
+		solenoid1.set(true);
+		solenoid2.set(false);
 	}
 
 	public void resetMotionProfiling(MotionProfileConfiguration config, boolean leftForwards, boolean rightForwards) {
@@ -155,7 +161,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
-		resetMotionProfiling(driveForwardConfig(linearDistInInches), false, true);
+		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
 	}
 	
 	public void autonPointTurn(double angle) {
@@ -163,6 +169,6 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void autonDriveBackward(double linearDistInInches) {
-		resetMotionProfiling(driveForwardConfig(linearDistInInches), true, false);
+		resetMotionProfiling(driveStraigtConfig(linearDistInInches), true, false);
 	}
 }

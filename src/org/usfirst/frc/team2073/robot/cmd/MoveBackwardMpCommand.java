@@ -29,4 +29,9 @@ public class MoveBackwardMpCommand extends Command {
 	protected boolean isFinished() {
 		return drivetrain.isMotionProfilingFinished();
 	}
+
+	@Override
+	protected void end() {
+		drivetrain.stopMotionProfiling();
+	}
 }

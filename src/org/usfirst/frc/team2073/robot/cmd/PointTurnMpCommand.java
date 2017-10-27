@@ -29,4 +29,9 @@ public class PointTurnMpCommand extends Command {
 	protected boolean isFinished() {
 		return drivetrain.isMotionProfilingFinished();
 	}
+
+	@Override
+	protected void end() {
+		drivetrain.stopMotionProfiling();
+	}
 }

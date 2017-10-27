@@ -51,7 +51,7 @@ public abstract class AppConstants {
 		public static final int INTERMEDIATE = 2;
 		
 		// Turret Shooter
-		public static final int TURRET_POSITION = 3;
+		public static final int TURRET_POSITION = 33;
 		public static final int TURRET_SHOOTER_1 = 4;
 		public static final int TURRET_SHOOTER_2 = 5;
 		
@@ -78,9 +78,11 @@ public abstract class AppConstants {
 		public abstract class Drivetrain {
 			public static final String NAME = "Drivetrain";
 			public static final double WHEEL_DIAMETER = 2 * Math.PI;
-			public static final double AUTONOMOUS_MAX_VELOCITY = 700;
+			public static final double AUTONOMOUS_MAX_VELOCITY = 1500;
 			public static final double AUTONOMOUS_MAX_ACCELERATION = 50;
 			public static final double ROBOT_WIDTH = 28;
+			public static final double LOW_GEAR_RATIO = 4.89;
+			public static final double HIGH_GEAR_RATIO = 15.41;
 			public abstract class ComponentNames {
 				public static final String LEFT_MOTOR = "Left Motor";
 				public static final String LEFT_MOTOR_SLAVE = "Left Motor Slave";
