@@ -35,7 +35,7 @@ public class OI {
 		Command gearOuttake = new GearOuttakeCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
-		Command mpDrive = new MoveBackwardMpCommand(100);
+		Command mpDrive = new MoveBackwardMpCommand(20);
 		Command intakeBalls = new IntakeBallsCommand();
 		Command outtakeBalls = new OuttakeBallsCommand();
 		Command climb = new ClimbCommand();

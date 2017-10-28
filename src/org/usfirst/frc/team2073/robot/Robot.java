@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
+import org.usfirst.frc.team2073.robot.cmd.MiddlePegCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.MoveForwardMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.RedFarSidePegCommandGroup;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
@@ -17,23 +18,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	RedFarSidePegCommandGroup redFarSideAuto;
+	private SendableChooser<Command> chooser = new SendableChooser<>();
+	private RedFarSidePegCommandGroup redFarSideAuto;
+	private MoveForwardMpCommand moveForwardAuto;
+	private MiddlePegCommandGroup centerAuto;
+	
 	@Override
 	public void robotInit() {
 		RobotMap.init();
 		OI.init();
-		chooser.addDefault("default", new ClimbCommand());
+		// TODO: usable chooser
+		chooser.addDefault("Cross Baseline", new MoveForwardMpCommand(100));
 		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
-		redFarSideAuto = new RedFarSidePegCommandGroup();
+		chooser.addObject("Center Peg", new MiddlePegCommandGroup());
+//		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
+//		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
+//		redFarSideAuto = new RedFarSidePegCommandGroup();
+//		moveForwardAuto = new MoveForwardMpCommand(100);
+//		centerAuto = new MiddlePegCommandGroup();
+		SmartDashboard.putData("Auto Mode", chooser);
+//		SmartDashboard.putBoolean("Far Side", false);
+//		SmartDashboard.putBoolean("Red", false);
+//		SmartDashboard.putBoolean("Straight", false);
 	}
 
 	@Override
 	public void autonomousInit() {
 //		move.start();
-		redFarSideAuto.start();
+//		if(SmartDashboard.getBoolean("Red", false) && SmartDashboard.getBoolean("Far Side", false) ) {
+//			redFarSideAuto.start();
+//		}else if(SmartDashboard.getBoolean("Straight", false)) {
+//			centerAuto.start();
+//		}else {
+//			moveForwardAuto.start();
+//		}
 //		autonomousCommand.start();
-//		chooser.getSelected().start();
+		chooser.getSelected().start();
 		
 	}
 
@@ -44,7 +64,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
-		redFarSideAuto.cancel();
+		chooser.getSelected().cancel();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

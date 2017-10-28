@@ -21,6 +21,14 @@ public class MotionProfileHelper {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
+	
+	public static void setF(CANTalon talon) {
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
+	}
+	public static void setFRightSide(CANTalon talon) {
+		int tempRightFix = 2;
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN) + tempRightFix);
+	}
 
 	public static void resetTalon(CANTalon talon) {
 		talon.changeControlMode(TalonControlMode.MotionProfile);
@@ -49,7 +57,7 @@ public class MotionProfileHelper {
 	public static void stopTalon(CANTalon talon) {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
-		resetEnc(talon);
+//		resetEnc(talon);
 	}
 
 	public static void checkDirection(CANTalon talon, boolean forwards) {

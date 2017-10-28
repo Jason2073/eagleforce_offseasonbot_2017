@@ -68,6 +68,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	private void configEncoders() {
 		leftMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		rightMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		leftMotor.configEncoderCodesPerRev(1024);
+		rightMotor.configEncoderCodesPerRev(1024);
 	}
 	
 	private void initTalons() {
@@ -77,7 +79,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public MotionProfileConfiguration driveStraigtConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = Drivetrain.LOW_GEAR_RATIO * linearDistInInches / Drivetrain.WHEEL_DIAMETER;//TODO: check if high gear is enabled
+		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDistInInches /* *(5/8)*/) / (Drivetrain.WHEEL_DIAMETER * 5);//TODO: check if high gear is enabled
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -88,7 +90,8 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public MotionProfileConfiguration pointTurnConfig(double angleTurn) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = Drivetrain.LOW_GEAR_RATIO * (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
+		double linearDist = (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
+		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDist) / (Drivetrain.WHEEL_DIAMETER * 5);
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -142,6 +145,11 @@ public class DrivetrainSubsystem extends Subsystem {
 		List<TrajectoryPoint> trajPointList = MotionProfileGenerator.generatePoints(config);
 		MotionProfileHelper.resetAndPushPoints(leftMotor, trajPointList, leftForwards);
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, rightForwards);
+		leftMotor.setPosition(0);
+		rightMotor.setPosition(0);
+		MotionProfileHelper.setF(leftMotor);
+		MotionProfileHelper.setFRightSide(rightMotor);
+		
 	}
 
 	public void processMotionProfiling() {
