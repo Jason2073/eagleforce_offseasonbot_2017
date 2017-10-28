@@ -50,6 +50,7 @@ public class GearPositionSubsystem extends Subsystem {
 //		talon.changeMotionControlFramePeriod(5);
 
 		MotionProfileHelper.initTalon(talon);
+		talon.setF(.7871);
 
 		LiveWindow.addActuator(GearPosition.NAME, GearPosition.ComponentNames.TALON, talon);
 		LiveWindow.addSensor(GearPosition.NAME, GearPosition.ComponentNames.MAGNET_ZEROER, magnetZeroer);
