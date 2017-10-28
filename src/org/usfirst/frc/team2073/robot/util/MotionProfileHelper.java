@@ -49,6 +49,7 @@ public class MotionProfileHelper {
 	public static void stopTalon(CANTalon talon) {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
+		resetEnc(talon);
 	}
 
 	public static void checkDirection(CANTalon talon, boolean forwards) {

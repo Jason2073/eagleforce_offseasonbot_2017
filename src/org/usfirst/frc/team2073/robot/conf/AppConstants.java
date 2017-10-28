@@ -72,17 +72,17 @@ public abstract class AppConstants {
 		public static final String FGAIN = "Fgain";
 	}
 	public abstract class Defaults {
-		public static final double FGAIN = .7871;
+		public static final double FGAIN = 5.7871;
 	}
 	public abstract class Subsystems {
 		public abstract class Drivetrain {
 			public static final String NAME = "Drivetrain";
 			public static final double WHEEL_DIAMETER = 2 * Math.PI;
-			public static final double AUTONOMOUS_MAX_VELOCITY = 1500;
+			public static final double AUTONOMOUS_MAX_VELOCITY = 300;
 			public static final double AUTONOMOUS_MAX_ACCELERATION = 50;
-			public static final double ROBOT_WIDTH = 28;
-			public static final double LOW_GEAR_RATIO = 4.89;
-			public static final double HIGH_GEAR_RATIO = 15.41;
+			public static final double ROBOT_WIDTH = 29;
+			public static final double HIGH_GEAR_RATIO = 4.89;
+			public static final double LOW_GEAR_RATIO = 15.41;
 			public abstract class ComponentNames {
 				public static final String LEFT_MOTOR = "Left Motor";
 				public static final String LEFT_MOTOR_SLAVE = "Left Motor Slave";

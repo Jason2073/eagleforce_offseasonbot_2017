@@ -25,11 +25,11 @@ public class GearIntakeSubsystem extends Subsystem {
 	}
 	
 	public void gearIn() {
-		intakeMotor.set(-.6);
+		intakeMotor.set(-.4);
 	}
 
 	public void gearOut() {
-		intakeMotor.set(.6);
+		intakeMotor.set(.4);
 	}
 	
 	public void gearHold() {

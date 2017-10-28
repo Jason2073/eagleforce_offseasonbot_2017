@@ -161,7 +161,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
-		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
+		resetMotionProfiling(driveStraigtConfig(linearDistInInches), true, false);
 	}
 	
 	public void autonPointTurn(double angle) {
@@ -169,6 +169,6 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void autonDriveBackward(double linearDistInInches) {
-		resetMotionProfiling(driveStraigtConfig(linearDistInInches), true, false);
+		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
 	}
 }

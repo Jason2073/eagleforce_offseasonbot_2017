@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
 	private static DrivetrainSubsystem drivetrain;
-	private static boolean ballIntakeForwards = true;
+	private static boolean ballIntakeForwards = false;
 	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
 	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
 	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
