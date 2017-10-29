@@ -6,6 +6,7 @@ import org.usfirst.frc.team2073.robot.cmd.MiddlePegCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.MoveForwardMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.RedBoilerSideCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.RedFarSidePegCommandGroup;
+import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -64,7 +65,9 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopInit() {
+		DrivetrainSubsystem drive = RobotMap.getDrivetrain();
 		chooser.getSelected().cancel();
+		drive.stopBrakeMode();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

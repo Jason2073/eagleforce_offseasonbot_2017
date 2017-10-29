@@ -1,10 +1,11 @@
 package org.usfirst.frc.team2073.robot;
 
-import org.usfirst.frc.team2073.robot.buttons.DpadAndCheckZero;
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeCommand;
+import org.usfirst.frc.team2073.robot.cmd.GearIntakeHardResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeResetCommand;
+import org.usfirst.frc.team2073.robot.cmd.GearIntakeSoftResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeToPlaceCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearOuttakeCommand;
@@ -42,6 +43,8 @@ public class OI {
 		Command climb = new ClimbCommand();
 		Command toggleDriveDirection = new InvertDriveCommand(); 
 		Command mpPointTurn = new PointTurnMpCommand(50); 
+		Command gearSoftReset = new GearIntakeSoftResetCommand();
+		Command gearHardReset = new GearIntakeHardResetCommand();
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
@@ -54,7 +57,7 @@ public class OI {
 		JoystickButton joystickCenter = new JoystickButton(joystick, 3);
 		JoystickPOV dPadDown = new JoystickPOV(controller, 180);
 		JoystickPOV dPadRight = new JoystickPOV(controller, 90);
-		DpadAndCheckZero dPadNone = new DpadAndCheckZero(controller, -1, RobotMap.getMagnetZeroer());
+		JoystickPOV dPadNone = new JoystickPOV(controller, -1/*, RobotMap.getMagnetZeroer()*/);
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
 		a.whileHeld(gearIntake);
@@ -62,7 +65,8 @@ public class OI {
 		dPadDown.whileActive(gearDown);
 		dPadNone.whileActive(gearReset);
 		dPadRight.whileActive(gearPlace);
-		x.whileHeld(intakeBalls);
+//		x.toggleWhenPressed(gearSoftReset);
+		x.toggleWhenPressed(gearHardReset);
 		y.whileHeld(climb);
 		leftBumper.whenPressed(mpPointTurn);
 		leftJoy.toggleWhenPressed(shift);

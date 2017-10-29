@@ -5,10 +5,10 @@ import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class GearIntakeResetCommand extends Command {
+public class GearIntakeAutonomousResetCommand extends Command {
 	private final GearPositionSubsystem gearIntake;
 
-	public GearIntakeResetCommand() {
+	public GearIntakeAutonomousResetCommand() {
 		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
 //		setInterruptible(false);
@@ -16,16 +16,16 @@ public class GearIntakeResetCommand extends Command {
 
 	@Override
 	protected void execute() {
-		if (!gearIntake.isZero()) {
+//		if (!gearIntake.isZero()) {
 			gearIntake.resetGearIntake();
-		} else {
-			gearIntake.zeroIntake();
-		}
+//		} else {
+//			gearIntake.zeroIntake();
+//		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return gearIntake.isZero();
+		return false;
 	}
 	
 	@Override

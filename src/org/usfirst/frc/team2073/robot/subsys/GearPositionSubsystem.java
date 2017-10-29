@@ -39,7 +39,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 200, 10, 40, 60);
+		upToDownTpList = generatePoints(true, 200, 10, 20, 60);
 		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
 //		shouldnt be called
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
@@ -91,7 +91,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 	public void resetGearIntake() {
 		talon.changeControlMode(TalonControlMode.PercentVbus);
-		talon.set(.2);
+		talon.set(.3);
 	}
 
 	public void zeroIntake() {

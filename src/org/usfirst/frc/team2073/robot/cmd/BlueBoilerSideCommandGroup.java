@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BlueBoilerSideCommandGroup extends CommandGroup {
 	public BlueBoilerSideCommandGroup() {
 		addSequential(new MoveForwardMpCommand(100));
-		addSequential(new PointTurnMpCommand(60.));
+		addSequential(new PointTurnMpCommand(78.));
 		addSequential(new MoveForwardMpCommand(25));
 //		addParallel(new GearIntakeToPlaceCommand());
 		addSequential(new DelayCommand(1));

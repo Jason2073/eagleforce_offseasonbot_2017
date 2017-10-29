@@ -46,6 +46,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		shiftLowGear();
 		configEncoders();
 		initTalons();
+		enableBrakeMode();
 
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR, leftMotor);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR_SLAVE, leftMotorSlave);
@@ -182,5 +183,15 @@ public class DrivetrainSubsystem extends Subsystem {
 	
 	public void autonDriveBackward(double linearDistInInches) {
 		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
+	}
+	
+	public void stopBrakeMode() {
+		leftMotor.enableBrakeMode(false);
+		rightMotor.enableBrakeMode(false);
+	}
+	
+	public void enableBrakeMode() {
+		leftMotor.enableBrakeMode(true);
+		rightMotor.enableBrakeMode(true);
 	}
 }

@@ -39,6 +39,9 @@ public class GearIntakeSubsystem extends Subsystem {
 	public void gearStop() {
 		intakeMotor.set(0);
 	}
+	public void gearSoftReset() {
+		intakeMotor.set(-.2);
+	}
 
 	public boolean lightSensor() {
 		return lightSensor.get();
