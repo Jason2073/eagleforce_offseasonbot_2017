@@ -25,8 +25,9 @@ public class MotionProfileHelper {
 	public static void setF(CANTalon talon) {
 		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
 	}
+	
 	public static void setFRightSide(CANTalon talon) {
-		int tempRightFix = 2;
+		double tempRightFix = .6;
 		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN) + tempRightFix);
 	}
 
