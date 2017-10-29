@@ -1,17 +1,16 @@
 package org.usfirst.frc.team2073.robot;
 
-import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
+import org.usfirst.frc.team2073.robot.cmd.BlueBoilerSideCommandGroup;
+import org.usfirst.frc.team2073.robot.cmd.BlueFarSidePegCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.MiddlePegCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.MoveForwardMpCommand;
+import org.usfirst.frc.team2073.robot.cmd.RedBoilerSideCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.RedFarSidePegCommandGroup;
-import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,10 +28,11 @@ public class Robot extends IterativeRobot {
 		OI.init();
 		// TODO: usable chooser
 		chooser.addDefault("Cross Baseline", new MoveForwardMpCommand(100));
-		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
 		chooser.addObject("Center Peg", new MiddlePegCommandGroup());
-//		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
-//		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
+		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
+		chooser.addObject("BlueFarSidePeg", new BlueFarSidePegCommandGroup());
+		chooser.addObject("RedBoilerSide", new RedBoilerSideCommandGroup());
+		chooser.addObject("BlueBoilerSide", new BlueBoilerSideCommandGroup());
 //		redFarSideAuto = new RedFarSidePegCommandGroup();
 //		moveForwardAuto = new MoveForwardMpCommand(100);
 //		centerAuto = new MiddlePegCommandGroup();
@@ -76,10 +76,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		GearPositionSubsystem gear = RobotMap.getGearPosition();
+//		GearPositionSubsystem gear = RobotMap.getGearPosition();
 //		gear.readPos();
 //		gear.isZero();
-		Joystick joy = OI.getWheel();
+//		Joystick joy = OI.getWheel();
 //		System.out.println(joy.getX());
 //		System.out.println(joy.getY());
 	}

@@ -2,10 +2,10 @@ package org.usfirst.frc.team2073.robot.cmd;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class RedFarSidePegCommandGroup extends CommandGroup {
-	public RedFarSidePegCommandGroup() {
+public class BlueFarSidePegCommandGroup extends CommandGroup {
+	public BlueFarSidePegCommandGroup() {
 		addSequential(new MoveForwardMpCommand(100));
-		addSequential(new PointTurnMpCommand(60));
+		addSequential(new PointTurnMpCommand(-60.));
 		addSequential(new MoveForwardMpCommand(22));
 //		addParallel(new GearIntakeToPlaceCommand());
 		addSequential(new DelayCommand(1));

@@ -173,7 +173,11 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 	
 	public void autonPointTurn(double angle) {
-		resetMotionProfiling(pointTurnConfig(angle), false, false);
+		if(angle > 0)
+			resetMotionProfiling(pointTurnConfig(Math.abs(angle)), false, false);
+		else
+			resetMotionProfiling(pointTurnConfig(Math.abs(angle)), true, true);
+			
 	}
 	
 	public void autonDriveBackward(double linearDistInInches) {
