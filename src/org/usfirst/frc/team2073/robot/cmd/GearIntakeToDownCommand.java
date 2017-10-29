@@ -21,6 +21,7 @@ public class GearIntakeToDownCommand extends Command {
 	@Override
 	protected void execute() {
 		gearIntake.runMotionProfiling();
+		
 	}
 
 	@Override

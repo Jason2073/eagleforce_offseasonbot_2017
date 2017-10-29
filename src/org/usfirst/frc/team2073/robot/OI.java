@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2073.robot;
 
+import org.usfirst.frc.team2073.robot.buttons.DpadAndCheckZero;
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.cmd.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.GearIntakeCommand;
@@ -53,7 +54,7 @@ public class OI {
 		JoystickButton joystickCenter = new JoystickButton(joystick, 3);
 		JoystickPOV dPadDown = new JoystickPOV(controller, 180);
 		JoystickPOV dPadRight = new JoystickPOV(controller, 90);
-		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
+		DpadAndCheckZero dPadNone = new DpadAndCheckZero(controller, -1, RobotMap.getMagnetZeroer());
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
 		a.whileHeld(gearIntake);

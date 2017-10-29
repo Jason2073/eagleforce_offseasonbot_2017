@@ -11,16 +11,16 @@ public class GearIntakeResetCommand extends Command {
 	public GearIntakeResetCommand() {
 		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
+		setInterruptible(false);
 	}
 
 	@Override
 	protected void execute() {
-		if (!gearIntake.isZero()) {
+//		if (!gearIntake.isZero()) {
 			gearIntake.resetGearIntake();
-		} else {
-			gearIntake.zeroIntake();
-			gearIntake.stop();
-		}
+//		} else {
+//			gearIntake.zeroIntake();
+//		}
 	}
 
 	@Override
@@ -31,5 +31,6 @@ public class GearIntakeResetCommand extends Command {
 	@Override
 	protected void end() {
 		gearIntake.zeroIntake();
+		gearIntake.stop();
 	}
 }
