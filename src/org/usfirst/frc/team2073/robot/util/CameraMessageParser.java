@@ -1,7 +1,9 @@
-package org.usfirst.frc.team2073.robot.domain;
+package org.usfirst.frc.team2073.robot.util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import org.usfirst.frc.team2073.robot.domain.CameraMessage;
 
 public class CameraMessageParser {
 	private static final String TRACKING_JSON_KEY = "Trk";

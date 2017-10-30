@@ -1,8 +1,10 @@
-package org.usfirst.frc.team2073.robot.domain;
+package org.usfirst.frc.team2073.robot.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
@@ -18,6 +20,7 @@ public class MotionProfileGenerator {
 		final double endDistance = mpc.getEndDistance();
 		final int interval = mpc.getInterval();
 		final double maxAcc = mpc.getMaxAcc();
+		final boolean isVelocityOnly = mpc.isVelocityOnly();
 
 		// Resolve non-config, static variables
 		// final double t1 = (1. / (maxAcc / RENAME_THIS));
@@ -38,8 +41,6 @@ public class MotionProfileGenerator {
 			i++;
 			double posOrNeg;
 			TrajectoryPoint tPoint = new TrajectoryPoint();
-			// TODO: Decide which version below is better/more readable
-			// MotionProfilePoint prevMpp = mppList.listIterator().previous();
 			TrajectoryPoint prevTp = tpList.get(i - 1);
 
 			posOrNeg = increasingOrDecreasing(i, endDistance, maxVel, interval, t1);
@@ -47,21 +48,15 @@ public class MotionProfileGenerator {
 			f1List.add(sumF1Count);
 			f2 = calculateF2(t2, i, interval, f1List, f2);
 
-			tPoint.velocityOnly = mpc.isVelocityOnly();
+			tPoint.velocityOnly = isVelocityOnly;
 			tPoint.profileSlotSelect = 0;
 			tPoint.timeDurMs = interval;
 			tPoint.velocity = calculateVelocity(maxVel, f1List, f2, i, t2, interval);
 			tPoint.position = (prevTp.position + calculatePosition(tPoint, prevTp, interval));
-			// TODO: Decide whether we should keep or remove acceleration
 
 			tpList.add(tPoint);
-			 System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position +"\t" + tPoint.timeDurMs);
-//			 + "\t" + mpp.getAcc() + "\t" + mpp.getInterval() + "\t" +
-//			 posOrNeg + "\t" +f1List.get(i) + "\t" +f2);
-			if (tPoint.velocity == 0 /*
-										 * endDistanceReached(mpp.getPos(),
-										 * endDistance)
-										 */) {
+			System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position +"\t" + tPoint.timeDurMs);
+			if (tPoint.velocity == 0 || (isVelocityOnly && tPoint.velocity == maxVel)) {
 				tPoint.isLastPoint = true;
 				break;
 			}
@@ -82,12 +77,23 @@ public class MotionProfileGenerator {
 		return tp;
 	}
 	
-	public static double round(double d, int decimalPlace) {
-		BigDecimal bd = new BigDecimal(d);
-		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-		return bd.doubleValue();
-	}
+	// TODO: Remove?
+//	private static double round(double d, int decimalPlace) {
+//		BigDecimal bd = new BigDecimal(d);
+//		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+//		return bd.doubleValue();
+//	}
 
+	/**
+	 * TODO: Jason, add JavaDocs about what this is doing mathematically.
+	 * 
+	 * @param i
+	 * @param endDistance
+	 * @param maxVel
+	 * @param interval
+	 * @param t1
+	 * @return
+	 */
 	// TODO: Break these variables out into a model object to be passed around
 	private static double increasingOrDecreasing(int i, double endDistance, double maxVel, int interval, double t1) {
 		if (i - 1 < (((endDistance / maxVel) * 1000) / interval)) {
@@ -121,6 +127,4 @@ public class MotionProfileGenerator {
 		final double avgVel = (currTp.velocity + prevTp.velocity) / 2;
 		return ((avgVel * interval) / 1000);
 	}
-
-
 }
