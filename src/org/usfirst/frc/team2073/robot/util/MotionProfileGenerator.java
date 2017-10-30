@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2073.robot.util;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class MotionProfileGenerator {
 
 		// Create a counter to use while looping
 		int i = 0;
-		
+
 		while (true) {
 			i++;
 			double posOrNeg;
@@ -55,7 +54,7 @@ public class MotionProfileGenerator {
 			tPoint.position = (prevTp.position + calculatePosition(tPoint, prevTp, interval));
 
 			tpList.add(tPoint);
-			System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position +"\t" + tPoint.timeDurMs);
+			System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position + "\t" + tPoint.timeDurMs);
 			if (tPoint.velocity == 0 || (isVelocityOnly && tPoint.velocity == maxVel)) {
 				tPoint.isLastPoint = true;
 				break;
@@ -76,13 +75,13 @@ public class MotionProfileGenerator {
 
 		return tp;
 	}
-	
+
 	// TODO: Remove?
-//	private static double round(double d, int decimalPlace) {
-//		BigDecimal bd = new BigDecimal(d);
-//		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-//		return bd.doubleValue();
-//	}
+	// private static double round(double d, int decimalPlace) {
+	// BigDecimal bd = new BigDecimal(d);
+	// bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+	// return bd.doubleValue();
+	// }
 
 	/**
 	 * TODO: Jason, add JavaDocs about what this is doing mathematically.
@@ -118,8 +117,8 @@ public class MotionProfileGenerator {
 		return retVal;
 	}
 
-	private static double calculateVelocity(final double maxVel, final List<Double> f1List, final double f2, int i, double t2,
-			double interval) {
+	private static double calculateVelocity(final double maxVel, final List<Double> f1List, final double f2, int i,
+			double t2, double interval) {
 		return maxVel * ((f1List.get(i) + f2) / (1 + (Math.round(t2 / interval))));
 	}
 

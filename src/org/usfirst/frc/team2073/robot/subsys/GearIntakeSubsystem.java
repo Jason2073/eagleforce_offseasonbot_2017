@@ -23,7 +23,7 @@ public class GearIntakeSubsystem extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 	}
-	
+
 	public void gearIn() {
 		intakeMotor.set(-.4);
 	}
@@ -31,16 +31,13 @@ public class GearIntakeSubsystem extends Subsystem {
 	public void gearOut() {
 		intakeMotor.set(.4);
 	}
-	
+
 	public void gearHold() {
-		intakeMotor.set(.1);
+		intakeMotor.set(-.2);
 	}
 
 	public void gearStop() {
 		intakeMotor.set(0);
-	}
-	public void gearSoftReset() {
-		intakeMotor.set(-.2);
 	}
 
 	public boolean lightSensor() {

@@ -1,12 +1,12 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.auton;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DelayCommand extends Command {
-	private int delay;
+	private double delay;
 	
-	public DelayCommand(int delayInSec) {
+	public DelayCommand(double delayInSec) {
 		this.delay = delayInSec;
 	}
 

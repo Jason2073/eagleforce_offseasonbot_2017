@@ -11,7 +11,6 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import old.com.eagleforce.robot.model.CameraMessage;
 import old.com.eagleforce.robot.model.MotionProfileConfiguration;
 
 public class MotionProfileShooterService {
@@ -33,7 +32,6 @@ public class MotionProfileShooterService {
 
 	private List<CANTalon> ctList = new ArrayList<>();
 	private CANTalon.MotionProfileStatus talonStatus = new CANTalon.MotionProfileStatus();
-	private boolean bufferFilled = false;
 	private static final double MAX_VELOCITY = 300;
 	private static final int INTERVAL = 10;
 	private static final double MAX_ACCELERATION = 30;

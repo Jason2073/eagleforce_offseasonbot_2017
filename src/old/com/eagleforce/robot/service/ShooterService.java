@@ -2,7 +2,6 @@ package old.com.eagleforce.robot.service;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
 
 public class ShooterService {
@@ -11,7 +10,6 @@ public class ShooterService {
 	// private CANTalon shoot2 = new CANTalon(3);
 	// private IntermediateService ammo = new IntermediateService();
 	private Victor turret = new Victor(1);
-	private Encoder enc = new Encoder(5, 6);
 	private CANTalon talon = new CANTalon(4);
 //	conf.setVelocityOnly(true)
 

@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 
-public class DpadAndCheckZero extends Trigger {
+public class DpadAndCheckSensor extends Trigger {
 	private Joystick controller;
 	private int pov;
 	private DigitalInput sensor;
 	
-	public DpadAndCheckZero(Joystick controller, int pov, DigitalInput sensor) {
+	public DpadAndCheckSensor(Joystick controller, int pov, DigitalInput sensor) {
 		this.controller = controller;
 		this.pov = pov;
 		this.sensor = sensor;
@@ -17,6 +17,6 @@ public class DpadAndCheckZero extends Trigger {
 	
 	@Override
 	public boolean get() {
-		return controller.getPOV() == pov && !sensor.get() ;
+		return controller.getPOV() == pov && sensor.get() ;
 	}
 }

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.intermediate;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;

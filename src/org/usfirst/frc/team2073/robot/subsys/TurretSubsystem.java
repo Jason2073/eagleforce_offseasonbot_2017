@@ -26,38 +26,38 @@ public class TurretSubsystem extends Subsystem {
 	private static final double DEFAULT_D = 170;
 	private static final double MAX_ACCELERATION = 800;
 	private static final double MAX_VELOCITY = 4000;
-	
+
 	private final CANTalon turretPos;
 	private final CANTalon shooter1;
 	private final CANTalon shooter2;
-	
+
 	private List<TrajectoryPoint> trajPoints;
-	
+
 	public TurretSubsystem() {
 		turretPos = RobotMap.getTurretPosition();
 		shooter1 = RobotMap.getShooter1();
 		shooter2 = RobotMap.getShooter2();
-		
+
 		initTurretPos();
 		generateTrajPoints();
 		TalonHelper.setFollowerOf(shooter2, shooter1);
-		
+
 		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.POS, turretPos);
 		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.SHOOTER_1, shooter1);
 		LiveWindow.addActuator(Turret.NAME, Turret.ComponentNames.SHOOTER_2, shooter2);
 	}
-	
+
 	@Override
 	public void initDefaultCommand() {
 	}
-	
+
 	private void initTurretPos() {
 		SmartDashboard.putNumber(DashboardKeys.SET_F, DEFAULT_F);
 		SmartDashboard.putNumber(DashboardKeys.SET_P, DEFAULT_P);
 		SmartDashboard.putNumber(DashboardKeys.SET_I, DEFAULT_I);
 		SmartDashboard.putNumber(DashboardKeys.SET_D, DEFAULT_D);
 		SmartDashboard.putNumber(DashboardKeys.RPM, MAX_VELOCITY);
-		
+
 		turretPos.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		turretPos.reverseSensor(false);
 		turretPos.configEncoderCodesPerRev(Turret.TURRET_POSITION_CODES_PER_REV);
@@ -69,7 +69,7 @@ public class TurretSubsystem extends Subsystem {
 		turretPos.setI(SmartDashboard.getNumber(DashboardKeys.SET_I, DEFAULT_I));
 		turretPos.setD(SmartDashboard.getNumber(DashboardKeys.SET_D, DEFAULT_D));
 	}
-	
+
 	private void generateTrajPoints() {
 		MotionProfileConfiguration config = new MotionProfileConfiguration();
 		config.setVelocityOnly(true);
@@ -79,22 +79,21 @@ public class TurretSubsystem extends Subsystem {
 		config.setMaxVel(SmartDashboard.getNumber(DashboardKeys.RPM, MAX_VELOCITY) * 60);
 		trajPoints = MotionProfileGenerator.generatePoints(config);
 	}
-	
+
 	public void turretMove(int angle) {
 		turretPos.changeControlMode(TalonControlMode.Position);
 		double rotations = angle / 360;
 		turretPos.set(rotations);
 	}
-	
+
 	public void accelerateToRPM() {
 		MotionProfileHelper.resetAndPushPoints(shooter1, trajPoints, true);
-		while(!MotionProfileHelper.isFinished(shooter1)) {
+		while (!MotionProfileHelper.isFinished(shooter1)) {
 			MotionProfileHelper.processPoints(shooter1);
 		}
 	}
-	
+
 	public void sustainRPM() {
 		// TODO: FIND A method for this
 	}
 }
-

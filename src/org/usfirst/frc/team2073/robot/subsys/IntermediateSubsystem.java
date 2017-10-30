@@ -11,7 +11,7 @@ public class IntermediateSubsystem extends Subsystem {
 	private final Victor main;
 	private final Victor bellyRoller;
 
-	public IntermediateSubsystem(){
+	public IntermediateSubsystem() {
 		main = RobotMap.getIntermediateBelts();
 		bellyRoller = RobotMap.getBellyRoller();
 

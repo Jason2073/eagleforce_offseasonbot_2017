@@ -30,7 +30,7 @@ public class GearPositionSubsystem extends Subsystem {
 	private List<TrajectoryPoint> placeToDownTpList;
 	private List<TrajectoryPoint> downToPlaceTpList;
 	private List<TrajectoryPoint> downToUpTpList;
-	
+
 	public GearPositionSubsystem() {
 		talon = RobotMap.getGearIntakeTalon();
 		magnetZeroer = RobotMap.getMagnetZeroer();
@@ -41,13 +41,10 @@ public class GearPositionSubsystem extends Subsystem {
 		// TODO: Extract method args to constants? Would this help or hurt?
 		upToDownTpList = generatePoints(true, 200, 10, 20, 60);
 		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
-//		shouldnt be called
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
 		downToPlaceTpList = generatePoints(false, 3, 10, .125, 60);
 		downToUpTpList = generatePoints(false, 3, 10, .25, 60);
-
-//		talon.changeMotionControlFramePeriod(5);
 
 		MotionProfileHelper.initTalon(talon);
 		talon.setF(.7871);
@@ -62,7 +59,8 @@ public class GearPositionSubsystem extends Subsystem {
 		talon.configEncoderCodesPerRev(1024);
 	}
 
-	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance, double maxAcc) {
+	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance,
+			double maxAcc) {
 		MotionProfileConfiguration config = new MotionProfileConfiguration();
 		config.setForwards(isForwards);
 		config.setMaxVel(maxVel);
@@ -71,7 +69,7 @@ public class GearPositionSubsystem extends Subsystem {
 		config.setMaxAcc(maxAcc);
 		return MotionProfileGenerator.generatePoints(config);
 	}
-	
+
 	public double getAngle() {
 		return talon.getPosition();
 	}
@@ -155,7 +153,7 @@ public class GearPositionSubsystem extends Subsystem {
 			MotionProfileHelper.stopTalon(talon);
 		}
 	}
-	
+
 	public void processMotionProfiling() {
 		MotionProfileHelper.processPoints(talon);
 	}

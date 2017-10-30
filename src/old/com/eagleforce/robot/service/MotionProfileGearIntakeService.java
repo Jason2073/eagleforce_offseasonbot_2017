@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Queue;
 
 import com.ctre.CANTalon;
-import com.ctre.CANTalon.MotionProfileStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
-import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import old.com.eagleforce.robot.model.MotionProfileConfiguration;
-import old.com.eagleforce.robot.util.SuppressibleLogger;
 
 public class MotionProfileGearIntakeService extends GearIntakeService {
 	private CANTalon talon = new CANTalon(4);
@@ -38,7 +35,6 @@ public class MotionProfileGearIntakeService extends GearIntakeService {
 	}
 	private List<CANTalon> ctList = new ArrayList<>();
 	private CANTalon.MotionProfileStatus talonStatus = new CANTalon.MotionProfileStatus();
-	private boolean bufferFilled = false;
 
 
 	public MotionProfileGearIntakeService() {

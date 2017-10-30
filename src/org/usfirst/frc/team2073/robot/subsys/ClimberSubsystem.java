@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-
 public class ClimberSubsystem extends Subsystem {
 	private final Victor motor;
 

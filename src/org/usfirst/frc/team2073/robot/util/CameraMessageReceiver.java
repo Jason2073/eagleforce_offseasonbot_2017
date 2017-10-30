@@ -9,12 +9,12 @@ import org.usfirst.frc.team2073.robot.domain.CameraMessage;
 public class CameraMessageReceiver {
 	private static final int RECEIVE_PORT = 2073;
 	private static final int RECEIVE_BUFFER_SIZE = 300;
-	
+
 	private static final Object INSTANCE_LOCK = new Object();
 	private static CameraMessageReceiver instance = null;
-	
+
 	private CameraMessage lastMessage = new CameraMessage();
-	
+
 	private static CameraMessageReceiver getInstance() {
 		synchronized (INSTANCE_LOCK) {
 			if (instance == null) {
@@ -23,7 +23,7 @@ public class CameraMessageReceiver {
 		}
 		return instance;
 	}
-	
+
 	private CameraMessageReceiver() {
 		// only allow one thread to be created
 		Thread thread = new Thread(() -> {
@@ -46,7 +46,7 @@ public class CameraMessageReceiver {
 		});
 		thread.start();
 	}
-	
+
 	public static CameraMessage getLastMessage() {
 		return getInstance().lastMessage;
 	}

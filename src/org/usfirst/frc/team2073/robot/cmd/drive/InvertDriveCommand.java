@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.drive;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 

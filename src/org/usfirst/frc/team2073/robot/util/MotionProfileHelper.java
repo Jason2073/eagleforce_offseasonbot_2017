@@ -37,10 +37,6 @@ public class MotionProfileHelper {
 		talon.clearMotionProfileTrajectories();
 	}
 	
-//	different version, potentially broken
-//	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
-//		trajPointList.forEach(talon::pushMotionProfileTrajectory);
-//	}
 	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
 		trajPointList.forEach(trajPoint -> talon.pushMotionProfileTrajectory(trajPoint));
 	}
@@ -58,7 +54,6 @@ public class MotionProfileHelper {
 	public static void stopTalon(CANTalon talon) {
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
-//		resetEnc(talon);
 	}
 
 	public static void checkDirection(CANTalon talon, boolean forwards) {

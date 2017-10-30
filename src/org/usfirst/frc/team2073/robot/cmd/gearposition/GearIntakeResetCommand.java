@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.gearposition;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
@@ -11,7 +11,7 @@ public class GearIntakeResetCommand extends Command {
 	public GearIntakeResetCommand() {
 		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
-//		setInterruptible(false);
+		// setInterruptible(false);
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class GearIntakeResetCommand extends Command {
 	protected boolean isFinished() {
 		return gearIntake.isZero();
 	}
-	
+
 	@Override
 	protected void end() {
 		gearIntake.zeroIntake();

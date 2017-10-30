@@ -14,7 +14,7 @@ public class BallIntakeSubsystem extends Subsystem {
 	private final Solenoid solenoid1;
 	private final Solenoid solenoid2;
 
-	public BallIntakeSubsystem(){
+	public BallIntakeSubsystem() {
 		motor1 = RobotMap.getBallIntakeMotor1();
 		motor2 = RobotMap.getBallIntakeMotor2();
 		solenoid1 = RobotMap.getBallIntakeSolenoid1();

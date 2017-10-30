@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.gearposition;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
@@ -16,14 +16,14 @@ public class GearIntakeHardResetCommand extends Command {
 
 	@Override
 	protected void execute() {
-			gearIntake.resetGearIntake();
+		gearIntake.resetGearIntake();
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
-	
+
 	@Override
 	protected void end() {
 		gearIntake.stop();

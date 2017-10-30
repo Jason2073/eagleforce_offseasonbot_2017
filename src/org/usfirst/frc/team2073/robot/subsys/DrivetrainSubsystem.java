@@ -3,7 +3,7 @@ package org.usfirst.frc.team2073.robot.subsys;
 import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
-import org.usfirst.frc.team2073.robot.cmd.DriveWithJoystickCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Drivetrain;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;

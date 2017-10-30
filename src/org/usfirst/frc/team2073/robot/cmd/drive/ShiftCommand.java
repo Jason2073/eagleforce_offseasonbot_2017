@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2073.robot.cmd;
+package org.usfirst.frc.team2073.robot.cmd.drive;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftCommand extends Command {
 	private final DrivetrainSubsystem drivetrain;
-	
+
 	public ShiftCommand() {
 		drivetrain = RobotMap.getDrivetrain();
-//		requires(drivetrain);
+		// requires(drivetrain);
 	}
 
 	@Override
