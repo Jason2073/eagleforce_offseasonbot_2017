@@ -16,6 +16,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -31,8 +32,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	private final CANTalon rightMotorSlave;
 	private final Solenoid solenoid1;
 	private final Solenoid solenoid2;
-
-	private double preTurn;//TODO: is this needed?
+	private final ADXRS450_Gyro gyro;
 
 	public DrivetrainSubsystem() {
 		leftMotor = RobotMap.getLeftMotor();
@@ -41,6 +41,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		rightMotorSlave = RobotMap.getRightMotorSlave();
 		solenoid1 = RobotMap.getDriveSolenoid1();
 		solenoid2 = RobotMap.getDriveSolenoid2();
+		gyro = RobotMap.getGyro();
 
 		setSlaves();
 		shiftLowGear();
@@ -72,7 +73,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		leftMotor.configEncoderCodesPerRev(1024);
 		rightMotor.configEncoderCodesPerRev(1024);
 	}
-	
+
 	private void initTalons() {
 		MotionProfileHelper.initTalon(leftMotor);
 		MotionProfileHelper.initTalon(rightMotor);
@@ -80,7 +81,8 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public MotionProfileConfiguration driveStraigtConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
-		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDistInInches /* *(5/8)*/) / (Drivetrain.WHEEL_DIAMETER * 5);//TODO: check if high gear is enabled
+		// TODO: check if high gear is enabled
+		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDistInInches) / (Drivetrain.WHEEL_DIAMETER * 5);
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -108,7 +110,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public double inverse(double start) {
 		double inverse = SmartDashboard.getNumber(DashboardKeys.INVERSE, DEFAULT_INVERSE);
-		return (start - preTurn) * inverse + start;
+		return (start) * inverse + start;
 	}
 
 	public void pointTurn(double turn) {
@@ -133,7 +135,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void shiftHighGear() {
-		solenoid1.set(false);//TODO: rename misleading shiftHighGear/shiftLowGear names
+		solenoid1.set(false);// TODO: rename misleading
+								// shiftHighGear/shiftLowGear names
 		solenoid2.set(true);
 	}
 
@@ -148,9 +151,9 @@ public class DrivetrainSubsystem extends Subsystem {
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, rightForwards);
 		leftMotor.setPosition(0);
 		rightMotor.setPosition(0);
-		MotionProfileHelper.setF(leftMotor);
+		MotionProfileHelper.setDefaultF(leftMotor);
 		MotionProfileHelper.setFRightSide(rightMotor);
-		
+
 	}
 
 	public void processMotionProfiling() {
@@ -164,34 +167,50 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public boolean isMotionProfilingFinished() {
-		// TODO: decide whether to check if both are finished or if at least one is
-		// finished
+		// TODO: decide whether to check if both are finished or if at least one
+		// is finished
 		return MotionProfileHelper.isFinished(leftMotor) && MotionProfileHelper.isFinished(rightMotor);
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
 		resetMotionProfiling(driveStraigtConfig(linearDistInInches), true, false);
 	}
-	
+
 	public void autonPointTurn(double angle) {
-		if(angle > 0)
+		if (angle > 0)
 			resetMotionProfiling(pointTurnConfig(Math.abs(angle)), false, false);
 		else
 			resetMotionProfiling(pointTurnConfig(Math.abs(angle)), true, true);
-			
+
 	}
-	
+
 	public void autonDriveBackward(double linearDistInInches) {
 		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
 	}
-	
+
 	public void stopBrakeMode() {
 		leftMotor.enableBrakeMode(false);
 		rightMotor.enableBrakeMode(false);
 	}
-	
+
 	public void enableBrakeMode() {
 		leftMotor.enableBrakeMode(true);
 		rightMotor.enableBrakeMode(true);
+	}
+
+	public double getGyroAngle() {
+		return gyro.getAngle();
+	}
+
+	public void changeFGain(CANTalon motor, double value) {
+		MotionProfileHelper.changeF(motor, value);
+	}
+
+	public void adjustF(double startingGryo) {
+		if (getGyroAngle() < startingGryo - 2) {
+			changeFGain(leftMotor, .01);
+		} else if (getGyroAngle() > startingGryo + 2) {
+			changeFGain(rightMotor, .01);
+		}
 	}
 }

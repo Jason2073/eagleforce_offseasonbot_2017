@@ -12,6 +12,7 @@ import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -26,6 +27,7 @@ public class RobotMap {
 	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
 	private static Solenoid driveSolenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
 	private static Solenoid driveSolenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
+	private static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
 	private static TurretSubsystem turret;
 	private static CANTalon turretPosition = new CANTalon(RobotPorts.TURRET_POSITION);
@@ -196,5 +198,9 @@ public class RobotMap {
 
 	public static CANTalon getShooter2() {
 		return shooter2;
+	}
+
+	public static ADXRS450_Gyro getGyro() {
+		return gyro;
 	}
 }

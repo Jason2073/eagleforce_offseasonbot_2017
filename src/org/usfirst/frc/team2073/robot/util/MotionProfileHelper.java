@@ -22,8 +22,12 @@ public class MotionProfileHelper {
 		talon.clearMotionProfileTrajectories();
 	}
 	
-	public static void setF(CANTalon talon) {
+	public static void setDefaultF(CANTalon talon) {
 		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
+	}
+	public static void changeF(CANTalon talon, double f) {
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN)+f);
+		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN+f);
 	}
 	
 	public static void setFRightSide(CANTalon talon) {
