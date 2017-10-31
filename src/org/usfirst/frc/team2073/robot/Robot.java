@@ -25,10 +25,10 @@ public class Robot extends IterativeRobot {
 		OI.init();
 		chooser.addDefault("Cross Baseline", new MoveForwardMpCommand(100));
 		chooser.addObject("Center Peg", new MiddlePegCommandGroup());
-		chooser.addObject("RedFarSidePeg", new RedFarSidePegCommandGroup());
-		chooser.addObject("BlueFarSidePeg", new BlueFarSidePegCommandGroup());
-		chooser.addObject("RedBoilerSide", new RedBoilerSideCommandGroup());
-		chooser.addObject("BlueBoilerSide", new BlueBoilerSideCommandGroup());
+		chooser.addObject("Red Far Side Peg", new RedFarSidePegCommandGroup());
+		chooser.addObject("Blue Far Side Peg", new BlueFarSidePegCommandGroup());
+		chooser.addObject("Red Boiler Side", new RedBoilerSideCommandGroup());
+		chooser.addObject("Blue Boiler Side", new BlueBoilerSideCommandGroup());
 		SmartDashboard.putData("Auto Mode", chooser);
 	}
 

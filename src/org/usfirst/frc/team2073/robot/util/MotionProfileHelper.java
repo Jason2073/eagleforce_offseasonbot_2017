@@ -25,9 +25,10 @@ public class MotionProfileHelper {
 	public static void setDefaultF(CANTalon talon) {
 		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
 	}
+	
 	public static void changeF(CANTalon talon, double f) {
-		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN)+f);
-		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN+f);
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN) + f);
+		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN + f);
 	}
 	
 	public static void setFRightSide(CANTalon talon) {
@@ -42,7 +43,7 @@ public class MotionProfileHelper {
 	}
 	
 	public static void pushPoints(CANTalon talon, List<TrajectoryPoint> trajPointList) {
-		trajPointList.forEach(trajPoint -> talon.pushMotionProfileTrajectory(trajPoint));
+		trajPointList.forEach(talon::pushMotionProfileTrajectory);
 	}
 
 	public static void processPoints(CANTalon talon) {
@@ -75,5 +76,4 @@ public class MotionProfileHelper {
 		talon.getMotionProfileStatus(talonStatus);
 		return talonStatus.topBufferCnt == 0 && talonStatus.btmBufferCnt == 0;
 	}
-
 }

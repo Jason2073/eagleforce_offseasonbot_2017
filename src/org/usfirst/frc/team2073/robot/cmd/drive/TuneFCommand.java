@@ -5,13 +5,16 @@ import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TuneFCommand extends Command{
-	private DrivetrainSubsystem drive;
+public class TuneFCommand extends Command {
+	private final DrivetrainSubsystem drive;
+	private final Command moveForward;
 	private double startingGyro = 0;
-	private Command moveForward;
-	public TuneFCommand() {
+
+	public TuneFCommand(Command moveForward) {
+		this.moveForward = moveForward;
 		drive = RobotMap.getDrivetrain();
 	}
+
 	@Override
 	protected void initialize() {
 		startingGyro = drive.getGyroAngle();
@@ -24,11 +27,6 @@ public class TuneFCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		return !drive.getCurrentCommand().equals(moveForward);
+		return !moveForward.equals(drive.getCurrentCommand());
 	}
-
-	@Override
-	protected void end() {
-	}
-	
 }

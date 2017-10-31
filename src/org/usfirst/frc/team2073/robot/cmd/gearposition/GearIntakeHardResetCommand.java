@@ -11,7 +11,7 @@ public class GearIntakeHardResetCommand extends Command {
 	public GearIntakeHardResetCommand() {
 		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
-		super.setInterruptible(false);
+		setInterruptible(false);
 	}
 
 	@Override

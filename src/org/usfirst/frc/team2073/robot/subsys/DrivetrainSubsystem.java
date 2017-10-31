@@ -79,7 +79,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		MotionProfileHelper.initTalon(rightMotor);
 	}
 
-	public MotionProfileConfiguration driveStraigtConfig(double linearDistInInches) {
+	public MotionProfileConfiguration driveStraightConfig(double linearDistInInches) {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
 		// TODO: check if high gear is enabled
 		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDistInInches) / (Drivetrain.WHEEL_DIAMETER * 5);
@@ -173,7 +173,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveForward(double linearDistInInches) {
-		resetMotionProfiling(driveStraigtConfig(linearDistInInches), true, false);
+		resetMotionProfiling(driveStraightConfig(linearDistInInches), true, false);
 	}
 
 	public void autonPointTurn(double angle) {
@@ -185,7 +185,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void autonDriveBackward(double linearDistInInches) {
-		resetMotionProfiling(driveStraigtConfig(linearDistInInches), false, true);
+		resetMotionProfiling(driveStraightConfig(linearDistInInches), false, true);
 	}
 
 	public void stopBrakeMode() {

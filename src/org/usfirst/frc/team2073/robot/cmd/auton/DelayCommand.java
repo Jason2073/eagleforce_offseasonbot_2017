@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DelayCommand extends Command {
-	private double delay;
+	private final double delay;
 	
 	public DelayCommand(double delayInSec) {
 		this.delay = delayInSec;

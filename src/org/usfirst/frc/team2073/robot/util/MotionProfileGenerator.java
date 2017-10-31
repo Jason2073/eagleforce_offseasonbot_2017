@@ -11,15 +11,15 @@ import com.ctre.CANTalon.TrajectoryPoint;
 public class MotionProfileGenerator {
 	private static final int ACCELERATION_CURVE = 3000;
 
-	public static List<TrajectoryPoint> generatePoints(MotionProfileConfiguration mpc) {
-		List<CANTalon.TrajectoryPoint> tpList = new ArrayList<>();
+	public static List<TrajectoryPoint> generatePoints(MotionProfileConfiguration config) {
+		List<CANTalon.TrajectoryPoint> trajPointList = new ArrayList<>();
 
 		// Store config in easy to access variables
-		final double maxVel = mpc.getMaxVel();
-		final double endDistance = mpc.getEndDistance();
-		final int interval = mpc.getInterval();
-		final double maxAcc = mpc.getMaxAcc();
-		final boolean isVelocityOnly = mpc.isVelocityOnly();
+		final double maxVel = config.getMaxVel();
+		final double endDistance = config.getEndDistance();
+		final int interval = config.getInterval();
+		final double maxAcc = config.getMaxAcc();
+		final boolean isVelocityOnly = config.isVelocityOnly();
 
 		// Resolve non-config, static variables
 		// final double t1 = (1. / (maxAcc / RENAME_THIS));
@@ -29,7 +29,7 @@ public class MotionProfileGenerator {
 		final List<Double> f1List = new ArrayList<>();
 
 		// Initialize everything to zero for the first record
-		tpList.add(initialTp(interval));
+		trajPointList.add(initialTp(interval));
 		f1List.add(0.0);
 		f2 = 0;
 
@@ -40,7 +40,7 @@ public class MotionProfileGenerator {
 			i++;
 			double posOrNeg;
 			TrajectoryPoint tPoint = new TrajectoryPoint();
-			TrajectoryPoint prevTp = tpList.get(i - 1);
+			TrajectoryPoint prevTp = trajPointList.get(i - 1);
 
 			posOrNeg = increasingOrDecreasing(i, endDistance, maxVel, interval, t1);
 			double sumF1Count = Math.max(0, Math.min(1, (f1List.get(i - 1) + posOrNeg)));
@@ -53,7 +53,7 @@ public class MotionProfileGenerator {
 			tPoint.velocity = calculateVelocity(maxVel, f1List, f2, i, t2, interval);
 			tPoint.position = (prevTp.position + calculatePosition(tPoint, prevTp, interval));
 
-			tpList.add(tPoint);
+			trajPointList.add(tPoint);
 			System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position + "\t" + tPoint.timeDurMs);
 			if (tPoint.velocity == 0 || (isVelocityOnly && tPoint.velocity == maxVel)) {
 				tPoint.isLastPoint = true;
@@ -61,7 +61,7 @@ public class MotionProfileGenerator {
 			}
 		}
 
-		return tpList;
+		return trajPointList;
 	}
 
 	// Private helper methods
