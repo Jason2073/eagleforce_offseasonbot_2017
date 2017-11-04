@@ -5,6 +5,7 @@ import java.util.List;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.drive.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Drivetrain;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
@@ -48,6 +49,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		configEncoders();
 		initTalons();
 		enableBrakeMode();
+		checkFGains();
 
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR, leftMotor);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR_SLAVE, leftMotorSlave);
@@ -60,6 +62,16 @@ public class DrivetrainSubsystem extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoystickCommand());
+	}
+	
+	private void checkFGains(){
+		if(SmartDashboard.getNumber(DashboardKeys.LEFTDRIVEFGAIN, -1 ) == -1){
+			SmartDashboard.putNumber(DashboardKeys.LEFTDRIVEFGAIN, Defaults.LEFTFGAIN);
+		}
+		if(SmartDashboard.getNumber(DashboardKeys.RIGHTDRIVEFGAIN, -1 ) == -1){
+			SmartDashboard.putNumber(DashboardKeys.RIGHTDRIVEFGAIN, Defaults.RIGHTFGAIN);
+		}
+		
 	}
 
 	private void setSlaves() {
@@ -75,8 +87,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	private void initTalons() {
-		MotionProfileHelper.initTalon(leftMotor);
-		MotionProfileHelper.initTalon(rightMotor);
+		MotionProfileHelper.initTalon(leftMotor, Defaults.LEFTFGAIN);
+		MotionProfileHelper.initTalon(rightMotor, Defaults.RIGHTFGAIN);
 	}
 
 	public MotionProfileConfiguration driveStraightConfig(double linearDistInInches) {
@@ -135,8 +147,7 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	public void shiftHighGear() {
-		solenoid1.set(false);// TODO: rename misleading
-								// shiftHighGear/shiftLowGear names
+		solenoid1.set(false);// TODO: rename misleading shiftHighGear/shiftLowGear names
 		solenoid2.set(true);
 	}
 
@@ -151,9 +162,6 @@ public class DrivetrainSubsystem extends Subsystem {
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, rightForwards);
 		leftMotor.setPosition(0);
 		rightMotor.setPosition(0);
-		MotionProfileHelper.setDefaultF(leftMotor);
-		MotionProfileHelper.setFRightSide(rightMotor);
-
 	}
 
 	public void processMotionProfiling() {
@@ -202,15 +210,18 @@ public class DrivetrainSubsystem extends Subsystem {
 		return gyro.getAngle();
 	}
 
-	public void changeFGain(CANTalon motor, double value) {
-		MotionProfileHelper.changeF(motor, value);
+	public void changeFGain(CANTalon motor, double value, String dashboardKey) {
+		MotionProfileHelper.changeF(motor, value, dashboardKey);
 	}
 
 	public void adjustF(double startingGryo) {
 		if (getGyroAngle() < startingGryo - 2) {
-			changeFGain(leftMotor, .01);
+			changeFGain(leftMotor, .01, DashboardKeys.LEFTDRIVEFGAIN);
+			changeFGain(rightMotor, .01, DashboardKeys.RIGHTDRIVEFGAIN);
 		} else if (getGyroAngle() > startingGryo + 2) {
-			changeFGain(rightMotor, .01);
+			changeFGain(rightMotor, .01, DashboardKeys.RIGHTDRIVEFGAIN);
+			changeFGain(leftMotor, -.01, DashboardKeys.LEFTDRIVEFGAIN);
+			
 		}
 	}
 }

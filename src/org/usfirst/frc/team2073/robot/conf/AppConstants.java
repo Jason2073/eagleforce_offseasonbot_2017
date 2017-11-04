@@ -7,6 +7,7 @@ public abstract class AppConstants {
 
 			public abstract class ButtonPorts {
 				public static final int LEFT = 4;
+				public static final int CENTER = 3;
 			}
 		}
 
@@ -76,11 +77,16 @@ public abstract class AppConstants {
 		public static final String SET_P = "Set P";
 		public static final String SET_I = "Set I";
 		public static final String SET_D = "Set D";
-		public static final String FGAIN = "Fgain";
+		public static final String GEARFGAIN = "Gear Position Fgain";
+		public static final String LEFTDRIVEFGAIN = "Left Drive Fgain";
+		public static final String RIGHTDRIVEFGAIN = "Right Drive Fgain";
 	}
 
 	public abstract class Defaults {
-		public static final double FGAIN = 8.7871;
+		public static final double LEFTFGAIN = 8.7871;
+		public static final double RIGHTFGAIN = 9.3871;
+		public static final double GEARFGAIN = .7871;
+		
 	}
 
 	public abstract class Subsystems {

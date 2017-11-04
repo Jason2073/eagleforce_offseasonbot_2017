@@ -35,7 +35,7 @@ public class GearPositionSubsystem extends Subsystem {
 		talon = RobotMap.getGearIntakeTalon();
 		magnetZeroer = RobotMap.getMagnetZeroer();
 
-		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN);
+		SmartDashboard.putNumber(DashboardKeys.GEARFGAIN, Defaults.GEARFGAIN);
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
@@ -46,8 +46,7 @@ public class GearPositionSubsystem extends Subsystem {
 		downToPlaceTpList = generatePoints(false, 3, 10, .125, 60);
 		downToUpTpList = generatePoints(false, 3, 10, .25, 60);
 
-		MotionProfileHelper.initTalon(talon);
-		talon.setF(.7871);
+		MotionProfileHelper.initTalon(talon, Defaults.GEARFGAIN);
 
 		LiveWindow.addActuator(GearPosition.NAME, GearPosition.ComponentNames.TALON, talon);
 		LiveWindow.addSensor(GearPosition.NAME, GearPosition.ComponentNames.MAGNET_ZEROER, magnetZeroer);
