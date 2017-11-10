@@ -2,6 +2,7 @@ package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.buttons.Sensor;
+import org.usfirst.frc.team2073.robot.cmd.ballintake.DeployBallIntakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.ballintake.IntakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.ballintake.OuttakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.climb.ClimbCommand;
@@ -15,6 +16,7 @@ import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeHardResetComman
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToPlaceCommand;
+import org.usfirst.frc.team2073.robot.cmd.gearposition.HardResetAndHoldCommandGroup;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.DriveWheel;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.PowerStick;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.Xbox;
@@ -43,10 +45,11 @@ public class OI {
 		Command toggleDriveDirection = new InvertDriveCommand(); 
 		Command gearHold = new GearIntakeHoldCommand();
 		Command gearHardReset = new GearIntakeHardResetCommand();
+		Command deployIntake = new DeployBallIntakeCommand();
 		
-		CommandGroup gearHardResetAndHold = new CommandGroup();
-		gearHardResetAndHold.addParallel(new GearIntakeHardResetCommand());
-		gearHardResetAndHold.addParallel(new GearIntakeHoldCommand());
+		CommandGroup gearHardResetAndHold = new HardResetAndHoldCommandGroup();
+//		gearHardResetAndHold.addParallel(new GearIntakeHardResetCommand());
+//		gearHardResetAndHold.addParallel(new GearIntakeHoldCommand());
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
@@ -67,16 +70,17 @@ public class OI {
 		a.whileHeld(gearIntake);
 		b.whileHeld(gearOuttake);
 		dPadDown.whileActive(gearDown);
-		dPadNone.whileActive(gearReset);
+//		dPadNone.whileActive(gearReset);
 		dPadRight.whileActive(gearPlace);
-		leftTrigger.whileHeld(outtakeBalls);
+//		leftTrigger.whileHeld(outtakeBalls);
 		x.toggleWhenPressed(gearHardReset);
 		y.whileHeld(climb);
-		leftBumper.whenPressed(intakeBalls);
+		leftBumper.toggleWhenPressed(deployIntake);
 		leftJoy.toggleWhenPressed(shift);
 		lPaddle.whileHeld(pointTurn);
 		rightBumper.whenPressed(gearHold);
 		sensor.whileActive(gearHardResetAndHold);
+		
 	}
 
 	public static Joystick getController() {

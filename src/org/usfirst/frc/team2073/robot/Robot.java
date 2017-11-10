@@ -17,18 +17,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	private SendableChooser<Command> chooser = new SendableChooser<>();
-	private TeleoperatedInitCommand teleopInitCmd = new TeleoperatedInitCommand();
+	private TeleoperatedInitCommand teleopInitCmd;
 	
 	@Override
 	public void robotInit() {
 		RobotMap.init();
 		OI.init();
+		
+		teleopInitCmd = new TeleoperatedInitCommand();
+		
 		chooser.addDefault("Cross Baseline", new MoveForwardMpCommand(100));
 		chooser.addObject("Center Peg", new MiddlePegCommandGroup());
 		chooser.addObject("Red Far Side Peg", new RedFarSidePegCommandGroup());
 		chooser.addObject("Blue Far Side Peg", new BlueFarSidePegCommandGroup());
 		chooser.addObject("Red Boiler Side", new RedBoilerSideCommandGroup());
 		chooser.addObject("Blue Boiler Side", new BlueBoilerSideCommandGroup());
+		
 		SmartDashboard.putData("Auto Mode", chooser);
 	}
 
@@ -52,6 +56,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println("Light sensor: " + RobotMap.getLightSensor().get());
 	}
 
 	@Override

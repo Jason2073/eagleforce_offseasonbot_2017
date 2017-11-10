@@ -14,12 +14,17 @@ public class DeployBallIntakeCommand extends Command {
 	}
 
 	@Override
-	protected void execute() {
+	protected void initialize() {
 		ballIntake.deployIntake();
 	}
 
 	@Override
 	protected boolean isFinished() {
 		return false;
+	}
+
+	@Override
+	protected void end() {
+		ballIntake.holdIntake();
 	}
 }

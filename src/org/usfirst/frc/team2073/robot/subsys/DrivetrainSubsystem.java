@@ -55,6 +55,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.RIGHT_MOTOR_SLAVE, rightMotorSlave);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.SOLENOID_1, solenoid1);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.SOLENOID_2, solenoid2);
+		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.GYRO, gyro);
 	}
 
 	@Override

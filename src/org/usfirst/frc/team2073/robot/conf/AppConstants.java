@@ -38,33 +38,32 @@ public abstract class AppConstants {
 		// Drivetrain
 		public static final int LEFT_MOTOR = 7;
 		public static final int LEFT_MOTOR_SLAVE = 8;
-		public static final int RIGHT_MOTOR = 3;
-		public static final int RIGHT_MOTOR_SLAVE = 1;
+		public static final int RIGHT_MOTOR = 1;
+		public static final int RIGHT_MOTOR_SLAVE = 3;
 		public static final int DRIVE_SOLENOID_1 = 0;
 		public static final int DRIVE_SOLENOID_2 = 7;
 
 		// Ball Intake
-		public static final int BALL_INTAKE_SOLENOID_1 = 2;
-		public static final int BALL_INTAKE_SOLENOID_2 = 3;
-		public static final int BALL_INTAKE_MOTOR_1 = 4;
-		public static final int BALL_INTAKE_MOTOR_2 = 5;
+		public static final int BALL_INTAKE_SOLENOID = 2;
+		public static final int BALL_INTAKE_MOTOR_1 = 0;
+		public static final int BALL_INTAKE_MOTOR_2 = 12;
 
 		// Climber
-		public static final int CLIMBER_MOTOR = 1;
+		public static final int CLIMBER_MOTOR = 4;
 
 		// Intermediate
-		public static final int BELLY_ROLLERS = 11;
-		public static final int INTERMEDIATE = 2;
+		public static final int BELLY_ROLLERS = 2 /* 2*/;
+		public static final int INTERMEDIATE = 5;//should be 5
 
 		// Turret Shooter
-		public static final int TURRET_POSITION = 33;
-		public static final int TURRET_SHOOTER_1 = 4;
-		public static final int TURRET_SHOOTER_2 = 5;
+		public static final int TURRET_POSITION = 14;
+		public static final int TURRET_SHOOTER_1 = 17;
+		public static final int TURRET_SHOOTER_2 = 18;
 
 		// Gear Intake
-		public static final int GEAR_INTAKE_MOTOR = 0;
+		public static final int GEAR_INTAKE_MOTOR = 6;
 		public static final int GEAR_INTAKE_TALON = 0;
-		public static final int LIGHT_SENSOR = 2;
+		public static final int LIGHT_SENSOR = 1;
 		public static final int MAGNET_ZEROER = 0;
 	}
 
@@ -100,6 +99,7 @@ public abstract class AppConstants {
 				public static final String RIGHT_MOTOR_SLAVE = "Right Motor Slave";
 				public static final String SOLENOID_1 = "Solenoid 1";
 				public static final String SOLENOID_2 = "Solenoid 2";
+				public static final String GYRO = "Gyro";
 			}
 		}
 
@@ -138,8 +138,7 @@ public abstract class AppConstants {
 			public abstract class ComponentNames {
 				public static final String MOTOR_1 = "Motor 1";
 				public static final String MOTOR_2 = "Motor 2";
-				public static final String SOLENOID_1 = "Solenoid 1";
-				public static final String SOLENOID_2 = "Solenoid 2";
+				public static final String SOLENOID = "Solenoid";
 			}
 		}
 

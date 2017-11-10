@@ -82,7 +82,7 @@ public class TurretSubsystem extends Subsystem {
 
 	public void turretMove(int angle) {
 		turretPos.changeControlMode(TalonControlMode.Position);
-		double rotations = angle / 360;
+		double rotations = angle / 360.0;
 		turretPos.set(rotations);
 	}
 

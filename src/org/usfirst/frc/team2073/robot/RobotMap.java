@@ -35,8 +35,7 @@ public class RobotMap {
 	private static CANTalon shooter2 = new CANTalon(RobotPorts.TURRET_SHOOTER_2);
 
 	private static BallIntakeSubsystem ballIntake;
-	private static Solenoid ballIntakeSolenoid1 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_1);
-	private static Solenoid ballIntakeSolenoid2 = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID_2);
+	private static Solenoid ballIntakeSolenoid = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID);
 	private static Victor ballIntakeMotor1 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_1);
 	private static Victor ballIntakeMotor2 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_2);
 
@@ -142,12 +141,8 @@ public class RobotMap {
 		return ballIntakeForwards;
 	}
 
-	public static Solenoid getBallIntakeSolenoid1() {
-		return ballIntakeSolenoid1;
-	}
-
-	public static Solenoid getBallIntakeSolenoid2() {
-		return ballIntakeSolenoid2;
+	public static Solenoid getBallIntakeSolenoid() {
+		return ballIntakeSolenoid;
 	}
 
 	public static Victor getBallIntakeMotor1() {

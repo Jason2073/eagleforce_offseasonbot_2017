@@ -3,8 +3,10 @@ package org.usfirst.frc.team2073.robot.subsys;
 import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
+import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearIntake;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearPosition;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
@@ -12,6 +14,7 @@ import org.usfirst.frc.team2073.robot.util.MotionProfileHelper;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.MotionProfileStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
 
@@ -39,7 +42,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 200, 10, 20, 60);
+		upToDownTpList = generatePoints(true, 100, 15, 20, 40);
 		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
@@ -48,6 +51,9 @@ public class GearPositionSubsystem extends Subsystem {
 
 		MotionProfileHelper.initTalon(talon);
 		talon.setF(.7871);
+		talon.configPeakOutputVoltage(+8.0, -8.0);
+		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		talon.configEncoderCodesPerRev(1024);
 
 		LiveWindow.addActuator(GearPosition.NAME, GearPosition.ComponentNames.TALON, talon);
 		LiveWindow.addSensor(GearPosition.NAME, GearPosition.ComponentNames.MAGNET_ZEROER, magnetZeroer);
@@ -55,8 +61,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		talon.configEncoderCodesPerRev(1024);
+		setDefaultCommand(new GearIntakeResetCommand());
 	}
 
 	private List<TrajectoryPoint> generatePoints(boolean isForwards, double maxVel, int interval, double endDistance,
@@ -102,6 +107,7 @@ public class GearPositionSubsystem extends Subsystem {
 	}
 
 	public void upToDown() {
+		System.out.println("upToDown()");
 		MotionProfileHelper.resetAndPushPoints(talon, upToDownTpList, false);
 	}
 
@@ -147,9 +153,13 @@ public class GearPositionSubsystem extends Subsystem {
 	}
 
 	public void runMotionProfiling() {
+		MotionProfileStatus mps = new MotionProfileStatus();
+		talon.getMotionProfileStatus(mps);
 		if (!MotionProfileHelper.isFinished(talon)) {
+//			System.out.println("runMotionProfiling() -> Not finished. btmBufCnt: " + mps.btmBufferCnt + " topBufCnt: " + mps.topBufferCnt + " topBufRem: " + mps.topBufferRem);
 			MotionProfileHelper.processPoints(talon);
 		} else {
+//			System.out.println("runMotionProfiling() -> Finished..");
 			MotionProfileHelper.stopTalon(talon);
 		}
 	}

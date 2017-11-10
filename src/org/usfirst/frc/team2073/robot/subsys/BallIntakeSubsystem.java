@@ -11,19 +11,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class BallIntakeSubsystem extends Subsystem {
 	private final Victor motor1;
 	private final Victor motor2;
-	private final Solenoid solenoid1;
-	private final Solenoid solenoid2;
+	private final Solenoid solenoid;
 
 	public BallIntakeSubsystem() {
 		motor1 = RobotMap.getBallIntakeMotor1();
 		motor2 = RobotMap.getBallIntakeMotor2();
-		solenoid1 = RobotMap.getBallIntakeSolenoid1();
-		solenoid2 = RobotMap.getBallIntakeSolenoid2();
+		solenoid = RobotMap.getBallIntakeSolenoid();
+
+		holdIntake();
 
 		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.MOTOR_1, motor1);
 		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.MOTOR_2, motor2);
-		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.SOLENOID_1, solenoid1);
-		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.SOLENOID_2, solenoid2);
+		LiveWindow.addActuator(BallIntake.NAME, BallIntake.ComponentNames.SOLENOID, solenoid);
 	}
 
 	@Override
@@ -31,18 +30,21 @@ public class BallIntakeSubsystem extends Subsystem {
 	}
 
 	public void deployIntake() {
-		solenoid1.set(true);
-		solenoid2.set(true);
+		solenoid.set(false);
+	}
+	
+	public void holdIntake() {
+		solenoid.set(true);
 	}
 
 	public void intakeBalls() {
-		motor1.set(1);
-		motor2.set(1);
+		motor1.set(.8);
+		motor2.set(.8);
 	}
 
 	public void reverseIntake() {
-		motor1.set(-1);
-		motor2.set(-1);
+		motor1.set(-.8);
+		motor2.set(-.8);
 	}
 
 	public void stopIntake() {
