@@ -17,10 +17,8 @@ public class GearIntakeResetCommand extends Command {
 	@Override
 	protected void execute() {
 		if (!gearIntake.isZero()) {
-//			System.out.println("Reset.execute() -> Intake not zero");
 			gearIntake.resetGearIntake();
 		} else {
-//			System.out.println("Reset.execute() -> Intake is zero");
 			gearIntake.zeroIntake();
 		}
 	}

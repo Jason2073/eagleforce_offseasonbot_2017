@@ -42,7 +42,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 100, 15, 20, 40);
+		upToDownTpList = generatePoints(true, 100, 15, 6f, 40);
 		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
@@ -156,10 +156,8 @@ public class GearPositionSubsystem extends Subsystem {
 		MotionProfileStatus mps = new MotionProfileStatus();
 		talon.getMotionProfileStatus(mps);
 		if (!MotionProfileHelper.isFinished(talon)) {
-//			System.out.println("runMotionProfiling() -> Not finished. btmBufCnt: " + mps.btmBufferCnt + " topBufCnt: " + mps.topBufferCnt + " topBufRem: " + mps.topBufferRem);
 			MotionProfileHelper.processPoints(talon);
 		} else {
-//			System.out.println("runMotionProfiling() -> Finished..");
 			MotionProfileHelper.stopTalon(talon);
 		}
 	}

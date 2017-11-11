@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class HardResetAndHoldCommandGroup extends CommandGroup {
-	private DigitalInput sensor = RobotMap.getLightSensor();
+	private final DigitalInput sensor;
 
 	public HardResetAndHoldCommandGroup() {
+		sensor = RobotMap.getLightSensor();
+		
 		addParallel(new GearIntakeHardResetCommand());
 		addParallel(new GearIntakeHoldCommand());
 	}
-	
-	@Override
 	protected boolean isFinished() {
-		return !sensor.get();
+		return !sensor.get();//TODO check if needed
 	}
 }

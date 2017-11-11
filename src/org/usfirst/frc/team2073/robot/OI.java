@@ -80,7 +80,6 @@ public class OI {
 		lPaddle.whileHeld(pointTurn);
 		rightBumper.whenPressed(gearHold);
 		sensor.whileActive(gearHardResetAndHold);
-		
 	}
 
 	public static Joystick getController() {

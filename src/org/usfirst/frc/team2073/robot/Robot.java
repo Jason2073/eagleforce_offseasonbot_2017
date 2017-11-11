@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	private SendableChooser<Command> chooser = new SendableChooser<>();
 	private TeleoperatedInitCommand teleopInitCmd;
+	private boolean started = false;
 	
 	@Override
 	public void robotInit() {
@@ -39,11 +40,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		chooser.getSelected().start();
-		
 	}
 
 	@Override
 	public void autonomousPeriodic() {
+		if(!started) {
+			chooser.getSelected().start();
+			started = true;
+		}
 		Scheduler.getInstance().run();
 	}
 
