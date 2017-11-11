@@ -6,7 +6,6 @@ import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
-import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearIntake;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearPosition;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;

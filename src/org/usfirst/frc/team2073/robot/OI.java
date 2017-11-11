@@ -3,8 +3,6 @@ package org.usfirst.frc.team2073.robot;
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
 import org.usfirst.frc.team2073.robot.buttons.Sensor;
 import org.usfirst.frc.team2073.robot.cmd.ballintake.DeployBallIntakeCommand;
-import org.usfirst.frc.team2073.robot.cmd.ballintake.IntakeBallsCommand;
-import org.usfirst.frc.team2073.robot.cmd.ballintake.OuttakeBallsCommand;
 import org.usfirst.frc.team2073.robot.cmd.climb.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.InvertDriveCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.PointTurnCommand;
@@ -13,7 +11,6 @@ import org.usfirst.frc.team2073.robot.cmd.gearintake.GearIntakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearintake.GearIntakeHoldCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearintake.GearOuttakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeHardResetCommand;
-import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToPlaceCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.HardResetAndHoldCommandGroup;
@@ -34,13 +31,13 @@ public class OI {
 	static void init() {
 		Command gearDown = new GearIntakeToDownCommand();		
 		Command gearPlace = new GearIntakeToPlaceCommand();
-		Command gearReset = new GearIntakeResetCommand();
+//		Command gearReset = new GearIntakeResetCommand();
 		Command gearIntake = new GearIntakeCommand();
 		Command gearOuttake = new GearOuttakeCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
-		Command intakeBalls = new IntakeBallsCommand();
-		Command outtakeBalls = new OuttakeBallsCommand();
+//		Command intakeBalls = new IntakeBallsCommand();
+//		Command outtakeBalls = new OuttakeBallsCommand();
 		Command climb = new ClimbCommand();
 		Command toggleDriveDirection = new InvertDriveCommand(); 
 		Command gearHold = new GearIntakeHoldCommand();
@@ -59,11 +56,11 @@ public class OI {
 		JoystickButton leftJoy = new JoystickButton(joystick, PowerStick.ButtonPorts.LEFT);
 		JoystickButton lPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LPADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
-		JoystickButton leftTrigger = new JoystickButton(controller, Xbox.ButtonPorts.L2);
+//		JoystickButton leftTrigger = new JoystickButton(controller, Xbox.ButtonPorts.L2);
 		JoystickButton joystickCenter = new JoystickButton(joystick, 3);
 		JoystickPOV dPadDown = new JoystickPOV(controller, 180);
 		JoystickPOV dPadRight = new JoystickPOV(controller, 90);
-		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
+//		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
 		Sensor sensor = new Sensor(RobotMap.getLightSensor());
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
