@@ -1,10 +1,12 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.drive.DriveWithJoystickCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Drivetrain;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 import org.usfirst.frc.team2073.robot.util.MotionProfileGenerator;
@@ -48,6 +50,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		configEncoders();
 		initTalons();
 		enableBrakeMode();
+		configSmartDashboard();
 
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR, leftMotor);
 		LiveWindow.addActuator(Drivetrain.NAME, Drivetrain.ComponentNames.LEFT_MOTOR_SLAVE, leftMotorSlave);
@@ -76,8 +79,8 @@ public class DrivetrainSubsystem extends Subsystem {
 	}
 
 	private void initTalons() {
-		MotionProfileHelper.initTalon(leftMotor);
-		MotionProfileHelper.initTalon(rightMotor);
+		MotionProfileHelper.initTalon(leftMotor, DashboardKeys.LEFTDRIVEFGAIN, Defaults.LEFTDRIVEFGAIN);
+		MotionProfileHelper.initTalon(rightMotor, DashboardKeys.RIGHTDRIVEFGAIN, Defaults.RIGHTDRIVEFGAIN);
 	}
 
 	public MotionProfileConfiguration driveStraightConfig(double linearDistInInches) {
@@ -96,6 +99,7 @@ public class DrivetrainSubsystem extends Subsystem {
 		MotionProfileConfiguration configuration = new MotionProfileConfiguration();
 		double linearDist = (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI);
 		double rotationDist = (8 * Drivetrain.LOW_GEAR_RATIO * linearDist) / (Drivetrain.WHEEL_DIAMETER * 5);
+		// TODO: find out why the 8 and 5 are needed
 		configuration.setEndDistance(rotationDist);
 		configuration.setInterval(10);
 		configuration.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
@@ -104,9 +108,74 @@ public class DrivetrainSubsystem extends Subsystem {
 		return configuration;
 	}
 
-	public double turnSense(double ptart) {
+	/**
+	 * List of profiles, first for outside then for inside.
+	 **/
+	public ArrayList<MotionProfileConfiguration> straightIntoTurn(double linearDistanceInInches, double angleTurn) {
+		MotionProfileConfiguration configuration1 = new MotionProfileConfiguration();
+		MotionProfileConfiguration configuration2 = new MotionProfileConfiguration();
+		double outsideLinearDistance = (angleTurn / 360) * (Drivetrain.ROBOT_WIDTH * Math.PI) + linearDistanceInInches;
+		double outsideRotations = (8 * Drivetrain.LOW_GEAR_RATIO * outsideLinearDistance)
+				/ (Drivetrain.WHEEL_DIAMETER * 5);
+		double insideRotations = (8 * Drivetrain.LOW_GEAR_RATIO * linearDistanceInInches)
+				/ (Drivetrain.WHEEL_DIAMETER * 5);
+		configuration1.setEndDistance(outsideRotations);
+		configuration2.setEndDistance(insideRotations);
+		configuration1.setInterval(10);
+		configuration1.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration1.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration1.setVelocityOnly(false);
+		configuration2.setInterval(10);
+		configuration2.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration2.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration2.setVelocityOnly(false);
+		ArrayList<MotionProfileConfiguration> configList = new ArrayList<MotionProfileConfiguration>();
+		configList.add(configuration1);
+		configList.add(configuration2);
+		return configList;
+	}
+
+	/**
+	 * List of profiles, first for outside then for inside.
+	 **/
+	public ArrayList<MotionProfileConfiguration> arcTurnConfiguratoin(double angleTurn, double turnRadius,
+			boolean isRightTurn) {
+		MotionProfileConfiguration configuration1 = new MotionProfileConfiguration();
+		MotionProfileConfiguration configuration2 = new MotionProfileConfiguration();
+
+		double outsideLinearDistance = 2 * Math.PI * (turnRadius + Drivetrain.ROBOT_WIDTH) * (angleTurn / 360);
+		double insideLinearDistance = 2 * Math.PI * turnRadius * (angleTurn / 360);
+		double outsideRotations = (8 * Drivetrain.LOW_GEAR_RATIO * outsideLinearDistance)
+				/ (Drivetrain.WHEEL_DIAMETER * 5);
+		double insideRotations = (8 * Drivetrain.LOW_GEAR_RATIO * insideLinearDistance)
+				/ (Drivetrain.WHEEL_DIAMETER * 5);
+		double time = Drivetrain.AUTONOMOUS_MAX_VELOCITY / outsideRotations;
+		double interiorVelocity = insideRotations / time;
+
+		configuration1.setEndDistance(outsideRotations);
+		configuration1.setMaxVel(Drivetrain.AUTONOMOUS_MAX_VELOCITY);
+		configuration2.setEndDistance(insideRotations);
+		configuration2.setMaxVel(interiorVelocity);
+
+		configuration1.setForwards(true);
+		configuration1.setInterval(10);
+		configuration1.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration1.setVelocityOnly(false);
+
+		configuration2.setForwards(true);
+		configuration2.setInterval(10);
+		configuration2.setMaxAcc(Drivetrain.AUTONOMOUS_MAX_ACCELERATION);
+		configuration2.setVelocityOnly(false);
+
+		ArrayList<MotionProfileConfiguration> configList = new ArrayList<MotionProfileConfiguration>();
+		configList.add(configuration1);
+		configList.add(configuration2);
+		return configList;
+	}
+
+	public double turnSense(double notPopTart) {
 		double sense = SmartDashboard.getNumber(DashboardKeys.SENSE, DEFAULT_SENSE);
-		return sense * ptart * ptart * ptart + ptart * (1 - sense);
+		return sense * notPopTart * notPopTart * notPopTart + notPopTart * (1 - sense);
 	}
 
 	public double inverse(double start) {
@@ -137,7 +206,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
 	public void shiftHighGear() {
 		solenoid1.set(true);// TODO: rename misleading
-								// shiftHighGear/shiftLowGear names
+							// shiftHighGear/shiftLowGear names
 		solenoid2.set(false);
 	}
 
@@ -152,8 +221,6 @@ public class DrivetrainSubsystem extends Subsystem {
 		MotionProfileHelper.resetAndPushPoints(rightMotor, trajPointList, rightForwards);
 		leftMotor.setPosition(0);
 		rightMotor.setPosition(0);
-		MotionProfileHelper.setDefaultF(leftMotor);
-		MotionProfileHelper.setFRightSide(rightMotor);
 
 	}
 
@@ -189,6 +256,35 @@ public class DrivetrainSubsystem extends Subsystem {
 		resetMotionProfiling(driveStraightConfig(linearDistInInches), false, true);
 	}
 
+	public void autonStraightDriveIntoTurn(double linearDistanceInInches, double angleTurn) {
+		List<TrajectoryPoint> outsideTpList = MotionProfileGenerator
+				.generatePoints(straightIntoTurn(linearDistanceInInches, angleTurn).get(0));
+		List<TrajectoryPoint> insideTpList = MotionProfileGenerator
+				.generatePoints(straightIntoTurn(linearDistanceInInches, angleTurn).get(1));
+
+		if (angleTurn > 0) {
+			MotionProfileHelper.resetAndPushPoints(leftMotor, outsideTpList, true);
+			MotionProfileHelper.resetAndPushPoints(rightMotor, insideTpList, true);
+		} else {
+			MotionProfileHelper.resetAndPushPoints(rightMotor, outsideTpList, true);
+			MotionProfileHelper.resetAndPushPoints(leftMotor, insideTpList, true);
+		}
+	}
+
+	public void autonArcTurn(double angleTurn, double turnRadius, boolean isRightTurn) {
+		List<TrajectoryPoint> outsideTpList = MotionProfileGenerator
+				.generatePoints(arcTurnConfiguratoin(angleTurn, turnRadius, isRightTurn).get(0));
+		List<TrajectoryPoint> insideTpList = MotionProfileGenerator
+				.generatePoints(arcTurnConfiguratoin(angleTurn, turnRadius, isRightTurn).get(1));
+		if (isRightTurn) {
+			MotionProfileHelper.resetAndPushPoints(leftMotor, outsideTpList, true);
+			MotionProfileHelper.resetAndPushPoints(rightMotor, insideTpList, true);
+		} else {
+			MotionProfileHelper.resetAndPushPoints(rightMotor, outsideTpList, true);
+			MotionProfileHelper.resetAndPushPoints(leftMotor, insideTpList, true);
+		}
+	}
+
 	public void stopBrakeMode() {
 		leftMotor.enableBrakeMode(false);
 		rightMotor.enableBrakeMode(false);
@@ -203,15 +299,23 @@ public class DrivetrainSubsystem extends Subsystem {
 		return gyro.getAngle();
 	}
 
-	public void changeFGain(CANTalon motor, double value) {
-		MotionProfileHelper.changeF(motor, value);
+	public void changeFGain(CANTalon motor, double value, String smartDashboardKey, double defaultF) {
+		MotionProfileHelper.changeF(motor, value, smartDashboardKey, defaultF);
 	}
 
 	public void adjustF(double startingGryo) {
-		if (getGyroAngle() < startingGryo - 2) {
-			changeFGain(leftMotor, .01);
-		} else if (getGyroAngle() > startingGryo + 2) {
-			changeFGain(rightMotor, .01);
+		if (getGyroAngle() < startingGryo - 1) {
+			changeFGain(leftMotor, .01, DashboardKeys.LEFTDRIVEFGAIN, Defaults.LEFTDRIVEFGAIN);
+			changeFGain(rightMotor, -.01, DashboardKeys.RIGHTDRIVEFGAIN, Defaults.RIGHTDRIVEFGAIN);
+		} else if (getGyroAngle() > startingGryo + 1) {
+			changeFGain(rightMotor, .01, DashboardKeys.RIGHTDRIVEFGAIN, Defaults.RIGHTDRIVEFGAIN);
+			changeFGain(leftMotor, -.01, DashboardKeys.LEFTDRIVEFGAIN, Defaults.LEFTDRIVEFGAIN);
 		}
+	}
+
+	private void configSmartDashboard() {
+		SmartDashboard.putNumber(DashboardKeys.LEFTDRIVEFGAIN, Defaults.LEFTDRIVEFGAIN);
+		SmartDashboard.putNumber(DashboardKeys.RIGHTDRIVEFGAIN, Defaults.RIGHTDRIVEFGAIN);
+
 	}
 }

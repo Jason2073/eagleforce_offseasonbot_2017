@@ -11,7 +11,7 @@ public class GearIntakeResetCommand extends Command {
 	public GearIntakeResetCommand() {
 		gearIntake = RobotMap.getGearPosition();
 		requires(gearIntake);
-		 setInterruptible(true);
+		setInterruptible(true);
 	}
 
 	@Override

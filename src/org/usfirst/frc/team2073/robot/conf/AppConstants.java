@@ -6,7 +6,17 @@ public abstract class AppConstants {
 			public static final int PORT = 1;
 
 			public abstract class ButtonPorts {
+				public static final int TRIGGER = 1;
+				public static final int DOWN = 2;
+				public static final int CENTER = 3;
 				public static final int LEFT = 4;
+				public static final int RIGHT = 5;
+				public static final int BASE_LEFT_UP = 6;
+				public static final int BASE_LEFT_DOWN = 7;
+				public static final int BASE_DOWN_LEFT = 8;
+				public static final int BASE_DOWN_RIGHT = 9;
+				public static final int BASE_RIGHT_DOWN = 10;
+				public static final int BASE_RIGHT_UP = 11;
 			}
 		}
 
@@ -14,7 +24,18 @@ public abstract class AppConstants {
 			public static final int PORT = 2;
 
 			public abstract class ButtonPorts {
-				public static final int LPADDLE = 1;
+				public static final int X = 1;
+				public static final int LEFT_PADDLE = 1;
+				public static final int O = 2;
+				public static final int SQUARE = 3;
+				public static final int RIGHT_PADDLE = 3;
+				public static final int TRIANGLE = 4;
+				public static final int L1 = 5;
+				public static final int R1 = 6;
+				public static final int SHARE = 7;
+				public static final int OPTIONS = 8;
+				public static final int L3 = 9;
+				public static final int R3 = 10;
 			}
 		}
 
@@ -28,6 +49,12 @@ public abstract class AppConstants {
 				public static final int Y = 4;
 				public static final int L1 = 5;
 				public static final int R1 = 6;
+				public static final int BACK = 7;
+				public static final int START = 8;
+				public static final int LEFT_JOYSTICK = 9;
+				public static final int RIGHT_JOYSTICK = 10;
+				
+				// TODO: verify L2 and R2 are mapped correctly
 				public static final int L2 = 7;
 				public static final int R2 = 8;
 			}
@@ -75,11 +102,16 @@ public abstract class AppConstants {
 		public static final String SET_P = "Set P";
 		public static final String SET_I = "Set I";
 		public static final String SET_D = "Set D";
-		public static final String FGAIN = "Fgain";
+		public static final String RIGHTDRIVEFGAIN = "RightDriveFgain";
+		public static final String LEFTDRIVEFGAIN = "LeftDriveFgain";
+		public static final String GEARFGAIN = "GearFgain";
 	}
 
 	public abstract class Defaults {
-		public static final double FGAIN = 8.7871;
+		public static final double LEFTDRIVEFGAIN = 6.5671;
+		public static final double RIGHTDRIVEFGAIN = 11.0071;
+		public static final double GEARFGAIN = .7871;
+		
 	}
 
 	public abstract class Subsystems {

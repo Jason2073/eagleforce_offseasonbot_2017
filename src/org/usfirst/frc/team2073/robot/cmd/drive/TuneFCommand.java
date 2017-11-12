@@ -7,11 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class TuneFCommand extends Command {
 	private final DrivetrainSubsystem drive;
-	private final Command moveForward;
 	private double startingGyro = 0;
 
-	public TuneFCommand(Command moveForward) {
-		this.moveForward = moveForward;
+	public TuneFCommand() {
 		drive = RobotMap.getDrivetrain();
 	}
 
@@ -27,6 +25,6 @@ public class TuneFCommand extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return !moveForward.equals(drive.getCurrentCommand());
+		return false;
 	}
 }

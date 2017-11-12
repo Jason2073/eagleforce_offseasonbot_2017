@@ -1,16 +1,19 @@
 package org.usfirst.frc.team2073.robot;
 
 import org.usfirst.frc.team2073.robot.buttons.JoystickPOV;
+import org.usfirst.frc.team2073.robot.buttons.MultiTrigger;
+import org.usfirst.frc.team2073.robot.buttons.RobotModeTrigger;
+import org.usfirst.frc.team2073.robot.buttons.RobotModeTrigger.RobotMode;
 import org.usfirst.frc.team2073.robot.buttons.Sensor;
-import org.usfirst.frc.team2073.robot.cmd.ballintake.DeployBallIntakeCommand;
 import org.usfirst.frc.team2073.robot.cmd.climb.ClimbCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.InvertDriveCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.MoveForwardMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.PointTurnCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.PointTurnMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.ShiftCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.TuneFCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearintake.GearIntakeCommand;
-import org.usfirst.frc.team2073.robot.cmd.gearintake.GearIntakeHoldCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearintake.GearOuttakeCommand;
-import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeHardResetCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToDownCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeToPlaceCommand;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.HardResetAndHoldCommandGroup;
@@ -20,8 +23,8 @@ import org.usfirst.frc.team2073.robot.conf.AppConstants.Controllers.Xbox;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class OI {
 	private static Joystick controller = new Joystick(Xbox.PORT);
@@ -31,22 +34,18 @@ public class OI {
 	static void init() {
 		Command gearDown = new GearIntakeToDownCommand();		
 		Command gearPlace = new GearIntakeToPlaceCommand();
-//		Command gearReset = new GearIntakeResetCommand();
 		Command gearIntake = new GearIntakeCommand();
 		Command gearOuttake = new GearOuttakeCommand();
 		Command shift = new ShiftCommand();
 		Command pointTurn = new PointTurnCommand();
 //		Command intakeBalls = new IntakeBallsCommand();
 //		Command outtakeBalls = new OuttakeBallsCommand();
+		Command autonPointTurn = new PointTurnMpCommand(90);
 		Command climb = new ClimbCommand();
 		Command toggleDriveDirection = new InvertDriveCommand(); 
-		Command gearHold = new GearIntakeHoldCommand();
-		Command gearHardReset = new GearIntakeHardResetCommand();
-		Command deployIntake = new DeployBallIntakeCommand();
-		
-		CommandGroup gearHardResetAndHold = new HardResetAndHoldCommandGroup();
-//		gearHardResetAndHold.addParallel(new GearIntakeHardResetCommand());
-//		gearHardResetAndHold.addParallel(new GearIntakeHoldCommand());
+		Command gearHardResetAndHold = new HardResetAndHoldCommandGroup();
+		Command mpMove = new MoveForwardMpCommand(60);
+		Command tuneF = new TuneFCommand();
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
@@ -54,29 +53,26 @@ public class OI {
 		JoystickButton y = new JoystickButton(controller, Xbox.ButtonPorts.Y);
 		JoystickButton leftBumper = new JoystickButton(controller, Xbox.ButtonPorts.L1);
 		JoystickButton leftJoy = new JoystickButton(joystick, PowerStick.ButtonPorts.LEFT);
-		JoystickButton lPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LPADDLE);
+		JoystickButton leftPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LEFT_PADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
-//		JoystickButton leftTrigger = new JoystickButton(controller, Xbox.ButtonPorts.L2);
-		JoystickButton joystickCenter = new JoystickButton(joystick, 3);
-		JoystickPOV dPadDown = new JoystickPOV(controller, 180);
-		JoystickPOV dPadRight = new JoystickPOV(controller, 90);
-//		JoystickPOV dPadNone = new JoystickPOV(controller, -1);
-		Sensor sensor = new Sensor(RobotMap.getLightSensor());
+		JoystickButton joystickCenter = new JoystickButton(joystick, PowerStick.ButtonPorts.CENTER);
+		JoystickPOV dpadDown = new JoystickPOV(controller, 180);
+		JoystickPOV dpadRight = new JoystickPOV(controller, 90);
+		Trigger lightSensor = new MultiTrigger(new Sensor(RobotMap.getLightSensor()),
+				new RobotModeTrigger(RobotMode.AUTONOMOUS, false));
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
 		a.whileHeld(gearIntake);
 		b.whileHeld(gearOuttake);
-		dPadDown.whileActive(gearDown);
-//		dPadNone.whileActive(gearReset);
-		dPadRight.whileActive(gearPlace);
-//		leftTrigger.whileHeld(outtakeBalls);
-		x.toggleWhenPressed(gearHardReset);
+		dpadDown.whileActive(gearDown);
+		dpadRight.whileActive(gearPlace);
+		x.toggleWhenPressed(tuneF);
 		y.whileHeld(climb);
-		leftBumper.toggleWhenPressed(deployIntake);
+		leftBumper.whenPressed(mpMove);
 		leftJoy.toggleWhenPressed(shift);
-		lPaddle.whileHeld(pointTurn);
-		rightBumper.whenPressed(gearHold);
-		sensor.whileActive(gearHardResetAndHold);
+		leftPaddle.whileHeld(pointTurn);
+		rightBumper.whenPressed(autonPointTurn);
+		lightSensor.whileActive(gearHardResetAndHold);
 	}
 
 	public static Joystick getController() {

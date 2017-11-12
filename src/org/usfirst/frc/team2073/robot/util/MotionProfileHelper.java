@@ -3,7 +3,6 @@ package org.usfirst.frc.team2073.robot.util;
 import java.util.List;
 
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
-import org.usfirst.frc.team2073.robot.conf.AppConstants.Defaults;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
@@ -14,26 +13,27 @@ import com.ctre.CANTalon.TrajectoryPoint;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotionProfileHelper {
-	public static void initTalon(CANTalon talon) {
-		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
+	public static void initTalon(CANTalon talon, String key, double defaultF) {
+		setDefaultF(talon, key, defaultF);
 		talon.changeControlMode(TalonControlMode.MotionProfile);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		talon.set(CANTalon.SetValueMotionProfile.Disable.value);
 		talon.clearMotionProfileTrajectories();
 	}
 	
-	public static void setDefaultF(CANTalon talon) {
-		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN));
+	public static void setDefaultF(CANTalon talon, String key, double defaultF) {
+		talon.setF(SmartDashboard.getNumber(key, defaultF));
 	}
 	
-	public static void changeF(CANTalon talon, double f) {
-		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN) + f);
-		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN + f);
+	public static void changeF(CANTalon talon, double f, String smartDashboardKey, double defaultF) {
+		double newF = SmartDashboard.getNumber(smartDashboardKey, defaultF) + f;
+		talon.setF(newF);
+		SmartDashboard.putNumber(smartDashboardKey, newF);
 	}
 	
-	public static void setFRightSide(CANTalon talon) {
+	public static void setFRightSide(CANTalon talon, double defaultF) {
 		double tempRightFix = .6;
-		talon.setF(SmartDashboard.getNumber(DashboardKeys.FGAIN, Defaults.FGAIN) + tempRightFix);
+		talon.setF(SmartDashboard.getNumber(DashboardKeys.RIGHTDRIVEFGAIN, defaultF) + tempRightFix);
 	}
 
 	public static void resetTalon(CANTalon talon) {

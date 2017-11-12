@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("Light sensor: " + RobotMap.getLightSensor().get());
+		System.out.println("Gyro: " + RobotMap.getGyro().getAngle());
 	}
 
 	@Override

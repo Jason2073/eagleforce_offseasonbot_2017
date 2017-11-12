@@ -12,11 +12,14 @@ public class HardResetAndHoldCommandGroup extends CommandGroup {
 
 	public HardResetAndHoldCommandGroup() {
 		sensor = RobotMap.getLightSensor();
-		addParallel(new GearIntakeRumbleCommand());
+
+		addParallel(new GearIntakeRumbleCommand(), 2);
 		addParallel(new GearIntakeHardResetCommand());
 		addParallel(new GearIntakeHoldCommand());
 	}
+
+	@Override
 	protected boolean isFinished() {
-		return !sensor.get();//TODO check if needed
+		return !sensor.get(); // TODO check if needed
 	}
 }

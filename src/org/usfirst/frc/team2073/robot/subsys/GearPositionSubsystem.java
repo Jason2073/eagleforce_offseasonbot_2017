@@ -37,18 +37,18 @@ public class GearPositionSubsystem extends Subsystem {
 		talon = RobotMap.getGearIntakeTalon();
 		magnetZeroer = RobotMap.getMagnetZeroer();
 
-		SmartDashboard.putNumber(DashboardKeys.FGAIN, Defaults.FGAIN);
+		SmartDashboard.putNumber(DashboardKeys.GEARFGAIN, Defaults.GEARFGAIN);
 
 		// generatePoints(isForwards, maxVel, interval, endDistance, maxAcc)
 		// TODO: Extract method args to constants? Would this help or hurt?
-		upToDownTpList = generatePoints(true, 100, 15, 6f, 40);
+		upToDownTpList = generatePoints(true, 50, 15, 4.2, 40);
 		upToPlaceTpList = generatePoints(true, 300, 10, 15, 60);
 		placeToUpTpList = generatePoints(false, 3, 10, .125, 60);
 		placeToDownTpList = generatePoints(true, 3, 10, .125, 60);
 		downToPlaceTpList = generatePoints(false, 3, 10, .125, 60);
 		downToUpTpList = generatePoints(false, 3, 10, .25, 60);
 
-		MotionProfileHelper.initTalon(talon);
+		MotionProfileHelper.initTalon(talon, DashboardKeys.GEARFGAIN, Defaults.GEARFGAIN);
 		talon.setF(.7871);
 		talon.configPeakOutputVoltage(+8.0, -8.0);
 		talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -93,7 +93,7 @@ public class GearPositionSubsystem extends Subsystem {
 
 	public void resetGearIntake() {
 		talon.changeControlMode(TalonControlMode.PercentVbus);
-		talon.set(.3);
+		talon.set(.25);
 	}
 
 	public void zeroIntake() {
