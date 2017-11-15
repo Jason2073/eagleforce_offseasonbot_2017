@@ -119,7 +119,7 @@ public abstract class AppConstants {
 			public static final String NAME = "Drivetrain";
 			public static final double WHEEL_DIAMETER = 4 * Math.PI;
 			public static final double AUTONOMOUS_MAX_VELOCITY = 300;
-			public static final double AUTONOMOUS_MAX_ACCELERATION = 50;
+			public static final double AUTONOMOUS_MAX_ACCELERATION = 30;
 			public static final double ROBOT_WIDTH = 29;
 			public static final double HIGH_GEAR_RATIO = 4.89;
 			public static final double LOW_GEAR_RATIO = 15.41;

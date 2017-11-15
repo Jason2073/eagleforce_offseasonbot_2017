@@ -6,6 +6,10 @@ import org.usfirst.frc.team2073.robot.buttons.RobotModeTrigger;
 import org.usfirst.frc.team2073.robot.buttons.RobotModeTrigger.RobotMode;
 import org.usfirst.frc.team2073.robot.buttons.Sensor;
 import org.usfirst.frc.team2073.robot.cmd.climb.ClimbCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.ArcTurnMpCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.CameraPointTurn;
+import org.usfirst.frc.team2073.robot.cmd.drive.DriveStraightAndPivotTurnCommand;
+import org.usfirst.frc.team2073.robot.cmd.drive.FollowTargetSmoothTurn;
 import org.usfirst.frc.team2073.robot.cmd.drive.InvertDriveCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.MoveForwardMpCommand;
 import org.usfirst.frc.team2073.robot.cmd.drive.PointTurnCommand;
@@ -46,6 +50,10 @@ public class OI {
 		Command gearHardResetAndHold = new HardResetAndHoldCommandGroup();
 		Command mpMove = new MoveForwardMpCommand(60);
 		Command tuneF = new TuneFCommand();
+		Command cammeraSmoothFollow = new FollowTargetSmoothTurn();
+		Command cameraPointTurn = new CameraPointTurn();
+		Command driveAndPivot = new DriveStraightAndPivotTurnCommand(25, 45);
+		Command arcTurn = new ArcTurnMpCommand(48, 90, true);
 		
 		JoystickButton x = new JoystickButton(controller, Xbox.ButtonPorts.X);
 		JoystickButton a = new JoystickButton(controller, Xbox.ButtonPorts.A);
@@ -55,6 +63,10 @@ public class OI {
 		JoystickButton leftJoy = new JoystickButton(joystick, PowerStick.ButtonPorts.LEFT);
 		JoystickButton leftPaddle = new JoystickButton(wheel, DriveWheel.ButtonPorts.LEFT_PADDLE);
 		JoystickButton rightBumper = new JoystickButton(controller, Xbox.ButtonPorts.R1);
+		JoystickButton back = new JoystickButton(controller, Xbox.ButtonPorts.BACK);
+		JoystickButton wheelX = new JoystickButton(wheel, DriveWheel.ButtonPorts.X);
+		JoystickButton wheelO = new JoystickButton(wheel, DriveWheel.ButtonPorts.O);
+		JoystickButton wheelSquare = new JoystickButton(wheel, DriveWheel.ButtonPorts.SQUARE);
 		JoystickButton joystickCenter = new JoystickButton(joystick, PowerStick.ButtonPorts.CENTER);
 		JoystickPOV dpadDown = new JoystickPOV(controller, 180);
 		JoystickPOV dpadRight = new JoystickPOV(controller, 90);
@@ -62,16 +74,20 @@ public class OI {
 				new RobotModeTrigger(RobotMode.AUTONOMOUS, false));
 		
 		joystickCenter.toggleWhenPressed(toggleDriveDirection);
+//		back.whenPressed(driveAndPivot);
+//		wheelX.whenPressed(arcTurn);
+//		wheelO.toggleWhenPressed(cammeraSmoothFollow);
+//		wheelSquare.whenPressed(cameraPointTurn);
 		a.whileHeld(gearIntake);
 		b.whileHeld(gearOuttake);
 		dpadDown.whileActive(gearDown);
 		dpadRight.whileActive(gearPlace);
 		x.toggleWhenPressed(tuneF);
 		y.whileHeld(climb);
-		leftBumper.whenPressed(mpMove);
+		leftBumper.whenPressed(arcTurn);
 		leftJoy.toggleWhenPressed(shift);
 		leftPaddle.whileHeld(pointTurn);
-		rightBumper.whenPressed(autonPointTurn);
+		rightBumper.whenPressed(arcTurn);
 		lightSensor.whileActive(gearHardResetAndHold);
 	}
 

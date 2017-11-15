@@ -11,11 +11,12 @@ public class ArcTurnMpCommand extends Command {
 	private final boolean isRightTurn;
 	private final DrivetrainSubsystem drivetrain;
 
-	public ArcTurnMpCommand(double linearDistance, double angleTurn, boolean isRightTurn) {
+	public ArcTurnMpCommand(double turnRadius, double angleTurn, boolean isRightTurn) {
 		drivetrain = RobotMap.getDrivetrain();
 		this.angleTurn = angleTurn;
-		this.turnRadius = linearDistance;
+		this.turnRadius = turnRadius;
 		this.isRightTurn = isRightTurn;
+		requires(drivetrain);
 	}
 
 	@Override
