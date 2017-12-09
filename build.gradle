@@ -1,0 +1,43 @@
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.11.27"
+}
+
+def TEAM = 2073
+def ROBOT_CLASS = "org.usfirst.frc.team2073.robot.Robot"
+
+deploy {
+    targets {
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = TEAM
+        }
+    }
+    artifacts {
+        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+        }
+    }
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    compile wpilib()
+    compile ctre()
+    compile group: 'org.json', name: 'json', version: '20171018'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2.1'
+}
