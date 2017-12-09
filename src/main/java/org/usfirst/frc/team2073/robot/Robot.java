@@ -10,6 +10,9 @@ import org.usfirst.frc.team2073.robot.cmd.auton.RedBoilerSideCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.auton.RedFarSidePegCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.drive.MoveForwardMpCommand;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,10 +29,12 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
+		Injector injector = Guice.createInjector(new RobotMapModule());
+		
 		RobotMap.init();
 		OI.init();
 		
-		teleopInitCmd = new TeleoperatedInitCommand();
+		teleopInitCmd = injector.getInstance(TeleoperatedInitCommand.class);
 		
 		chooser.addDefault("Cross Baseline", new MoveForwardMpCommand(100));
 		chooser.addObject("Center Peg", new MiddlePegCommandGroup());

@@ -18,12 +18,16 @@ import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.MotionProfileStatus;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@Singleton
 public class GearPositionSubsystem extends Subsystem {
 	private static final Logger LOGGER = LoggerFactory.getLogger(GearPositionSubsystem.class);
 
@@ -37,9 +41,10 @@ public class GearPositionSubsystem extends Subsystem {
 	private List<TrajectoryPoint> downToPlaceTpList;
 	private List<TrajectoryPoint> downToUpTpList;
 
-	public GearPositionSubsystem() {
-		talon = RobotMap.getGearIntakeTalon();
-		magnetZeroer = RobotMap.getMagnetZeroer();
+	@Inject
+	GearPositionSubsystem(@Named("Gear Position") CANTalon talon, @Named("Magnet Zeroer") DigitalInput magnetZeroer) {
+		this.talon = talon;
+		this.magnetZeroer = magnetZeroer;
 
 		SmartDashboard.putNumber(DashboardKeys.GEARFGAIN, Defaults.GEARFGAIN);
 

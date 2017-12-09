@@ -2,7 +2,6 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Turret;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
@@ -14,11 +13,15 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@Singleton
 public class TurretSubsystem extends Subsystem {
 	private static final double DEFAULT_F = 4.0;
 	private static final double DEFAULT_P = 30;
@@ -33,10 +36,13 @@ public class TurretSubsystem extends Subsystem {
 
 	private List<TrajectoryPoint> trajPoints;
 
-	public TurretSubsystem() {
-		turretPos = RobotMap.getTurretPosition();
-		shooter1 = RobotMap.getShooter1();
-		shooter2 = RobotMap.getShooter2();
+	@Inject
+	TurretSubsystem(@Named("Turret Position") CANTalon turretPos,
+			@Named("Turret Shooter 1") CANTalon shooter1,
+			@Named("Turret Shooter 2") CANTalon shooter2) {
+		this.turretPos = turretPos;
+		this.shooter1 = shooter1;
+		this.shooter2 = shooter2;
 
 		initTurretPos();
 		generateTrajPoints();

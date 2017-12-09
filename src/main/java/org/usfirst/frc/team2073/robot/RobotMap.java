@@ -1,7 +1,12 @@
 package org.usfirst.frc.team2073.robot;
 
-import org.usfirst.frc.team2073.robot.conf.AppConstants.RobotPorts;
-import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.*;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.BallIntake;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Climber;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Drivetrain;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearIntake;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearPosition;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Intermediate;
+import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Turret;
 import org.usfirst.frc.team2073.robot.subsys.BallIntakeSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.ClimberSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
@@ -10,58 +15,26 @@ import org.usfirst.frc.team2073.robot.subsys.GearPositionSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.IntermediateSubsystem;
 import org.usfirst.frc.team2073.robot.subsys.TurretSubsystem;
 
-import com.ctre.CANTalon;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.GyroBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotMap {
-	private static DrivetrainSubsystem drivetrain;
+	@Inject private static DrivetrainSubsystem drivetrain;
 	private static boolean ballIntakeForwards = false;
-	private static CANTalon leftMotor = new CANTalon(RobotPorts.LEFT_MOTOR);
-	private static CANTalon leftMotorSlave = new CANTalon(RobotPorts.LEFT_MOTOR_SLAVE);
-	private static CANTalon rightMotor = new CANTalon(RobotPorts.RIGHT_MOTOR);
-	private static CANTalon rightMotorSlave = new CANTalon(RobotPorts.RIGHT_MOTOR_SLAVE);
-	private static Solenoid driveSolenoid1 = new Solenoid(RobotPorts.DRIVE_SOLENOID_1);
-	private static Solenoid driveSolenoid2 = new Solenoid(RobotPorts.DRIVE_SOLENOID_2);
-	private static ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-
-	private static TurretSubsystem turret;
-	private static CANTalon turretPosition = new CANTalon(RobotPorts.TURRET_POSITION);
-	private static CANTalon shooter1 = new CANTalon(RobotPorts.TURRET_SHOOTER_1);
-	private static CANTalon shooter2 = new CANTalon(RobotPorts.TURRET_SHOOTER_2);
-
-	private static BallIntakeSubsystem ballIntake;
-	private static Solenoid ballIntakeSolenoid = new Solenoid(RobotPorts.BALL_INTAKE_SOLENOID);
-	private static Victor ballIntakeMotor1 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_1);
-	private static Victor ballIntakeMotor2 = new Victor(RobotPorts.BALL_INTAKE_MOTOR_2);
-
-	private static ClimberSubsystem climber;
-	private static Victor climberMotor = new Victor(RobotPorts.CLIMBER_MOTOR);
-
-	private static IntermediateSubsystem intermediate;
-	private static Victor bellyRoller = new Victor(RobotPorts.BELLY_ROLLERS);
-	private static Victor intermediateBelts = new Victor(RobotPorts.INTERMEDIATE);
-
-	private static GearPositionSubsystem gearPosition;
-	private static GearIntakeSubsystem gearIntake;
-	private static Victor gearIntakeMotor = new Victor(RobotPorts.GEAR_INTAKE_MOTOR);
-	private static CANTalon gearIntakeTalon = new CANTalon(RobotPorts.GEAR_INTAKE_TALON);
-	private static DigitalInput lightSensor = new DigitalInput(RobotPorts.LIGHT_SENSOR);
-	private static DigitalInput magnetZeroer = new DigitalInput(RobotPorts.MAGNET_ZEROER);
+	@Inject private static GyroBase gyro;
+	@Inject private static TurretSubsystem turret;
+	@Inject private static BallIntakeSubsystem ballIntake;
+	@Inject private static ClimberSubsystem climber;
+	@Inject private static IntermediateSubsystem intermediate;
+	@Inject private static GearPositionSubsystem gearPosition;
+	@Inject private static GearIntakeSubsystem gearIntake;
+	@Inject @Named("Light Sensor") private static DigitalInput lightSensor;
 
 	static void init() {
-		drivetrain = new DrivetrainSubsystem();
-		gearPosition = new GearPositionSubsystem();
-		ballIntake = new BallIntakeSubsystem();
-		climber = new ClimberSubsystem();
-		turret = new TurretSubsystem();
-		intermediate = new IntermediateSubsystem();
-		gearIntake = new GearIntakeSubsystem();
-
 		SmartDashboard.putData(Drivetrain.NAME, drivetrain);
 		SmartDashboard.putData(Turret.NAME, turret);
 		SmartDashboard.putData(GearPosition.NAME, gearPosition);
@@ -71,64 +44,32 @@ public class RobotMap {
 		SmartDashboard.putData(Climber.NAME, climber);
 	}
 
-	// Drivetrain
-	// ====================================================================================================
+	@Deprecated
 	public static DrivetrainSubsystem getDrivetrain() {
 		return drivetrain;
 	}
 
-	public static CANTalon getLeftMotor() {
-		return leftMotor;
+	@Deprecated
+	public static GyroBase getGyro() {
+		return gyro;
 	}
 
-	public static CANTalon getLeftMotorSlave() {
-		return leftMotorSlave;
-	}
-
-	public static CANTalon getRightMotor() {
-		return rightMotor;
-	}
-
-	public static CANTalon getRightMotorSlave() {
-		return rightMotorSlave;
-	}
-
-	public static Solenoid getDriveSolenoid1() {
-		return driveSolenoid1;
-	}
-
-	public static Solenoid getDriveSolenoid2() {
-		return driveSolenoid2;
-	}
-
-	// Gear Intake
-	// ====================================================================================================
+	@Deprecated
 	public static GearIntakeSubsystem getGearIntake() {
 		return gearIntake;
 	}
 
+	@Deprecated
 	public static GearPositionSubsystem getGearPosition() {
 		return gearPosition;
 	}
 
-	public static Victor getGearIntakeMotor() {
-		return gearIntakeMotor;
-	}
-
-	public static CANTalon getGearIntakeTalon() {
-		return gearIntakeTalon;
-	}
-
+	@Deprecated
 	public static DigitalInput getLightSensor() {
 		return lightSensor;
 	}
 
-	public static DigitalInput getMagnetZeroer() {
-		return magnetZeroer;
-	}
-
-	// Ball Intake
-	// ====================================================================================================
+	@Deprecated
 	public static BallIntakeSubsystem getBallIntake() {
 		return ballIntake;
 	}
@@ -141,61 +82,18 @@ public class RobotMap {
 		return ballIntakeForwards;
 	}
 
-	public static Solenoid getBallIntakeSolenoid() {
-		return ballIntakeSolenoid;
-	}
-
-	public static Victor getBallIntakeMotor1() {
-		return ballIntakeMotor1;
-	}
-
-	public static Victor getBallIntakeMotor2() {
-		return ballIntakeMotor2;
-	}
-
-	// Climber
-	// ====================================================================================================
+	@Deprecated
 	public static ClimberSubsystem getClimber() {
 		return climber;
 	}
 
-	public static Victor getClimberMotor() {
-		return climberMotor;
-	}
-
-	// Intermediate
-	// ====================================================================================================
+	@Deprecated
 	public static IntermediateSubsystem getIntermediate() {
 		return intermediate;
 	}
 
-	public static Victor getBellyRoller() {
-		return bellyRoller;
-	}
-
-	public static Victor getIntermediateBelts() {
-		return intermediateBelts;
-	}
-
-	// Turret
-	// ====================================================================================================
+	@Deprecated
 	public static TurretSubsystem getTurret() {
 		return turret;
-	}
-
-	public static CANTalon getTurretPosition() {
-		return turretPosition;
-	}
-
-	public static CANTalon getShooter1() {
-		return shooter1;
-	}
-
-	public static CANTalon getShooter2() {
-		return shooter2;
-	}
-
-	public static ADXRS450_Gyro getGyro() {
-		return gyro;
 	}
 }

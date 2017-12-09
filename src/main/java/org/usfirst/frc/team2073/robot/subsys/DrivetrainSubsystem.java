@@ -17,13 +17,17 @@ import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon.TrajectoryPoint;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.GyroBase;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+@Singleton
 public class DrivetrainSubsystem extends Subsystem {
 	public static final double DEFAULT_INVERSE = .2;
 	public static final double DEFAULT_SENSE = .7;
@@ -34,16 +38,23 @@ public class DrivetrainSubsystem extends Subsystem {
 	private final CANTalon rightMotorSlave;
 	private final Solenoid solenoid1;
 	private final Solenoid solenoid2;
-	private final ADXRS450_Gyro gyro;
+	private final GyroBase gyro;
 
-	public DrivetrainSubsystem() {
-		leftMotor = RobotMap.getLeftMotor();
-		leftMotorSlave = RobotMap.getLeftMotorSlave();
-		rightMotor = RobotMap.getRightMotor();
-		rightMotorSlave = RobotMap.getRightMotorSlave();
-		solenoid1 = RobotMap.getDriveSolenoid1();
-		solenoid2 = RobotMap.getDriveSolenoid2();
-		gyro = RobotMap.getGyro();
+	@Inject
+	DrivetrainSubsystem(@Named("Drivetrain Left") CANTalon leftMotor,
+			@Named("Drivetrain Left Slave") CANTalon leftMotorSlave,
+			@Named("Drivetrain Right") CANTalon rightMotor,
+			@Named("Drivetrain Right Slave") CANTalon rightMotorSlave,
+			@Named("Drivetrain Solenoid 1") Solenoid solenoid1,
+			@Named("Drivetrain Solenoid 2") Solenoid solenoid2,
+			GyroBase gyro) {
+		this.leftMotor = leftMotor;
+		this.leftMotorSlave = leftMotorSlave;
+		this.rightMotor = rightMotor;
+		this.rightMotorSlave = rightMotorSlave;
+		this.solenoid1 = solenoid1;
+		this.solenoid2 = solenoid2;
+		this.gyro = gyro;
 
 		setSlaves();
 		shiftLowGear();

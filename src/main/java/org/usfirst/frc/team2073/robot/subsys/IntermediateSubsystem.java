@@ -1,19 +1,25 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Intermediate;
 
-import edu.wpi.first.wpilibj.Victor;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+@Singleton
 public class IntermediateSubsystem extends Subsystem {
-	private final Victor main;
-	private final Victor bellyRoller;
+	private final PWMSpeedController main;
+	private final PWMSpeedController bellyRoller;
 
-	public IntermediateSubsystem() {
-		main = RobotMap.getIntermediateBelts();
-		bellyRoller = RobotMap.getBellyRoller();
+	@Inject
+	IntermediateSubsystem(@Named("Intermediate") PWMSpeedController main,
+			@Named("Belly Roller") PWMSpeedController bellyRoller) {
+		this.main = main;
+		this.bellyRoller = bellyRoller;
 
 		LiveWindow.addActuator(Intermediate.NAME, Intermediate.ComponentNames.MAIN, main);
 		LiveWindow.addActuator(Intermediate.NAME, Intermediate.ComponentNames.BELL_ROLLER, bellyRoller);

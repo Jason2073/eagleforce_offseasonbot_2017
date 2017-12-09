@@ -1,17 +1,22 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.Climber;
 
-import edu.wpi.first.wpilibj.Victor;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+@Singleton
 public class ClimberSubsystem extends Subsystem {
-	private final Victor motor;
+	private final PWMSpeedController motor;
 
-	public ClimberSubsystem() {
-		motor = RobotMap.getClimberMotor();
+	@Inject
+	ClimberSubsystem(@Named("Climber") PWMSpeedController motor) {
+		this.motor = motor;
 		LiveWindow.addActuator(Climber.NAME, Climber.ComponentNames.MOTOR, motor);
 	}
 

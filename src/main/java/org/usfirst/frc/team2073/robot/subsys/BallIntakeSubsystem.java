@@ -1,22 +1,29 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.BallIntake;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+@Singleton
 public class BallIntakeSubsystem extends Subsystem {
-	private final Victor motor1;
-	private final Victor motor2;
+	private final PWMSpeedController motor1;
+	private final PWMSpeedController motor2;
 	private final Solenoid solenoid;
 
-	public BallIntakeSubsystem() {
-		motor1 = RobotMap.getBallIntakeMotor1();
-		motor2 = RobotMap.getBallIntakeMotor2();
-		solenoid = RobotMap.getBallIntakeSolenoid();
+	@Inject
+	BallIntakeSubsystem(@Named("Ball Intake 1") PWMSpeedController motor1,
+			@Named("Ball Intake 2") PWMSpeedController motor2,
+			@Named("Ball Intake") Solenoid solenoid) {
+		this.motor1 = motor1;
+		this.motor2 = motor2;
+		this.solenoid = solenoid;
 
 		holdIntake();
 

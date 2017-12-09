@@ -1,17 +1,22 @@
 package org.usfirst.frc.team2073.robot.subsys;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.Subsystems.GearIntake;
 
-import edu.wpi.first.wpilibj.Victor;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
+
+import edu.wpi.first.wpilibj.PWMSpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+@Singleton
 public class GearIntakeSubsystem extends Subsystem {
-	private final Victor intakeMotor;
+	private final PWMSpeedController intakeMotor;
 
-	public GearIntakeSubsystem() {
-		intakeMotor = RobotMap.getGearIntakeMotor();
+	@Inject
+	GearIntakeSubsystem(@Named("Gear Intake") PWMSpeedController intakeMotor) {
+		this.intakeMotor = intakeMotor;
 		LiveWindow.addActuator(GearIntake.NAME, GearIntake.ComponentNames.INTAKE_MOTOR, intakeMotor);
 	}
 

@@ -1,15 +1,17 @@
 package org.usfirst.frc.team2073.robot.cmd;
 
-import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
+
+import com.google.inject.Inject;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TeleoperatedInitCommand extends Command {
 	private final DrivetrainSubsystem drivetrain;
 
-	public TeleoperatedInitCommand() {
-		drivetrain = RobotMap.getDrivetrain();
+	@Inject
+	TeleoperatedInitCommand(DrivetrainSubsystem drivetrain) {
+		this.drivetrain = drivetrain;
 		requires(drivetrain);
 	}
 
