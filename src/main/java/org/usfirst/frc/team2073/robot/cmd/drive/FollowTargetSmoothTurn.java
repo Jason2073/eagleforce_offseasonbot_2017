@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2073.robot.cmd.drive;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.subsys.DrivetrainSubsystem;
 import org.usfirst.frc.team2073.robot.util.CameraMessageReceiver;
@@ -7,6 +9,8 @@ import org.usfirst.frc.team2073.robot.util.CameraMessageReceiver;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FollowTargetSmoothTurn extends Command {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FollowTargetSmoothTurn.class);
+
 	private final DrivetrainSubsystem drivetrain;
 	private double lastAngleToTarget;
 
@@ -32,7 +36,7 @@ public class FollowTargetSmoothTurn extends Command {
 			}
 			drivetrain.processMotionProfiling();
 		} else {
-			System.out.println("No Camera Vision");
+			LOGGER.warn("No Camera Vision");
 		}
 	}
 

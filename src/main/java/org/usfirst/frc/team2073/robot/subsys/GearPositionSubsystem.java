@@ -2,6 +2,8 @@ package org.usfirst.frc.team2073.robot.subsys;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team2073.robot.RobotMap;
 import org.usfirst.frc.team2073.robot.cmd.gearposition.GearIntakeResetCommand;
 import org.usfirst.frc.team2073.robot.conf.AppConstants.DashboardKeys;
@@ -23,6 +25,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearPositionSubsystem extends Subsystem {
+	private static final Logger LOGGER = LoggerFactory.getLogger(GearPositionSubsystem.class);
+
 	private final CANTalon talon;
 	private final DigitalInput magnetZeroer;
 
@@ -79,7 +83,7 @@ public class GearPositionSubsystem extends Subsystem {
 	}
 
 	public void readPos() {
-		System.out.println(talon.getPosition());
+		LOGGER.debug("Talon Position: {}", talon.getPosition());
 	}
 
 	public void stop() {
@@ -106,7 +110,7 @@ public class GearPositionSubsystem extends Subsystem {
 	}
 
 	public void upToDown() {
-		System.out.println("upToDown()");
+		LOGGER.debug("upToDown()");
 		MotionProfileHelper.resetAndPushPoints(talon, upToDownTpList, false);
 	}
 

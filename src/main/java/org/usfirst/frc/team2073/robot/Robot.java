@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2073.robot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team2073.robot.cmd.TeleoperatedInitCommand;
 import org.usfirst.frc.team2073.robot.cmd.auton.BlueBoilerSideCommandGroup;
 import org.usfirst.frc.team2073.robot.cmd.auton.BlueFarSidePegCommandGroup;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Robot.class);
+
 	private SendableChooser<Command> chooser = new SendableChooser<>();
 	private TeleoperatedInitCommand teleopInitCmd;
 	private boolean started = false;
@@ -44,7 +48,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousPeriodic() {
-		if(!started) {
+		if (!started) {
 			chooser.getSelected().start();
 			started = true;
 		}
@@ -60,7 +64,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println("Gyro: " + RobotMap.getGyro().getAngle());
+		LOGGER.debug("Gyro Angle: {}", RobotMap.getGyro().getAngle());
 	}
 
 	@Override

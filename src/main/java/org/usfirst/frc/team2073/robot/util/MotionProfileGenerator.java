@@ -3,12 +3,16 @@ package org.usfirst.frc.team2073.robot.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team2073.robot.domain.MotionProfileConfiguration;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TrajectoryPoint;
 
 public class MotionProfileGenerator {
+	private static final Logger LOGGER = LoggerFactory.getLogger(MotionProfileGenerator.class);
+
 	private static final int ACCELERATION_CURVE = 3000;
 
 	public static List<TrajectoryPoint> generatePoints(MotionProfileConfiguration config) {
@@ -54,7 +58,7 @@ public class MotionProfileGenerator {
 			tPoint.position = (prevTp.position + calculatePosition(tPoint, prevTp, interval));
 
 			trajPointList.add(tPoint);
-			System.out.println(i + "\t" + tPoint.velocity + "\t" + tPoint.position + "\t" + tPoint.timeDurMs);
+			LOGGER.debug("{}\t{}\t{}\t{}", i, tPoint.velocity, tPoint.position, tPoint.timeDurMs);
 			if (tPoint.velocity == 0 || (isVelocityOnly && tPoint.velocity == maxVel)) {
 				tPoint.isLastPoint = true;
 				break;
@@ -77,11 +81,11 @@ public class MotionProfileGenerator {
 	}
 
 	// TODO: Remove?
-	// private static double round(double d, int decimalPlace) {
-	// BigDecimal bd = new BigDecimal(d);
-	// bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
-	// return bd.doubleValue();
-	// }
+//	private static double round(double d, int decimalPlace) {
+//		BigDecimal bd = new BigDecimal(d);
+//		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+//		return bd.doubleValue();
+//	}
 
 	/**
 	 * TODO: Jason, add JavaDocs about what this is doing mathematically.
